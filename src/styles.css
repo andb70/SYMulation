@@ -1,0 +1,61 @@
+/*.bdrR{
+  border: solid 1px red;
+}
+.bdrG{
+  border: solid 1px green;
+}
+.bdrB{
+  border: solid 1px blue;
+}
+.bdrY{
+  border: solid 1px yellow;
+}
+.bdrC{
+  border: solid 1px cyan;
+}
+.bdrM{
+  border: solid 1px magenta;
+}*/
+.topBdrGrey{
+  border-top: solid 1px grey;
+}
+.floatR{
+  float: right;
+}
+.floatL{
+  float: left;
+}
+.w10{
+  width: 10%;
+}
+.w15{
+  width: 15%;
+}
+.w20{
+  width: 20%;
+}
+.w30{
+  width: 30%;
+}
+.w45{
+  width: 45%;
+}
+.w70{
+  width: 70%;
+}
+.w100{
+  width: 100%;
+}
+
+.h100px{
+  height: 100px;
+}
+.top10px{
+  margin-top: 10px;
+}
+.bottom10px{
+  margin-bottom: 10px;
+}
+.left10px{
+  margin-left: 10px;
+}

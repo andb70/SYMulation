@@ -1,0 +1,16 @@
+.err1{
+  border-color: yellow;
+}
+.err2{
+   border-color: orange;
+}
+.err3{
+    border-color: red;
+}
+.ppad{
+  margin-top: 15px;
+  padding: 5px;
+}
+:host {
+  border: 1px solid green;
+}

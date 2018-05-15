@@ -1,0 +1,41 @@
+<!--  2 way binding tra il valore del
+      <input type="checkbox"    e la variabile varName tramite
+      [(ngModel)]="varName"
+
+      1 way binding (sola lettura) alla variabile varName
+      {{varName}}
+
+      [ngClass]="{'clsName1':visible, 'clsName2':true, 'clsName3':false}"
+      'clsName1':visible    will be applied when visible = true
+      'clsName2':true       will always be applied
+      'clsName3':false      will never be applied
+
+      <some-element *ngIf="condition"></some-element>
+      <some-element>        will be rendered if condition is true
+-->
+<!-- TODO considere come la categoria determina lo stile dell'item-->
+<div class="row topBdrGrey" [ngClass]="{'styDeleted':item.isDeleted}">
+
+  <!-- TODO presentare in modo decente l'item-->
+  <div class="col-8 bdrY">
+    <h2>{{item.Title}}</h2>
+    <p>{{item.Description}}</p>
+  </div>
+  <!-- TODO aggiungere un pulsante 'more' per vedere maggiori informazioni per l'elemento-->
+
+  <!-- TODO sistemare la checkbox-->
+  <div class="custom-checkbox col-1 bdrM">               <!--  occhio! non è una variabile    -->
+    <input type="checkbox" class="floatR bdrC top10px"     [(ngModel)]="isCompleted" title="Select completed actions"/>
+  </div>
+  <!--<div class="col-3 bdrM" [ngClass] ="customStyles()">-->
+  <div class="col-3 bdrM" [ngStyle] ="categoryStyles()">
+    <!-- TODO lasciare solo remove e restore -->
+    <!-- TODO quando si fa remove mostrare la finestra di conferma con l'opzione delete-->
+    <button *ngIf="!item.isDeleted" type="button" class="btn floatR w45 left10px top10px" (click)="removeMe()">Remove</button>
+    <button *ngIf="item.isDeleted" type="button" class="btn floatR w45 left10px top10px bottom10px" (click)="restoreMe()">Restore</button>
+    <button type="button" class="btn floatR w45 left10px top10px" (click)="editMe()">Edit</button>
+    category: {{item.category}}
+    <button *ngIf="item.isDeleted" type="button" class="btn btn-warning floatR w45 left10px top10px bottom10px" (click)="deleteMe()">Delete</button>
+  </div>
+
+</div>

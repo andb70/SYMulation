@@ -1,0 +1,45 @@
+
+<app-clock></app-clock>
+<div class="container bdrC" >
+
+
+  <div class="row">
+
+    <div class="col-4 bdrB">
+      <h2>What's up, Jack?</h2>
+      <p>Here is another nice clock-work pineapple pizza from your beloved ACME God template</p>
+    </div>
+
+    <div class="col-8 bdrB">
+      <app-user-input #uInput
+                      (newItem)="lList.refresh()"
+                      (clearList)="lList.refresh()"
+                      (updateItem)="lList.refresh()"
+                      (restoreDeleted)="lList.refresh()"
+                      (emptyDeleted)="lList.refresh()"
+      ></app-user-input>
+    </div>
+
+  </div>
+<!--
+  <div class="row" style="background-color: lightgray">
+    <app-category-selector></app-category-selector>
+  </div>
+-->
+
+  <div class="row">
+
+    <div class="col-12 bdrB">
+      <app-list #lList
+                [viewUsed]="uInput.viewUsed"
+                [viewDeleted]="uInput.viewDeleted"
+                (editToDo)="uInput.editToDo($event)"
+      ></app-list>
+    </div>
+
+  </div>
+
+
+</div>
+
+<!--<app-its-select></app-its-select>-->

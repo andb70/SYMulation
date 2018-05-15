@@ -1,0 +1,15 @@
+<h1> Test Select</h1>
+<select [(ngModel)]="selectedValue">
+  <option *ngFor ="let s of list" [value]="s">
+    {{s}}
+  </option>
+</select>
+<button type = "button" (click)="showValue()">show</button>
+
+
+<select [(ngModel)]="selectedStyle">
+  <option *ngFor ="let x of styles" [ngValue]="x">
+    {{x.description}}
+  </option>
+</select>
+<div [ngClass]="selectedStyle.cssClass">ciao</div>
