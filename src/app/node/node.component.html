@@ -1,0 +1,5 @@
+<div>{{object.name}}</div>
+<div  class="padLeft">
+  <app-node *ngFor="let o of object.getChildren()" [object]="o"></app-node>
+  <app-sensor  *ngFor="let s of object.getSensors()" [config]="s" (newdata)="sendData($event)"></app-sensor>
+</div>

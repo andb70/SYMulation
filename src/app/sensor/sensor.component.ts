@@ -1,7 +1,7 @@
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {ClockService} from '../clock.service';
 import {Subscription} from 'rxjs/Subscription';
-import {SensorType} from '../models/SensorType';
+import {DataPointType} from '../models/DataPointType';
 
 @Component({
   selector: 'app-sensor',
@@ -17,7 +17,7 @@ export class SensorComponent implements OnInit, OnDestroy {
   @Input()
   slope = 0.5;
   @Input()
-  config: SensorType;
+  config: DataPointType;
   @Output()
   newData = new EventEmitter();
 
