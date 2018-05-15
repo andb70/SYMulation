@@ -5,7 +5,7 @@ export class ObjectType {
   constructor(public name: string,
               public tag: number
   ) { }
-  objects: ObjectType[] = [];
+  children: ObjectType[] = [];
   sensors: SensorType[] = [];
 
   appendSensor(sensor: SensorType) {

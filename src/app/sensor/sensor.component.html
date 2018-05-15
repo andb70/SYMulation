@@ -1,3 +1,3 @@
 <p>nome: {{config.name}}</p>
-<p>valore: {{getValue()}}</p>
-<p>soglia: {{config.updtTHS}}</p>
+<p>valore: {{getValue() | number: '.1' }}</p>
+<p>soglia: {{config.updtTHS | number: '1.2'}}</p>
