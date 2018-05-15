@@ -7,8 +7,21 @@ import {StorageService} from '../storage.service';
   styleUrls: ['./list-item.component.css']
 })
 export class ListItemComponent {
+  @Input()
+  sensors = [];
 
+  data = [];
+  lastData = [];
   constructor(private storage: StorageService) { }
 
+  sendData(event) {
+    for (let i = 0; i < this.sensors.length; i++) {
+      if (this.sensors[i].tag == event.tag) {
+        this.lastData[i] = this.data[i];
+        this.data[i] = event;
+      }
+    }
+    console.log(JSON.stringify(event));
+  }
 
 }

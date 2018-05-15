@@ -1,3 +1,2 @@
-<!--
-<app-sensor  *ngFor="let s of sensors" [config]="s">____</app-sensor>
--->
+
+<app-sensor  *ngFor="let s of sensors" [config]="s" (newdata)="sendData($event)"></app-sensor>

@@ -5,5 +5,9 @@
 <p>consumo corrente forni (ogni minuto)</p>
 <p>temperatura media dei forni (ogni 10 minuti)</p>
 <p>livello massimo e minimo vasche di trattamento (ogni ora)</p>
-
-<app-sensor  *ngFor="let s of sensors" [config]="s" (newdata)="sendData($event)">____</app-sensor>
+<!--
+<app-list-item [sensors]="sensors0"></app-list-item>
+<app-list-item [sensors]="sensors1"></app-list-item>
+<app-list-item [sensors]="sensors2"></app-list-item>
+-->
+<app-list [objects]="objects"></app-list>

@@ -1,4 +1,4 @@
-import {Component } from '@angular/core';
+import {Component, Input, Output} from '@angular/core';
 import {StorageService} from '../storage.service';
 import * as _ from 'underscore';
 
@@ -8,7 +8,8 @@ import * as _ from 'underscore';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent {
-
+  @Input()
+  objects = [];
   constructor(private storage: StorageService) {
   }
 
