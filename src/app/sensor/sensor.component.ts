@@ -10,7 +10,7 @@ import {Subscription} from 'rxjs/Subscription';
 export class SensorComponent implements OnInit, OnDestroy {
 
   private _clockSubscription: Subscription;
-
+  tick= false;
   @Input()
   nome = "sensore";
  /* @Input()
@@ -18,6 +18,7 @@ export class SensorComponent implements OnInit, OnDestroy {
   @Input()
     soglia = 0.5;
 
+  coef = 0.1;
   i: number;
   dato: number;
 
@@ -25,6 +26,7 @@ export class SensorComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.i = 0;
+    this.dato= 20;
     this._clockSubscription = this.clockService.getClock().subscribe(() => this.Genera());
   }
 
@@ -32,18 +34,15 @@ export class SensorComponent implements OnInit, OnDestroy {
     this._clockSubscription.unsubscribe();
   }
 
-  Genera(){
-    this.i++;
-    if(this.scansione){
-      if(this.i>this.soglia){
-
-      }
+  Genera() {
+    /*    this.i++;*/
+    this.tick=!this.tick;
+    if (Math.random() > this.soglia) {
+      this.aggiornaDato()
     }
-    else{
-
-    }
-
-
+  }
+  aggiornaDato(){
+      this.dato=this.dato+(Math.random()- 0.5) * this.coef;
   }
 
 
