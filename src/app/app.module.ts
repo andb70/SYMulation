@@ -5,16 +5,13 @@ import { NgModule } from '@angular/core';
 import { AppComponent } from './app.component';
 import { ListComponent } from './list/list.component';
 import { ListItemComponent } from './list-item/list-item.component';
-import { UserInputComponent } from './user-input/user-input.component';
 import { FormsModule } from '@angular/forms';
 import { StorageService } from './storage.service';
-import { StyRepoService } from './sty-repo.service';
-import { CategorySelectorComponent } from './category-selector/category-selector.component';
-import { ItsSelectComponent } from './its-select/its-select.component';
+
 import { HttpClientModule } from '@angular/common/http';
-import { ClockComponent } from './clock/clock.component';
-import {ClockService} from "./clock.service";
+import { ClockService} from './clock.service';
 import { SensorComponent } from './sensor/sensor.component';
+import {SensorType} from './models/SensorType';
 
 
 @NgModule({
@@ -22,10 +19,6 @@ import { SensorComponent } from './sensor/sensor.component';
     AppComponent,
     ListComponent,
     ListItemComponent,
-    UserInputComponent,
-    CategorySelectorComponent,
-    ItsSelectComponent,
-    ClockComponent,
     SensorComponent
   ],
   imports: [
@@ -35,9 +28,8 @@ import { SensorComponent } from './sensor/sensor.component';
   ],
   providers: [
     StorageService,
-    StyRepoService,
     ClockService
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {}

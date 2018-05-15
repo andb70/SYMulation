@@ -1,6 +1,7 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
 import {ClockService} from '../clock.service';
 import {Subscription} from 'rxjs/Subscription';
+import {SensorType} from '../models/SensorType';
 
 @Component({
   selector: 'app-sensor',
@@ -10,40 +11,39 @@ import {Subscription} from 'rxjs/Subscription';
 export class SensorComponent implements OnInit, OnDestroy {
 
   private _clockSubscription: Subscription;
-  tick= false;
-  @Input()
-  nome = "sensore";
- /* @Input()
-    scansione = true;*/
-  @Input()
-    soglia = 0.5;
 
-  coef = 0.1;
-  i: number;
-  dato: number;
+  dataBit: number;
+
+  @Input()
+  slope = 0.5;
+  @Input()
+  config: SensorType;
+  @Output()
+  newData = new EventEmitter();
 
   constructor(private clockService: ClockService) { }
 
   ngOnInit(): void {
-    this.i = 0;
-    this.dato= 20;
-    this._clockSubscription = this.clockService.getClock().subscribe(() => this.Genera());
+    this.dataBit = (this.config.initValue -  this.config.scaleMin)
+              / (this.config.scaleMax -  this.config.scaleMin) * this.config.inRange;
+    this._clockSubscription = this.clockService.getClock().subscribe(() => {
+      if (Math.random() > this.config.updtTHS) {
+        this.update();
+      }
+    });
   }
 
   ngOnDestroy(): void {
     this._clockSubscription.unsubscribe();
   }
 
-  Genera() {
-    /*    this.i++;*/
-    this.tick=!this.tick;
-    if (Math.random() > this.soglia) {
-      this.aggiornaDato()
-    }
-  }
-  aggiornaDato(){
-      this.dato=this.dato+(Math.random()- 0.5) * this.coef;
+  update() {
+      this.dataBit = this.dataBit + (Math.random() - this.slope) * this.config.updtRate;
+      this.newData.emit( {name: this.config.name, value: this.getValue(), tag: this.config.tag});
   }
 
+  getValue() {
+    return this.dataBit / this.config.inRange * (this.config.scaleMax - this.config.scaleMin);
+  }
 
 }
