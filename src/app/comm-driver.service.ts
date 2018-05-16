@@ -4,7 +4,7 @@ import {HttpClient} from '@angular/common/http';
 import {Measure} from './models/Measure';
 
 @Injectable()
-export class StorageService {
+export class CommDriverService {
  /* @Output()*/
   cue = [];
   maxLength = 1;

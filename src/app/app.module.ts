@@ -4,7 +4,7 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { FormsModule } from '@angular/forms';
-import { StorageService } from './storage.service';
+import { CommDriverService } from './comm-driver.service';
 
 import { HttpClientModule } from '@angular/common/http';
 import { ClockService} from './clock.service';
@@ -24,7 +24,7 @@ import {NodeComponent} from './node/node.component';
     HttpClientModule
   ],
   providers: [
-    StorageService,
+    CommDriverService,
     ClockService
   ],
   bootstrap: [AppComponent]

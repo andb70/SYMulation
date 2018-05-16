@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {DataPointType} from './models/DataPointType';
-import {StorageService} from './storage.service';
+import {CommDriverService} from './comm-driver.service';
 import {ObjectType} from './models/ObjectType';
 
 @Component({
@@ -77,7 +77,7 @@ export class AppComponent {
   );
 
   root: ObjectType;
-  constructor(private storage: StorageService) {
+  constructor(private storage: CommDriverService) {
 
     this.root = new ObjectType('root', 1);
     this.root

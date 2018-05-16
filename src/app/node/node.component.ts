@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, Output} from '@angular/core';
-import {StorageService} from '../storage.service';
+import {CommDriverService} from '../comm-driver.service';
 import {ObjectType} from '../models/ObjectType';
 
 @Component({
@@ -13,7 +13,7 @@ export class NodeComponent {
 
   data = [];
   lastData = [];
-  constructor(private storage: StorageService) { }
+  constructor(private storage: CommDriverService) { }
 
   sendData(event) {
 /*    for (let i = 0; i < this.sensors.length; i++) {
