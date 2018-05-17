@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angula
 import {ClockService} from '../clock.service';
 import {Subscription} from 'rxjs/Subscription';
 import {DataPointType} from '../models/DataPointType';
+import {Measure} from '../models/Measure';
 
 @Component({
   selector: 'app-sensor',
@@ -47,8 +48,12 @@ export class SensorComponent implements OnInit, OnDestroy {
    * aggiorna il dato e comunica al contenitore la modifica
    * */
   update() {
-      this.dataBit = this.dataBit + (Math.random() - this.slope) * this.config.updtRate;
-    this.newData.emit( {name: this.config.name, value: this.getValue(), tag: this.config.tag});
+    this.dataBit = this.dataBit + (Math.random() - this.slope) * this.config.updtRate;
+    this.newData.emit( { fldName: this.config.fldName,
+                              value: this.getValue(),
+                              tag: this.config.tag,
+                              timestamp: Measure.getTimeStamp()
+                            });
     /*this.newData.emit( );*/
       /*console.log(this.dataBit);*/
   }

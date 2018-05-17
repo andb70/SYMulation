@@ -12,13 +12,13 @@ export class CommDriverService implements OnInit, OnDestroy {
   sync = new EventEmitter();
 
   cue = [];
-  maxLength = 30;
+  maxLength = 10;
 
-  serverLocal = 'http://localhost:8080/api/todoitems/';
+  serverLocal = 'http://localhost:8080/api/datalog';
 
   // serverPavo = 'http://192.168.101.77:5000/api/todolist/';
   server = '';
-  counter = 0;
+  counter = 9;
   clockRate = 10;
   constructor(private http: HttpClient, private clockService: ClockService) {
     // this.server = this.serverPavo;
@@ -54,9 +54,10 @@ export class CommDriverService implements OnInit, OnDestroy {
       let data = this.cue;
       this.cue = [];
       console.log('posting ' + (data.length - 1));
-     /* this.http.post(this.server, data).subscribe( () => {
+      console.log(data[0]);
+      this.http.post(this.server, data).subscribe( () => {
         console.log('posted');
-      });*/
+      });
     }
   }
 

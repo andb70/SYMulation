@@ -3,6 +3,7 @@ import {ObjectType} from './ObjectType';
 export class DataPointType {
   private parent: ObjectType = null;
   tag: number;
+  public fldName: string;
   constructor(public name: string,
               public inRange: number,
               public scaleMin: number,
@@ -12,7 +13,7 @@ export class DataPointType {
               public updtTHS: number
   ) {return this; }
 
-  static  fromTemplate(template: DataPointType, tag: number)  {
+  static  fromTemplate(template: DataPointType, fldName: string, tag: number)  {
     let dtp =  new DataPointType(
       template.name,
       template.inRange,
@@ -22,6 +23,7 @@ export class DataPointType {
       template.updtRate,
       template.updtTHS);
     dtp.tag = tag;
+    dtp.fldName = fldName;
     return dtp;
   }
 

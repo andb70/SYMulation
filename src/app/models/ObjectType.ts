@@ -1,11 +1,13 @@
 import {DataPointType} from './DataPointType';
 import * as _ from 'underscore';
+import {Measure} from './Measure';
 
 export class ObjectType {
   private parent: ObjectType = null;
   private children: ObjectType[] = [];
   private sensors: DataPointType[] = [];
   constructor(public name: string,
+              public tagName: string,
               public tag: number
   ) { }
   getChildren() {
@@ -45,7 +47,7 @@ export class ObjectType {
     return '/' + this.name;
   }
   getTags(tags: any[]) {
-    tags.push(this.tag);
+    tags.push({tagName: this.tagName, value: this.tag});
     if (this.getParent()) {
       return this.getParent().getTags(tags);
     }

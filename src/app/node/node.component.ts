@@ -1,6 +1,7 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {CommDriverService} from '../comm-driver.service';
 import {ObjectType} from '../models/ObjectType';
+import {Measure} from '../models/Measure';
 
 @Component({
   selector: 'app-node',
@@ -18,18 +19,21 @@ export class NodeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    /*console.log(this.object.name + ', sensors: ' + this.object.getSensorCount());*/
-    /*this.data = new [this.object.getSensorCount()];
-    this.lastData = new [this.object.getSensorCount()];*/
+
     let s = this.object.getSensors();
     for (let i = 0; i < s.length; i++) {
-      this.data.push({name: s[i].name, value: 0, tag: s[i].tag});
+      this.data.push({fldName: s[i].fldName, value: 0, tag: s[i].tag, timestamp: Measure.getTimeStamp()});
     }
     this.lastData = this.data;
-
-    this.collector.sync.subscribe(() => {
-      this.collector.newData(this.object.name, this.data, this.object.getTags([]));
-    });
+    if (s && s.length > 0) {
+      console.log('subscription: ' + this.object.name);
+      this.collector.sync.subscribe(() => {
+        this.collector.newData( this.object.name,
+                                this.data,
+                                this.object.getTags([])
+                              );
+      });
+    }
   }
 
   onNewData(event) {
