@@ -1,11 +1,11 @@
 .divN {
   width: 200px;
   display: inline-block;
-  border: solid 1px blue;
+  /*border: solid 1px blue;*/
 }
 .divV {
   width: 100px;
   display: inline;
-  background-color: bisque;
+  /*background-color: bisque;*/
   text-align: right;
 }

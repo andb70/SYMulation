@@ -77,7 +77,7 @@ export class AppComponent {
   );
 
   root: ObjectType;
-  constructor(private storage: CommDriverService) {
+  constructor(private collector: CommDriverService) {
 
     this.root = new ObjectType('root', 1);
     this.root

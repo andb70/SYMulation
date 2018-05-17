@@ -44,4 +44,11 @@ export class ObjectType {
     }
     return '/' + this.name;
   }
+  getTags(tags: any[]) {
+    tags.push(this.tag);
+    if (this.getParent()) {
+      return this.getParent().getTags(tags);
+    }
+    return tags;
+  }
 }

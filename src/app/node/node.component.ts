@@ -13,20 +13,28 @@ export class NodeComponent implements OnInit {
 
   data = [];
   lastData = [];
-  constructor(private storage: CommDriverService) { }
+
+  constructor(private collector: CommDriverService) {
+  }
+
   ngOnInit(): void {
-    console.log(this.object.name + ', sensors: ' + this.object.getSensorCount());
+    /*console.log(this.object.name + ', sensors: ' + this.object.getSensorCount());*/
     /*this.data = new [this.object.getSensorCount()];
     this.lastData = new [this.object.getSensorCount()];*/
     let s = this.object.getSensors();
     for (let i = 0; i < s.length; i++) {
-        this.data.push({name: s[i].name, value: 0, tag: s[i].tag});
-      }
-      this.lastData = this.data;
+      this.data.push({name: s[i].name, value: 0, tag: s[i].tag});
+    }
+    this.lastData = this.data;
+
+    this.collector.sync.subscribe(() => {
+      this.collector.newData(this.object.name, this.data, this.object.getTags([]));
+    });
   }
+
   onNewData(event) {
     for (let i = 0; i < this.data.length; i++) {
-      if (this.data[i].tag == event.tag) {
+      if (this.data[i].tag === event.tag) {
         this.lastData[i] = this.data[i];
         this.data[i] = event;
       }
