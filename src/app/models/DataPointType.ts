@@ -10,7 +10,7 @@ export class DataPointType {
               public initValue: number,
               public updtRate: number,
               public updtTHS: number
-  ) {return this;}
+  ) {return this; }
 
   static  fromTemplate(template: DataPointType, tag: number)  {
     let dtp =  new DataPointType(
@@ -20,7 +20,7 @@ export class DataPointType {
       template.scaleMax,
       template.initValue,
       template.updtRate,
-      template.updtTHS)
+      template.updtTHS);
     dtp.tag = tag;
     return dtp;
   }

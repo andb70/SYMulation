@@ -21,13 +21,21 @@ export class CommDriverService {
   }
 
 
-
+  /**
+   * riceve una misura da un componente  e la accoda a cue
+   * se cue supera l'altezza di soglia:
+   *    copia la cue nel buffer <data>
+   *    svuota cue
+   *    effettua la chiamata POST(data)
+   */
   newData(name, fields, tags) {
+
     this.cue.push(new Measure(name, fields, tags));
     if (this.cue.length > this.maxLength) {
       let curLength = this.cue.length;
       let data = this.cue
       this.cue = [];
+
       this.http.post(this.server, data).subscribe( () => {
         console.log('posted');
       });

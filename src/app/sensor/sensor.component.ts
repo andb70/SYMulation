@@ -24,8 +24,14 @@ export class SensorComponent implements OnInit, OnDestroy {
   constructor(private clockService: ClockService) { }
 
   ngOnInit(): void {
+    /**
+     * Inizializza il dato in base alla configurazione ricevuta
+     * */
     this.dataBit = (this.config.initValue -  this.config.scaleMin)
               / (this.config.scaleMax -  this.config.scaleMin) * this.config.inRange;
+    /**
+     * Ad ogni tick del clock valuta se aggiornare il dato
+     * */
     this._clockSubscription = this.clockService.getClock().subscribe(() => {
       if (Math.random() > this.config.updtTHS) {
         this.update();
@@ -37,9 +43,14 @@ export class SensorComponent implements OnInit, OnDestroy {
     this._clockSubscription.unsubscribe();
   }
 
+  /**
+   * aggiorna il dato e comunica al contenitore la modifica
+   * */
   update() {
       this.dataBit = this.dataBit + (Math.random() - this.slope) * this.config.updtRate;
-      this.newData.emit( {name: this.config.name, value: this.getValue(), tag: this.config.tag});
+    this.newData.emit( {name: this.config.name, value: this.getValue(), tag: this.config.tag});
+    /*this.newData.emit( );*/
+      /*console.log(this.dataBit);*/
   }
 
   getValue() {

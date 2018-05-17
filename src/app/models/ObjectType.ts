@@ -14,6 +14,9 @@ export class ObjectType {
   getSensors() {
     return this.sensors.slice(0);
   }
+  getSensorCount() {
+    return this.sensors.length;
+  }
   getParent(): ObjectType {
     return this.parent;
   }
