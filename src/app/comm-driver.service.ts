@@ -14,28 +14,30 @@ export class CommDriverService implements OnInit, OnDestroy {
   cue = [];
   maxLength = 10;
 
-  serverLocal = 'http://localhost:8088/api/datalog';
-  serverPavo = 'http://192.168.101.26:5000/api/sensor/write';
-  serverFabio = 'http://192.168.43.75:5000/api/sensor/write';
-  serverFilippo = 'http://192.168.101.129:5000/mqtt/prova';
-
-  server = '';
+  server: string;
   counter = 9;
   clockRate = 10;
   constructor(private http: HttpClient, private clockService: ClockService) {
+
+    let serverLocal = 'http://localhost:8088/api/datalog';
+    let serverPavo = 'http://192.168.101.26:5000/api/sensor/write';
+    let serverFabio = 'http://192.168.43.75:5000/api/sensor/write';
+    let serverFilippo = 'http://192.168.101.129:5000/mqtt/prova';
+
     let serverId = 20;
+
     switch (serverId) {
       case 0:
-        this.server = this.serverLocal;
+        this.server = serverLocal;
         break;
       case 1:
-        this.server = this.serverPavo;
+        this.server = serverPavo;
         break;
       case 2:
-        this.server = this.serverFabio;
+        this.server = serverFabio;
         break;
       case 3:
-        this.server = this.serverFilippo;
+        this.server = serverFilippo;
         break;
       default:
         this.server = null;
