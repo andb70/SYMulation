@@ -2,18 +2,26 @@ import {ObjectType} from './ObjectType';
 
 export class DataPointType {
   private parent: ObjectType = null;
-  tag: number;
+  public tag: number;
   public fldName: string;
+  public slope = 0.5;
   constructor(public name: string,
               public inRange: number,
               public scaleMin: number,
               public scaleMax: number,
               public initValue: number,
               public updtRate: number,
-              public updtTHS: number
-  ) {return this; }
+              public updtTHS: number,
+              public owner?: any
+  ) {
+    if (this.owner) {
+      if (!this.owner.plug(this)) {
+        this.owner = false;
+      }
+    }
+    return this; }
 
-  static  fromTemplate(template: DataPointType, fldName: string, tag: number)  {
+  static  fromTemplate(template: DataPointType, fldName: string, tag: number, owner?: any)  {
     let dtp =  new DataPointType(
       template.name,
       template.inRange,
@@ -24,11 +32,17 @@ export class DataPointType {
       template.updtTHS);
     dtp.tag = tag;
     dtp.fldName = fldName;
+
     return dtp;
   }
-
+  getDelta() {
+    return (Math.random() - this.slope) * this.updtRate;
+  }
   getParent(): ObjectType {
     return this.parent;
+  }
+  getIsLeaf(): boolean {
+    return (!this.owner);
   }
   setParent(newParent: ObjectType) {
     this.parent = newParent;

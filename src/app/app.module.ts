@@ -10,13 +10,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { ClockService} from './clock.service';
 import { SensorComponent } from './sensor/sensor.component';
 import {NodeComponent} from './node/node.component';
+import { MotorComponent } from './motor/motor.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     NodeComponent,
-    SensorComponent
+    SensorComponent,
+    MotorComponent
   ],
   imports: [
     BrowserModule,

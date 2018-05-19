@@ -1,21 +1,30 @@
 import {EventEmitter, OnDestroy, OnInit, Output} from '@angular/core';
 import {ClockService} from '../clock.service';
 import {Subscription} from 'rxjs/Subscription';
+import {DataPointType} from './DataPointType';
 
 export class MotorClass implements OnInit, OnDestroy {
   private _clockSubscription: Subscription;
   private counter = 0;
+
   @Output()
   newData = new EventEmitter();
 
   state = false;
   targetRPM = 0;
   status = 0;
-  constructor(private clockService: ClockService,
+  private clockService: ClockService;
+  constructor(public name: string,
               public refreshInterval: number,
-              public config: MotorConfigType,
-              public param: MotorParamType) {
-    this.param = new MotorParamType(param.state, param.I, param.RPM, param.H);
+              private config: MotorConfigType,
+              private param: MotorParamType,
+              private sCurrent: DataPointType,
+              private sRPM: DataPointType,
+              private sHours: DataPointType ) {
+    this.clockService = new ClockService();
+    this.sCurrent.owner = this;
+    this.sRPM.owner = this;
+    this.sHours.owner = this;
   }
 
   ngOnInit(): void {
@@ -32,6 +41,18 @@ export class MotorClass implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this._clockSubscription.unsubscribe();
   }
+
+  getsCurrent(): DataPointType {
+    return this.sCurrent;
+  }
+  getsRPM(): DataPointType {
+    return this.sRPM;
+  }
+  getsHours(): DataPointType {
+    return this.sHours;
+  }
+
+
   updateParam() {
     switch (this.status) {
       case 0: // idle / spento
@@ -75,7 +96,7 @@ export class MotorClass implements OnInit, OnDestroy {
     }
   }
   accelera(verso: number) {
-    this.param.RPM += verso * this.config.ecceleration;
+    this.param.RPM += verso * this.config.acceleration;
   }
 
   speedTargeted(targetSpeed: number) {
@@ -101,7 +122,7 @@ export enum switchState {
 export class MotorConfigType {
   constructor (public maxI: number,
                public maxRPM: number,
-               public ecceleration: number) {}
+               public acceleration: number) {}
 }
 
 export class MotorParamType {

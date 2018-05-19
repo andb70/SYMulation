@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {CommDriverService} from '../comm-driver.service';
 import {ObjectType} from '../models/ObjectType';
 import {Measure} from '../models/Measure';
@@ -43,8 +43,6 @@ export class NodeComponent implements OnInit {
         this.data[i] = event;
       }
     }
-
-    /*console.log(event);*/
   }
 
 }

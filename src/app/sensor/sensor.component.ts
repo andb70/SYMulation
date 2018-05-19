@@ -16,8 +16,6 @@ export class SensorComponent implements OnInit, OnDestroy {
   dataBit: number;
 
   @Input()
-  slope = 0.5;
-  @Input()
   config: DataPointType;
   @Output()
   newData = new EventEmitter();
@@ -25,6 +23,13 @@ export class SensorComponent implements OnInit, OnDestroy {
   constructor(private clockService: ClockService) { }
 
   ngOnInit(): void {
+    this.startClock();
+   /* if (this.config.getIsLeaf()) {
+      this.startClock();
+    }*/
+  }
+
+  startClock(): void {
     /**
      * Inizializza il dato in base alla configurazione ricevuta
      * */
@@ -35,20 +40,27 @@ export class SensorComponent implements OnInit, OnDestroy {
      * */
     this._clockSubscription = this.clockService.getClock().subscribe(() => {
       if (Math.random() > this.config.updtTHS) {
-        this.update();
+        this.update(this.config.getDelta());
       }
     });
   }
 
   ngOnDestroy(): void {
-    this._clockSubscription.unsubscribe();
+    this.stopClock();
+  }
+
+  stopClock(): void {
+    if (this._clockSubscription) {
+      this._clockSubscription.unsubscribe();
+      this._clockSubscription = null;
+    }
   }
 
   /**
    * aggiorna il dato e comunica al contenitore la modifica
    * */
-  update() {
-    this.dataBit = this.dataBit + (Math.random() - this.slope) * this.config.updtRate;
+  update(delta: number) {
+    this.dataBit = this.dataBit + delta;
     this.newData.emit( { fldName: this.config.fldName,
                               value: this.getValue(),
                               tag: this.config.tag,
