@@ -24,7 +24,7 @@ export class ObjectType {
   }
   setParent(newParent: ObjectType) {
     this.parent = newParent;
-    console.log('append Obj ' + this.getPath());
+    // console.log('append Obj ' + this.getPath());
   }
 
   appendSensor(sensor: DataPointType) {

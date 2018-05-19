@@ -20,23 +20,31 @@ export class SensorComponent implements OnInit, OnDestroy {
   @Output()
   newData = new EventEmitter();
 
-  constructor(private clockService: ClockService) { }
+  constructor(private clockService: ClockService) {
+  }
 
   ngOnInit(): void {
-    this.startClock();
-   /* if (this.config.getIsLeaf()) {
+    /**
+     * Inizializza il dato in base alla configurazione ricevuta
+     */
+    this.dataBit = (this.config.initValue - this.config.scaleMin)
+      / (this.config.scaleMax - this.config.scaleMin) * this.config.inRange;
+
+    /**
+     * Se il sensore è privo di proprietario l'aggiornamento sarà
+     * cadenzato da un clock, altrimenti la responsabilità di chiamare
+     * updatate(<delta>) sarà demandata all'oggetto che lo possiede
+     */
+    // console.log(this.config.name + ' isLeaf: ' + this.config.getIsLeaf());
+    if (this.config.getIsLeaf()) {
       this.startClock();
-    }*/
+    }
   }
 
   startClock(): void {
     /**
-     * Inizializza il dato in base alla configurazione ricevuta
-     * */
-    this.dataBit = (this.config.initValue -  this.config.scaleMin)
-              / (this.config.scaleMax -  this.config.scaleMin) * this.config.inRange;
-    /**
-     * Ad ogni tick del clock valuta se aggiornare il dato
+     * Ad ogni tick del clock valuta se aggiornare il dato e calcola
+     * il delta in modo casuale
      * */
     this._clockSubscription = this.clockService.getClock().subscribe(() => {
       if (Math.random() > this.config.updtTHS) {
@@ -60,14 +68,23 @@ export class SensorComponent implements OnInit, OnDestroy {
    * aggiorna il dato e comunica al contenitore la modifica
    * */
   update(delta: number) {
+
+    if (this.dataBit + delta < this.config.scaleMin) {
+      delta = this.config.scaleMin - this.dataBit;
+    } else if (this.dataBit + delta > this.config.scaleMax) {
+      delta = this.config.scaleMin - this.dataBit;
+    }
+    if (!delta) {
+      return;
+    }
+    // console.log(this.config.name + ' update ' + delta);
     this.dataBit = this.dataBit + delta;
-    this.newData.emit( { fldName: this.config.fldName,
-                              value: this.getValue(),
-                              tag: this.config.tag,
-                              timestamp: Measure.getTimeStamp()
-                            });
-    /*this.newData.emit( );*/
-      /*console.log(this.dataBit);*/
+    this.newData.emit({
+                            fldName: this.config.fldName,
+                            value: this.getValue(),
+                            tag: this.config.tag,
+                            timestamp: Measure.getTimeStamp()
+                    });
   }
 
   getValue() {

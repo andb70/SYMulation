@@ -1,0 +1,23 @@
+qui devono esser inseriti i controlli per gestire
+<b>{{config.name}}</b>
+<ul mat-list>
+  <li mat-list-item>switch on-of
+    <button  type="button" mat-button
+             [ngClass]="{'motorON': config.isON,'motorOFF': config.isOFF}"
+            (click)="motorSwitch()">switch</button>
+  </li>
+  <li mat-list-item>sforzo
+    <select name="sStress" [(ngModel)]="stress" class="form-control w70 floatR">
+      <option *ngFor="let i of stressValues()" [ngValue]="i">{{i}}</option>
+
+    </select>
+  </li>
+  <li mat-list-item> velocità
+
+    <input type="text" name="tSpeed" #Title="ngModel"
+           [(ngModel)]="speed"></li>
+  ----------
+  <li mat-list-item>assorbimento attuale </li>
+  <li mat-list-item>velocità attuale</li>
+  <li mat-list-item>ore lavoro</li>
+</ul>

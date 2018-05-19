@@ -36,7 +36,7 @@ export class DataPointType {
     return dtp;
   }
   getDelta() {
-    return (Math.random() - this.slope) * this.updtRate;
+    return Math.floor((Math.random() - this.slope) * this.updtRate);
   }
   getParent(): ObjectType {
     return this.parent;
@@ -46,7 +46,7 @@ export class DataPointType {
   }
   setParent(newParent: ObjectType) {
     this.parent = newParent;
-    console.log('append Sns ' + this.getPath());
+    // console.log('append Sns ' + this.getPath());
   }
   getPath(): String {
     if (this.parent) {

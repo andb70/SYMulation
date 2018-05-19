@@ -23,7 +23,7 @@ export class CommDriverService implements OnInit, OnDestroy {
   counter = 9;
   clockRate = 10;
   constructor(private http: HttpClient, private clockService: ClockService) {
-    let serverId = 0;
+    let serverId = 20;
     switch (serverId) {
       case 0:
         this.server = this.serverLocal;
@@ -32,8 +32,13 @@ export class CommDriverService implements OnInit, OnDestroy {
         this.server = this.serverPavo;
         break;
       case 2:
+        this.server = this.serverFabio;
+        break;
+      case 3:
         this.server = this.serverFilippo;
         break;
+      default:
+        this.server = null;
     }
 
     this._clockSubscription = this.clockService.getClock().subscribe(() => {
@@ -61,6 +66,9 @@ export class CommDriverService implements OnInit, OnDestroy {
    *    effettua la chiamata POST(data)
    */
   newData(name, fields, tags) {
+    if (!this.server) {
+      return;
+    }
     this.cue.push(new Measure(name, fields, tags));
     /*console.log('new measure ' + this.cue[this.cue.length - 1].name);*/
     /*console.log('new measure ' + this.cue);*/

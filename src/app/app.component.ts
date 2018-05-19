@@ -14,7 +14,7 @@ export class AppComponent {
     -200	,
     600	,
     20	,
-    0.8	,
+    1	,
     0.8
   );
   sRPM = new DataPointType('rpm'	,
@@ -22,7 +22,7 @@ export class AppComponent {
     0	,
     4500	,
     0	,
-    0.8	,
+    1.1	,
     0.5
   );
   sHours = new DataPointType('ore'	,
@@ -30,7 +30,7 @@ export class AppComponent {
     0	,
     2000	,
     0	,
-    0.095	,
+    1.6	,
     0.8
   );
   sLiquidFlow = new DataPointType('contatoreAcqua'	,
@@ -38,7 +38,7 @@ export class AppComponent {
     0	,
     600	,
     20	,
-    0.8	,
+    22	,
     0.8
   );
   sTemperature = new DataPointType('temperatura'	,
@@ -46,7 +46,7 @@ export class AppComponent {
     0	,
     125	,
     0	,
-    0.8	,
+    15	,
     0.8
   );
   sLiquidLevel = new DataPointType('livelloAcqua'	,
@@ -54,7 +54,7 @@ export class AppComponent {
     -200	,
     600	,
     20	,
-    0.8	,
+    10	,
     0.8
   );
   sRH = new DataPointType('umidità'	,
@@ -62,7 +62,7 @@ export class AppComponent {
     -200	,
     600	,
     20	,
-    0.8	,
+    5	,
     0.8
   );
   spH = new DataPointType('pH'	,
@@ -70,35 +70,35 @@ export class AppComponent {
     -200	,
     600	,
     20	,
-    0.8	,
+    4	,
     0.8
   );
-  pompa1: MotorClass = new MotorClass('Pompa 1', 12, {maxI: 60, maxRPM: 4500, acceleration: 23} as MotorConfigType,
+  pompa1: MotorClass = new MotorClass('Pompa 1', 1, {maxI: 60, maxRPM: 4500, acceleration: 23} as MotorConfigType,
     {state: switchState.OFF, I: 1, RPM: 60, H: 12} as MotorParamType,
     DataPointType.fromTemplate(this.sCurrent, 'current', 5),
     DataPointType.fromTemplate(this.sRPM, 'RPM', 6),
     DataPointType.fromTemplate(this.sHours, 'h', 7));
 
-  pompa2: MotorClass = new MotorClass('Pompa 2', 12, {maxI: 30, maxRPM: 2000, acceleration: 23} as MotorConfigType,
+  pompa2: MotorClass = new MotorClass('Pompa 2', 1, {maxI: 30, maxRPM: 2000, acceleration: 23} as MotorConfigType,
     {state: switchState.OFF, I: 1, RPM: 120, H: 24} as MotorParamType,
     DataPointType.fromTemplate(this.sCurrent, 'current', 13),
     DataPointType.fromTemplate(this.sRPM, 'RPM', 14),
     DataPointType.fromTemplate(this.sHours, 'h', 15));
 
-  ventilatore1: MotorClass = new MotorClass('Ventilatore 1', 12, {maxI: 22, maxRPM: 1400, acceleration: 23} as MotorConfigType,
+  ventilatore1: MotorClass = new MotorClass('Ventilatore 1', 1, {maxI: 22, maxRPM: 1400, acceleration: 23} as MotorConfigType,
     {state: switchState.OFF, I: 1, RPM: 120, H: 24} as MotorParamType,
     DataPointType.fromTemplate(this.sCurrent, 'current', 21),
     DataPointType.fromTemplate(this.sRPM, 'RPM', 22),
     DataPointType.fromTemplate(this.sHours, 'h', 23));
 
 
-  motore1: MotorClass = new MotorClass('Motore 1', 12, {maxI: 90, maxRPM: 1800, acceleration: 23} as MotorConfigType,
+  motore1: MotorClass = new MotorClass('Motore 1', 1, {maxI: 90, maxRPM: 1800, acceleration: 23} as MotorConfigType,
     {state: switchState.OFF, I: 1, RPM: 120, H: 24} as MotorParamType,
     DataPointType.fromTemplate(this.sCurrent, 'current', 40),
     DataPointType.fromTemplate(this.sRPM, 'RPM', 41),
     DataPointType.fromTemplate(this.sHours, 'h', 42));
 
-  motore2: MotorClass = new MotorClass('Motore 2', 12, {maxI: 90, maxRPM: 1800, acceleration: 23} as MotorConfigType,
+  motore2: MotorClass = new MotorClass('Motore 2', 1, {maxI: 90, maxRPM: 1800, acceleration: 23} as MotorConfigType,
     {state: switchState.OFF, I: 1, RPM: 120, H: 24} as MotorParamType,
     DataPointType.fromTemplate(this.sCurrent, 'current', 44),
     DataPointType.fromTemplate(this.sRPM, 'RPM', 45),

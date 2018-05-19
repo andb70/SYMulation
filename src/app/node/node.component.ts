@@ -26,7 +26,7 @@ export class NodeComponent implements OnInit {
     }
     this.lastData = this.data;
     if (s && s.length > 0) {
-      console.log('subscription: ' + this.object.name);
+      // console.log('subscription: ' + this.object.name);
       this.collector.sync.subscribe(() => {
         this.collector.newData( this.object.name,
                                 this.data,
