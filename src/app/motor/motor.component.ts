@@ -10,13 +10,8 @@ import {LogicIOService} from '../logic-io.service';
   styleUrls: ['./motor.component.css']
 })
 export class MotorComponent implements OnInit, OnDestroy {
-  private ticks = 0;
   @Input()
   config: MotorClass;
-  private _speed = 0;
-  private _stress = 0;
-  @Input()
-  state = switchState.OFF;
 
   constructor(private IOs: LogicIOService) {
     this.IOs.updateIO.subscribe( t => {
@@ -34,14 +29,22 @@ export class MotorComponent implements OnInit, OnDestroy {
     this.config.motorSwitch();
   }
   stressValues() {
-    return [0, 1, 2, 3];
+    return [0, 1, 2, 4];
   }
   get stress(): number {
-    return this._stress;
+    return this.config.stress;
   }
   set stress(value: number) {
-    this._stress = value;
+    this.config.stress = value;
     console.log('stress ' + this.config.name + ': ' + this.stress);
+  }
+
+  get actualCurrent(): number {
+    return this.config.getsCurrent().scaledValue;
+  }
+
+  get actualHours(): number {
+    return this.config.getHours();
   }
 
   get actualSpeed(): number {

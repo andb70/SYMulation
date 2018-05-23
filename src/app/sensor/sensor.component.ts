@@ -13,8 +13,6 @@ export class SensorComponent implements OnInit, OnDestroy {
 
   @Input()
   config: DataPointType;
-  @Output()
-  newData = new EventEmitter();
 
   constructor() { }
 

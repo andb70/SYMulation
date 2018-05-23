@@ -1,8 +1,11 @@
+import {ObjectType} from './ObjectType';
+
 export class DataPointType implements INotify {
   public tag: number;
   public slope = 0.5;
   public map: number;
   private _value: number;
+  private parent: ObjectType;
 
   public constructor(public fldName: string,
                      public inMin: number,
@@ -40,7 +43,9 @@ export class DataPointType implements INotify {
     return (x - inMin) / (inMax - inMin)
       * (outMax - outMin) + outMin;
   }
-
+  setParent(newParent: ObjectType) {
+    this.parent = newParent;
+  }
   /**
    * INotify.notify(newValue)
    *
@@ -50,6 +55,7 @@ export class DataPointType implements INotify {
    * */
   notify(newValue: number) {
     this._value = newValue;
+    this.parent.onUpdate();
   }
 
   get value(): number {

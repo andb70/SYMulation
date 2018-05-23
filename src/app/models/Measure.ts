@@ -33,27 +33,37 @@ export class Measure {
    * measure['Measure'] = Measure.build(name, fields, tags);
    * this.cue.push(measure);
    *
-   * */
-/*  public static build(measurement: String, fields: any[], tags: any[]) {
-    let oFlds = new Object();
-    let oTags = new Object();
-    let time = Measure.getTimeStamp();
+   *   public static build(measurement: String, fields: any[], tags: any[]) {
+      let oFlds = new Object();
+      let oTags = new Object();
+      let time = Measure.getTimeStamp();
 
-    fields.forEach(function (f) {
-      oFlds[f.fldName] = f.value;
-    });
+      fields.forEach(function (f) {
+        oFlds[f.fldName] = f.value;
+      });
 
-    tags.forEach(function (t) {
-      oTags[t.tagName] = t.value;
-    });
+      tags.forEach(function (t) {
+        oTags[t.tagName] = t.value;
+      });
 
-    return new Measure(measurement, oFlds, oTags, time);
-  }*/
+      return new Measure(measurement, oFlds, oTags, time);
+    }*/
+
+
   /**
    * restituisce il TimeStamp del momento attuale
    *
    * */
   public static getTimeStamp(): number {
     return new Date().getTime();
+  }
+}
+
+export class Field {
+  constructor(
+    fldName: string,
+    value: number,
+    tag: number,
+    timestamp: number) {
   }
 }

@@ -6,7 +6,7 @@ qui devono esser inseriti i controlli per gestire
              [ngClass]="{'motorON': config.isON,'motorOFF': config.isOFF}"
             (click)="motorSwitch()">switch</button>
   </li>
-  <li mat-list-item> velocità
+  <li mat-list-item> set velocità {{targetSpeed}}
 
     <input type="text" name="tSpeed" #Title="ngModel"
            [(ngModel)]="targetSpeed"></li>
@@ -17,7 +17,7 @@ qui devono esser inseriti i controlli per gestire
     </select>
   </li>
   ----------
-  <li mat-list-item>assorbimento attuale</li>
-  <li mat-list-item>velocità attuale {{actualSpeed}}</li>
-  <li mat-list-item>ore lavoro</li>
+  <li mat-list-item>assorbimento attuale  {{actualCurrent | number:'1.1-1'}}</li>
+  <li mat-list-item>velocità attuale {{actualSpeed | number:'1.0-0'}}</li>
+  <li mat-list-item>ore lavoro  {{actualHours | number:'1.3-3'}}</li>
 </ul>

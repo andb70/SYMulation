@@ -1,15 +1,17 @@
 import {OnDestroy, OnInit} from '@angular/core';
 import {DataPointType} from './DataPointType';
 import {LogicIOService} from '../logic-io.service';
+import {Measure} from './Measure';
 
 export class MotorClass implements OnInit, OnDestroy {
 
   private IOs: LogicIOService;
-  private state = false;
+  private state = true;
+  public stress = 0;
   private targetRPM = 0;
   private status: MotorStatusEnum = MotorStatusEnum.IDLE;
   public cruising = false; // velocità costante
-
+  private timeON = 0;
   constructor(public name: string,
               private config: MotorConfigType,
               private param: MotorParamType,
@@ -37,16 +39,6 @@ export class MotorClass implements OnInit, OnDestroy {
     return inputs;
   }
 
-
-
-  updateIO() {
-    let names = ['sCurrent', 'sRPM', 'sHours'];
-    for (let i = 0; i < names.length; i++) {
-      console.log('call nextValue ' + names[i] + ' v: ' + this[names[i]].initValue);
-      this.IOs.nextValue(this[names[i]].map, this[names[i]].initValue);
-    }
-  }
-
   getsCurrent(): DataPointType {
     return this.sCurrent;
   }
@@ -54,15 +46,10 @@ export class MotorClass implements OnInit, OnDestroy {
   getsRPM(): DataPointType {
     return this.sRPM;
   }
-  getTargetRPM(): number {
-    return DataPointType.scale( this.targetRPM, this.sRPM.inMin, this.sRPM.inMax, this.sRPM.scaleMin, this.sRPM.scaleMax);
-  }
-  setTargetRPM(newValue: number) {
-    this.targetRPM = DataPointType.scale( newValue, this.sRPM.scaleMin, this.sRPM.scaleMax, this.sRPM.inMin, this.sRPM.inMax);
-  }
-  getsHours(): DataPointType {
+
+/*  getsHours(): DataPointType {
     return this.sHours;
-  }
+  }*/
 
 
   updateParam() {
@@ -72,10 +59,11 @@ export class MotorClass implements OnInit, OnDestroy {
        * stato iniziale idle / spento
        * */
       case MotorStatusEnum.IDLE: // idle / spento: se switchON -> accendi
-        console.log('update motor ' + this.name + 'IDLE');
+        /*console.log('update motor ' + this.name + 'IDLE');*/
         if (this.isON) {
           this.status = MotorStatusEnum.SWITCHON;
         }
+        this.timeON = 0;
         break;
 
         /**
@@ -117,27 +105,33 @@ export class MotorClass implements OnInit, OnDestroy {
     }
     if (this.status !== MotorStatusEnum.IDLE) {
       // this.sHours.update(this.refreshInterval);
+      if (!this.timeON) {
+        this.timeON = Measure.getTimeStamp();
+      }
+      this.param.H += this.workPeriod();
+      this.timeON = Measure.getTimeStamp();
     }
   }
-
+  getHours() {
+      return this.param.H;
+  }
+  private workPeriod(): number {
+    return (Measure.getTimeStamp() - this.timeON) / 1000 / 1000;
+  }
   updateRPM(targetRPM: number) {
     if (this.speedTargeted(targetRPM)) {
       return true;
     }
-    if (this.param.RPM > targetRPM) {
-      this.accelera(targetRPM, -1);
-    } else {
-      this.accelera(targetRPM, 1);
-    }
+    this.param.I = ((targetRPM - this.param.RPM) * (targetRPM - this.param.RPM) / this.config.maxRPM / this.config.maxRPM
+                    + this.param.RPM / targetRPM) * this.config.maxI * this.getStress();
+    this.param.RPM += this.config.acceleration * (targetRPM - this.param.RPM);
   }
-
-  accelera(targetRPM: number, verso: number) {
-    this.param.RPM += verso * this.config.acceleration * (targetRPM - this.param.RPM);
+  getStress() {
+    return (this.stress + 2) / (this.stress + 2.5);
   }
-
   speedTargeted(targetSpeed: number) {
-    console.log('speedTargeted ' + targetSpeed + ', RPM: ' + this.param.RPM + ', max: ' + this.config.maxRPM)
-    return (Math.abs(this.param.RPM - targetSpeed) / this.config.maxRPM < 0.01);
+    console.log('speedTargeted ' + targetSpeed + ', RPM: ' + this.param.RPM + ', max: ' + this.config.maxRPM);
+    return (Math.abs(this.param.RPM - targetSpeed) / this.config.maxRPM < 0.0001);
   }
 
   set targetSpeed(RPM: number) {

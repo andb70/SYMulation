@@ -92,7 +92,7 @@ export class AppComponent {
     4	,
     0.8
   );
-  pompa1: MotorClass = new MotorClass('Pompa 1', {maxI: 60, maxRPM: 4500, acceleration: .1} as MotorConfigType,
+  pompa1: MotorClass = new MotorClass('Pompa 1', {maxI: 60, maxRPM: 4500, acceleration: .3} as MotorConfigType,
     {state: switchState.OFF, I: 0, RPM: 0, H: 0} as MotorParamType,
     DataPointType.fromTemplate(this.sCurrent,  5, 0),
     DataPointType.fromTemplate(this.sRPM, 6, 1),
@@ -174,7 +174,7 @@ export class AppComponent {
 
 
 
-  switch = false;
+  switch = true;
   root: ObjectType;
   constructor(private logicIO: LogicIOService) {
 
@@ -256,10 +256,16 @@ export class AppComponent {
     this.switch = !this.switch;
     console.log('motor switch ' + this.switch);
     if (this.switch) {
-      this.logicIO.scanStart(1000, 1000);
+      this.logicIO.scanStart(0, 1000);
     } else  {
       this.logicIO.scanStop();
     }
+  }
+  isON() {
+    return this.switch;
+  }
+  isOFF() {
+    return !this.switch;
   }
 
 }

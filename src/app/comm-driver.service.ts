@@ -1,31 +1,28 @@
-import {EventEmitter, Injectable, OnDestroy, OnInit, Output} from '@angular/core';
+import {EventEmitter, Injectable, Output} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Measure} from './models/Measure';
 import {ClockService} from './clock.service';
-import {Subscription} from 'rxjs/Subscription';
-/*import * as _ from 'underscore';*/
+import {Clock7} from './models/Clock7';
 
 @Injectable()
-export class CommDriverService implements OnInit, OnDestroy {
-  private _clockSubscription: Subscription;
+export class CommDriverService {
   @Output()
-  sync = new EventEmitter();
+  /*sync = new EventEmitter();*/
 
   cue = [];
   maxLength = 10;
 
   server: string;
-  counter = 9;
-  clockRate = 10;
-  constructor(private http: HttpClient, private clockService: ClockService) {
 
+  clock: Clock7;
+  constructor(private http: HttpClient, private clockService: ClockService) {
+    this.clock = new Clock7();
     let serverLocal = 'http://localhost:8088/api/datalog';
     let serverPavo = 'http://192.168.101.47:5000/api/sensor/write';
     let serverFabio = 'http://192.168.43.75:5000/api/sensor/write';
     let serverFilippo = 'http://192.168.101.129:5000/mqtt/prova';
 
-    let serverId = 1;
-
+    let serverId = 0;
     switch (serverId) {
       case 0:
         this.server = serverLocal;
@@ -43,20 +40,12 @@ export class CommDriverService implements OnInit, OnDestroy {
         this.server = null;
     }
 
-    this._clockSubscription = this.clockService.getClock().subscribe(() => {
-      if (this.counter > this.clockRate) {
-        this.counter = 0;
-        this.sync.emit();
-      }
-      this.counter++;
-    });  }
+/*    this.clock = new Clock7();
+    this.clock.start(0, 1000).tick.subscribe( () => {
+      /!*console.log('tick');*!/
+      this.sync.emit();
+    });*/
 
-  ngOnInit(): void {
-
-  }
-
-  ngOnDestroy(): void {
-    this._clockSubscription.unsubscribe();
   }
 
   /**
@@ -72,20 +61,29 @@ export class CommDriverService implements OnInit, OnDestroy {
       return;
     }
     this.cue.push(new Measure(name, fields, tags));
-    console.log('new measure ' + this.cue[this.cue.length - 1].name);
+    /*console.log('new measure ' + this.cue[this.cue.length - 1].name);*/
     /*console.log('new measure ' + this.cue);*/
     if (this.cue.length > this.maxLength) {
+      this.fireMeasure();
+    } else {
+      if (this.clock.isBusy()) {return; }
+      this.clock.start(1000, 10000).tick.subscribe( () => {
+        console.log('new measure timeout' );
+        this.clock.stop7();
+        if (this.cue.length > 0) {
+          this.fireMeasure();
+        }
+      });
+    }
+  }
+  fireMeasure() {
       let data = this.cue;
       this.cue = [];
       console.log('posting ' + (data.length - 1));
-      /*console.log(data);*/
       this.http.post(this.server, data).subscribe( () => {
-        console.log('posted 2 server');
+        console.log('posted');
       });
-/*      this.http.post(this.serverFabio, data).subscribe( () => {
-        console.log('posted 2 Pavo');
-      });*/
-    }
+
   }
 
 

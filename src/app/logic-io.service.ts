@@ -1,14 +1,13 @@
 import {EventEmitter, Injectable, Output} from '@angular/core';
-import {Observable} from 'rxjs/RX';
-import {Subscription} from 'rxjs/Subscription';
 import {CLogicIO, DataPointType, ILogicIO} from './models/DataPointType';
 import {isNull} from 'util';
+import {Clock7} from './models/Clock7';
 
 @Injectable()
 export class LogicIOService {
 
-  private _clockSubscription: Subscription;
   private IOs: ILogicIO[] = [];
+  private clock: Clock7;
 
   /**
    * ricevuto da motor.component che aggiorna la classe sottostante
@@ -17,6 +16,7 @@ export class LogicIOService {
   updateIO: EventEmitter<number> = new EventEmitter<number>();
 
   constructor() {
+    this.clock = new Clock7();
     this.IOs = CLogicIO.create(40);
   }
   public nextValue(i: number, value: number) {
@@ -70,32 +70,15 @@ export class LogicIOService {
       this.IOs[inputs[i].map].callback = inputs[i];
     }
   }
-
   scanStart(initialDelay?: number, period?: number) {
-    if (!initialDelay) {
-      initialDelay = 1000;
-    }
-    if (!period) {
-      period = 1000;
-    }
-    console.log('initialDelay ' + initialDelay);
-    console.log('period ' + period);
-    let clock: Observable<number>;
-    clock = Observable.timer(initialDelay, period); // Call after 10 second.. Please set your time
-    this.scanStop();
-    this._clockSubscription = clock.subscribe(t => {
+    this.clock.start(initialDelay, period).tick.subscribe( (t) => {
       this.updateIO.emit(t);
       this.scan(t);
     });
   }
 
   scanStop() {
-    try {
-      this._clockSubscription.unsubscribe();
-    } catch (e) {
-      console.log('LogicIO: couldn\'t unsubscribe scanner');
-    }
-    this._clockSubscription = null;
+    this.clock.stop7();
   }
 }
 
