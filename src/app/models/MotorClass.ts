@@ -106,7 +106,7 @@ export class MotorClass implements OnInit, OnDestroy {
          * aggiorna velocità e corrente
          * */
       case MotorStatusEnum.RUNNING: // in rotazione
-        console.log('update motor ' + this.name + 'RUNNING');
+        // console.log('update motor ' + this.name + 'RUNNING');
         if (this.isOFF) {
           this.status = MotorStatusEnum.SWITCHOFF;
           this.cruising = false;

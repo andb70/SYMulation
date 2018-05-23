@@ -20,11 +20,11 @@ export class CommDriverService implements OnInit, OnDestroy {
   constructor(private http: HttpClient, private clockService: ClockService) {
 
     let serverLocal = 'http://localhost:8088/api/datalog';
-    let serverPavo = 'http://192.168.101.26:5000/api/sensor/write';
+    let serverPavo = 'http://192.168.101.47:5000/api/sensor/write';
     let serverFabio = 'http://192.168.43.75:5000/api/sensor/write';
     let serverFilippo = 'http://192.168.101.129:5000/mqtt/prova';
 
-    let serverId = 20;
+    let serverId = 1;
 
     switch (serverId) {
       case 0:
@@ -72,7 +72,7 @@ export class CommDriverService implements OnInit, OnDestroy {
       return;
     }
     this.cue.push(new Measure(name, fields, tags));
-    /*console.log('new measure ' + this.cue[this.cue.length - 1].name);*/
+    console.log('new measure ' + this.cue[this.cue.length - 1].name);
     /*console.log('new measure ' + this.cue);*/
     if (this.cue.length > this.maxLength) {
       let data = this.cue;

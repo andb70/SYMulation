@@ -6,6 +6,7 @@ export class ObjectType {
   private parent: ObjectType = null;
   private children: ObjectType[] = [];
   private sensors: DataPointType[] = [];
+  private _measureName: string;
   constructor(public name: string,
               public tagName: string,
               public tag: number
@@ -43,6 +44,13 @@ export class ObjectType {
   }
   newObject() {
     return this.children[this.children.length - 1];
+  }
+  hasMeasure(name: string) {
+    this._measureName = name;
+    return this;
+  }
+  get measureName(): string {
+    return this._measureName;
   }
   getPath(): String {
     if (this.parent) {
