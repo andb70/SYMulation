@@ -28,8 +28,12 @@ export class ObjectType {
   }
 
   appendSensor(sensor: DataPointType) {
-    sensor.setParent(this);
     this.sensors.push(sensor);
+    return this;
+  }
+
+  appendSensors(sensors: DataPointType[]) {
+    this.sensors = this.sensors.concat(sensors);
     return this;
   }
   appendObject(object: ObjectType) {

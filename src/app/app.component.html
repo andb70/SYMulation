@@ -5,7 +5,11 @@ consumo globale acqua lavaggio (ogni giorno) <br>
 consumo corrente forni (ogni minuto) <br>
 temperatura media dei forni (ogni 10 minuti) <br>
 livello massimo e minimo vasche di trattamento (ogni ora) <br>
+
+<button  type="button" mat-button
+         (click)="motorSwitch()">scan</button>
 <h3>Controlli impianto</h3>
+
 <app-motor [config]="pompa1"></app-motor>
 <app-motor [config]="pompa2"></app-motor>
 <app-motor [config]="ventilatore1"></app-motor>

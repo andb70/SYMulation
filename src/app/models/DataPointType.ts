@@ -1,57 +1,103 @@
-import {ObjectType} from './ObjectType';
-
-export class DataPointType {
-  private parent: ObjectType = null;
+export class DataPointType implements INotify {
   public tag: number;
-  public fldName: string;
   public slope = 0.5;
-  constructor(public name: string,
-              public inRange: number,
-              public scaleMin: number,
-              public scaleMax: number,
-              public initValue: number,
-              public updtRate: number,
-              public updtTHS: number,
-              public owner?: any
-  ) {
-    if (this.owner) {
-      if (!this.owner.plug(this)) {
-        this.owner = false;
-      }
-    }
-    return this; }
+  public map: number;
+  private _value: number;
 
-  static  fromTemplate(template: DataPointType, fldName: string, tag: number, owner?: any)  {
-    let dtp =  new DataPointType(
-      template.name,
-      template.inRange,
+  public constructor(public fldName: string,
+                     public inMin: number,
+                     public inMax: number,
+                     public scaleMin: number,
+                     public scaleMax: number,
+                     public initValue: number,
+                     public updtRate: number,
+                     public updtTHS: number
+  ) {
+    this._value = DataPointType.scale(initValue, scaleMin, scaleMax, inMin, inMax);
+  }
+
+  static fromTemplate(template: DataPointType, tag: number, map?: number) {
+    let dtp = new DataPointType(
+      template.fldName,
+      template.inMin,
+      template.inMax,
       template.scaleMin,
       template.scaleMax,
       template.initValue,
       template.updtRate,
       template.updtTHS);
     dtp.tag = tag;
-    dtp.fldName = fldName;
-
+    dtp.map = map;
     return dtp;
   }
-  getDelta() {
-    return Math.floor((Math.random() - this.slope) * this.updtRate);
+
+  static scale(x: number,
+               inMin: number,
+               inMax: number,
+               outMin: number,
+               outMax: number
+  ): number {
+    return (x - inMin) / (inMax - inMin)
+      * (outMax - outMin) + outMin;
   }
-  getParent(): ObjectType {
-    return this.parent;
+
+  /**
+   * INotify.notify(newValue)
+   *
+   * utilizzato da LogicIO per passare il nuovo valore
+   * al DataPoint
+   *
+   * */
+  notify(newValue: number) {
+    this._value = newValue;
   }
-  getIsLeaf(): boolean {
-    return (!this.owner);
+
+  get value(): number {
+    return this._value;
   }
-  setParent(newParent: ObjectType) {
-    this.parent = newParent;
-    // console.log('append Sns ' + this.getPath());
+
+  get scaledValue(): number {
+    return DataPointType.scale(this._value,
+      this.inMin,
+      this.inMax,
+      this.scaleMin,
+      this.scaleMax);
   }
-  getPath(): String {
-    if (this.parent) {
-      return this.parent.getPath() + '.' + this.name;
+}
+
+
+export interface IMap {
+  map(inputs: DataPointType[], slots: number[], provider: any): DataPointType[];
+}
+
+export interface INotify {
+  notify(newValue: number);
+}
+
+export interface ItranseferFN {
+  update(inputs: DataPointType[]): DataPointType[];
+}
+
+export interface ILogicIO {
+  value: number;
+  nextValue: number;
+  callback: INotify;
+}
+
+export class CLogicIO implements ILogicIO {
+  callback: INotify;
+  nextValue: number;
+  value: number;
+
+  private constructor() {
+    this.callback = null;
+  }
+
+  static create(count: number) {
+    let a = [];
+    for (let i = 0; i < count; i++) {
+      a.push(new CLogicIO());
     }
-    return '.' + this.name;
+    return a;
   }
 }

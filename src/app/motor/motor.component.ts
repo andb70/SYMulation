@@ -2,6 +2,7 @@ import {Component, Input, OnInit, OnDestroy} from '@angular/core';
 import {MotorClass, switchState} from '../models/MotorClass';
 import {Subscription} from 'rxjs/Subscription';
 import {ClockService} from '../clock.service';
+import {LogicIOService} from '../logic-io.service';
 
 @Component({
   selector: 'app-motor',
@@ -9,7 +10,6 @@ import {ClockService} from '../clock.service';
   styleUrls: ['./motor.component.css']
 })
 export class MotorComponent implements OnInit, OnDestroy {
-  private _clockSubscription: Subscription;
   private ticks = 0;
   @Input()
   config: MotorClass;
@@ -18,28 +18,17 @@ export class MotorComponent implements OnInit, OnDestroy {
   @Input()
   state = switchState.OFF;
 
-  constructor(private clockService: ClockService) { }
-
-  ngOnInit(): void {
-    /**
-     * Ad ogni tick del clock valuta se aggiornare il dato e calcola
-     * il delta in modo casuale
-     * */
-    this._clockSubscription = this.clockService.getClock().subscribe(() => {
-      if (this.ticks > this.config.refreshInterval) {
-        this.config.updateParam();
-        this.ticks = 0;
-      }
-      this.ticks++;
+  constructor(private IOs: LogicIOService) {
+    this.IOs.updateIO.subscribe( t => {
+      // console.log('evento update');
+      this.config.updateParam();
     });
   }
 
-  ngOnDestroy(): void {
-    if (this._clockSubscription) {
-      this._clockSubscription.unsubscribe();
-      this._clockSubscription = null;
-    }
-  }
+  ngOnInit(): void { }
+
+  ngOnDestroy(): void { }
+
   motorSwitch() {
     console.log('motor switch ' + this.config.name);
     this.config.motorSwitch();
@@ -55,17 +44,14 @@ export class MotorComponent implements OnInit, OnDestroy {
     console.log('stress ' + this.config.name + ': ' + this.stress);
   }
 
-  get speed(): number {
-    return this._speed;
+  get actualSpeed(): number {
+    return this.config.getsRPM().scaledValue;
   }
-  set speed(value: number) {
-    this._speed = value;
-    console.log('speed ' + this.config.name + ': ' + this.speed);
+
+  get targetSpeed(): number {
+    return this.config.targetSpeed;
   }
   set targetSpeed(RPM: number) {
     this.config.targetSpeed = RPM;
-  }
-  get targetSpeed(): number {
-    return this.config.targetSpeed;
   }
 }

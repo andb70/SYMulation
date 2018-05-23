@@ -1,27 +1,31 @@
 import {OnDestroy, OnInit} from '@angular/core';
 import {ObjectType} from './ObjectType';
-import {ItranseferFN} from './ITransferFN';
-import {DataPointType} from './DataPointType';
+import {DataPointType, ItranseferFN} from './DataPointType';
 
 export class MeasureGen extends ObjectType implements OnInit, OnDestroy, ItranseferFN {
   transferFN: ItranseferFN = this;
-  fields: object[];
-  constructor() { }
+  fields: DataPointType[];
 
-  ngOnInit(): void {
-    fields = new Object[this.getSensorCount()];
+  constructor(public name: string,
+              public tagName: string,
+              public tag: number) {
+    super(name, tagName, tag);
   }
 
-  ngOnDestroy(): void { }
+  ngOnInit(): void {
+    this.fields = new Object[this.getSensorCount()];
+  }
+
+  ngOnDestroy(): void {
+  }
 
   update(inputs: DataPointType[]): DataPointType[] {
     return inputs;
-}
-
-  fnUpdate() {
-    this.fields = this.transferFN.update(this.getInputs());
   }
 
+  fnUpdate() {
+    this.fields = this.transferFN.update(super.getSensors());
+  }
 
 
 }
