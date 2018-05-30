@@ -12,6 +12,7 @@ export class MotorClass implements OnInit, OnDestroy {
   private status: MotorStatusEnum = MotorStatusEnum.IDLE;
   public cruising = false; // velocità costante
   private timeON = 0;
+  private _acceleration = 0;
   constructor(public name: string,
               private config: MotorConfigType,
               private param: MotorParamType,
@@ -76,6 +77,7 @@ export class MotorClass implements OnInit, OnDestroy {
           this.status = MotorStatusEnum.SWITCHOFF;
           break;
         }
+        this._acceleration = 0;
         this.status = MotorStatusEnum.RUNNING;
         break;
 
@@ -84,6 +86,7 @@ export class MotorClass implements OnInit, OnDestroy {
         if (this.isON) {
           this.status = MotorStatusEnum.SWITCHON;
         }
+        this._acceleration = 1;
         if (this.updateRPM(0)) {
           this.status = MotorStatusEnum.IDLE;
         }
@@ -120,17 +123,21 @@ export class MotorClass implements OnInit, OnDestroy {
   }
   updateRPM(targetRPM: number) {
     if (this.speedTargeted(targetRPM)) {
+      this._acceleration = 0;
       return true;
     }
     this.param.I = ((targetRPM - this.param.RPM) * (targetRPM - this.param.RPM) / this.config.maxRPM / this.config.maxRPM
                     + this.param.RPM / targetRPM) * this.config.maxI * this.getStress();
-    this.param.RPM += this.config.acceleration * (targetRPM - this.param.RPM);
+    if (this._acceleration < this.config.acceleration) {
+      this._acceleration += this.config.acceleration * .2;
+    }
+    this.param.RPM += this._acceleration * (targetRPM - this.param.RPM);
   }
   getStress() {
     return (this.stress + 2) / (this.stress + 2.5);
   }
   speedTargeted(targetSpeed: number) {
-    console.log('speedTargeted ' + targetSpeed + ', RPM: ' + this.param.RPM + ', max: ' + this.config.maxRPM);
+    // console.log('speedTargeted ' + targetSpeed + ', RPM: ' + this.param.RPM + ', max: ' + this.config.maxRPM);
     return (Math.abs(this.param.RPM - targetSpeed) / this.config.maxRPM < 0.0001);
   }
 
