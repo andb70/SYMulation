@@ -1,8 +1,10 @@
 import {DataPointType} from './DataPointType';
 import {Measure} from './Measure';
 import {EventEmitter, Output} from '@angular/core';
+import {JUtil} from './JUtil';
 
 export class ObjectType {
+  private _id = JUtil.getUID();
   private parent: ObjectType = null;
   private children: ObjectType[] = [];
   private sensors: DataPointType[] = [];
@@ -14,6 +16,28 @@ export class ObjectType {
               public tagName: string,
               public tag: number
   ) {this._lastUpdate =  Measure.getTimeStamp(); }
+
+  getID(): number {
+    return this._id;
+  }
+  serialize() {
+    let o = new Object();
+    o['id'] = this._id;
+    o['name'] = this.name;
+    o['tagName'] = this.tagName;
+    o['tag'] = this.tag;
+    o['parent'] = this.parent ? this.parent.getID() : null ;
+    o['measureName'] = this._measureName || null;
+    o['sensors'] = [];
+    o['children'] = [];
+    this.sensors.forEach(child => {
+      o['sensors'].push(child.serialize());
+    });
+    this.children.forEach(child => {
+      o['children'].push(child.serialize());
+    });
+    return o;
+  }
   onUpdate() {
     let now = Measure.getTimeStamp();
     if (now - this._lastUpdate > 1000) {
@@ -24,6 +48,9 @@ export class ObjectType {
   }
   getChildren() {
     return this.children.slice(0);
+  }
+  getChild(index: number) {
+    return this.children.slice(0)[index];
   }
 
   getSensors() {

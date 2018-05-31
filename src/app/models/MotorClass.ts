@@ -2,9 +2,10 @@ import {OnDestroy, OnInit} from '@angular/core';
 import {DataPointType} from './DataPointType';
 import {LogicIOService} from '../logic-io.service';
 import {Measure} from './Measure';
+import {JUtil} from './JUtil';
 
 export class MotorClass implements OnInit, OnDestroy {
-
+  private _id = JUtil.getUID();
   private IOs: LogicIOService;
   private state = true;
   public stress = 0;
@@ -23,7 +24,21 @@ export class MotorClass implements OnInit, OnDestroy {
   ngOnInit(): void { }
 
   ngOnDestroy(): void { }
-
+  getID(): number {
+    return this._id;
+  }
+  serialize() {
+    let o = new Object();
+    o['id'] = this._id;
+    o['name'] = this.name;
+    o['config'] = this.config;
+    o['param'] = this.param;
+    o['sCurrent'] = {id: this.sCurrent.getID(), obj: this.sCurrent.serialize()};
+    o['sRPM'] = {id: this.sRPM.getID(), obj: this.sRPM.serialize()};
+    o['sHours'] = {id: this.sHours.getID(), obj: this.sHours.serialize()};
+    o['stress'] = this.stress;
+    return o;
+  }
   map(provider: any): DataPointType[] {
     let inputs = [];
     inputs.push(this.sCurrent);
@@ -114,6 +129,9 @@ export class MotorClass implements OnInit, OnDestroy {
       this.param.H += this.workPeriod();
       this.timeON = Measure.getTimeStamp();
     }
+  }
+  setDefaults(fldName: string, value: number) {
+    this.param[fldName] = value;
   }
   getHours() {
       return this.param.H;

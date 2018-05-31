@@ -1,9 +1,10 @@
 import {OnDestroy, OnInit} from '@angular/core';
 import {DataPointType} from './DataPointType';
 import {LogicIOService} from '../logic-io.service';
+import {JUtil} from './JUtil';
 
 export class PoolClass implements OnInit, OnDestroy {
-
+  private _id = JUtil.getUID();
   private IOs: LogicIOService;
   private state = false;
 
@@ -17,7 +18,20 @@ export class PoolClass implements OnInit, OnDestroy {
   ngOnInit(): void { }
 
   ngOnDestroy(): void { }
-
+  getID(): number {
+    return this._id;
+  }
+  serialize() {
+    let o = new Object();
+    o['id'] = this._id;
+    o['name'] = this.name;
+    o['config'] = this.config;
+    o['param'] = this.param;
+    o['sLiquidFlow'] = {id: this.sLiquidFlow.getID(), obj: this.sLiquidFlow.serialize()};
+    o['sTemperature'] = {id: this.sTemperature.getID(), obj: this.sTemperature.serialize()};
+    o['sLiquidLevel'] = {id: this.sLiquidLevel.getID(), obj: this.sLiquidLevel.serialize()};
+    return o;
+  }
   map(provider: any): DataPointType[] {
     this.IOs = provider as LogicIOService;
 
@@ -80,7 +94,7 @@ export class PoolClass implements OnInit, OnDestroy {
 
 
 export class Pool1Class implements OnInit, OnDestroy {
-
+  private _id = JUtil.getUID();
   private IOs: LogicIOService;
   private state = false;
 
@@ -94,7 +108,20 @@ export class Pool1Class implements OnInit, OnDestroy {
   ngOnInit(): void { }
 
   ngOnDestroy(): void { }
-
+  getID(): number {
+    return this._id;
+  }
+  serialize() {
+    let o = new Object();
+    o['id'] = this._id;
+    o['name'] = this.name;
+    o['config'] = this.config;
+    o['param'] = this.param;
+    o['sLiquidFlow'] = {id: this.sLiquidFlow.getID(), obj: this.sLiquidFlow.serialize()};
+    o['sTemperature'] = {id: this.sTemperature.getID(), obj: this.sTemperature.serialize()};
+    o['sPH'] = {id: this.sPH.getID(), obj: this.sPH.serialize()};
+    return o;
+  }
   map(provider: any): DataPointType[] {
     this.IOs = provider as LogicIOService;
 
@@ -157,7 +184,7 @@ export class Pool1Class implements OnInit, OnDestroy {
 
 
 export class Pool2Class implements OnInit, OnDestroy {
-
+  private _id = JUtil.getUID();
   private IOs: LogicIOService;
   private state = false;
 
@@ -170,7 +197,19 @@ export class Pool2Class implements OnInit, OnDestroy {
   ngOnInit(): void { }
 
   ngOnDestroy(): void { }
-
+  getID(): number {
+    return this._id;
+  }
+  serialize() {
+    let o = new Object();
+    o['id'] = this._id;
+    o['name'] = this.name;
+    o['config'] = this.config;
+    o['param'] = this.param;
+    o['sLiquidLevel'] = {id: this.sLiquidLevel.getID(), obj: this.sLiquidLevel.serialize()};
+    o['sPH'] = {id: this.sPH.getID(), obj: this.sPH.serialize()};
+    return o;
+  }
   map(provider: any): DataPointType[] {
     this.IOs = provider as LogicIOService;
 

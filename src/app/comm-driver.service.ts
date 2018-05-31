@@ -17,10 +17,10 @@ export class CommDriverService {
   clock: Clock7;
   constructor(private http: HttpClient, private clockService: ClockService) {
     this.clock = new Clock7();
-    let serverLocal = 'http://localhost:8088/api/datalog';
-    let serverPavo = 'http://192.168.101.47:5000/api/sensor/write';
-    let serverFabio = 'http://192.168.43.75:5000/api/sensor/write';
-    let serverFilippo = 'http://192.168.101.129:5000/mqtt/prova';
+    let serverLocal = 'http://localhost:8088/api/sensor/';
+    let serverPavo = 'http://192.168.101.47:5000/api/sensor/';
+    let serverFabio = 'http://192.168.43.75:5000/api/sensor/';
+    let serverFilippo = 'http://192.168.101.129:5000/mqtt/';
 
     let serverId = 0;
     switch (serverId) {
@@ -77,15 +77,32 @@ export class CommDriverService {
     }
   }
   fireMeasure() {
-      let data = this.cue;
-      this.cue = [];
-      console.log('posting ' + (data.length - 1));
-      this.http.post(this.server, data).subscribe( () => {
-        console.log('posted');
-      });
+    let data = this.cue;
+    this.cue = [];
+    console.log('posting ' + (data.length - 1));
+    this.http.post(this.server + 'write/', data).subscribe( () => {
+      console.log('posted');
+    });
+
+  }
+  queryMeasure(data: any) {
+
+    console.log('query ' + (data.length - 1));
+    return this.http.post(this.server + 'get/', data);
 
   }
 
+  savePlant(plant: any) {
+
+    console.log('save plant');
+    return this.http.post(this.server + 'saveroot/', plant);
+  }
+
+  loadPlant() {
+
+    console.log('load plant');
+    return this.http.get(this.server + 'loadroot/');
+  }
 
 
 }

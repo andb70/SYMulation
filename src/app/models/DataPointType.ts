@@ -1,13 +1,13 @@
 import {ObjectType} from './ObjectType';
+import {JUtil} from './JUtil';
 
 export class DataPointType implements INotify {
+  private _id = JUtil.getUID();
   public tag: number;
-  public slope = 0.5;
   public map: number;
   private _value: number;
   private parent: ObjectType;
-
-  public constructor(public fldName: string,
+   public constructor(public fldName: string,
                      public inMin: number,
                      public inMax: number,
                      public scaleMin: number,
@@ -18,6 +18,7 @@ export class DataPointType implements INotify {
   ) {
     this._value = DataPointType.scale(initValue, scaleMin, scaleMax, inMin, inMax);
   }
+
 
   static fromTemplate(template: DataPointType, tag: number, map?: number) {
     let dtp = new DataPointType(
@@ -43,6 +44,28 @@ export class DataPointType implements INotify {
     return (x - inMin) / (inMax - inMin)
       * (outMax - outMin) + outMin;
   }
+
+  getID(): number {
+    return this._id;
+  }
+  serialize() {
+    let o = new Object();
+    o['id'] = this._id;
+    o['tag'] = this.tag;
+    o['map'] = this.map;
+    o['value'] = this._value;
+    o['parent'] = this.parent.getID();
+    o['fldName'] = this.fldName;
+    o['inMin'] = this.inMin;
+    o['inMax'] = this.inMax;
+    o['scaleMin'] = this.scaleMin;
+    o['scaleMax'] = this.scaleMax;
+    o['initValue'] = this.initValue;
+    o['updtRate'] = this.updtRate;
+    o['updtTHS'] = this.updtTHS;
+    return o;
+  }
+
   setParent(newParent: ObjectType) {
     this.parent = newParent;
   }
