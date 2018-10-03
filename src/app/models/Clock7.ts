@@ -1,6 +1,7 @@
+
+import {timer as observableTimer, Subscription} from 'rxjs';
 import {EventEmitter, Output} from '@angular/core';
 import {Observable} from 'rxjs/RX';
-import {Subscription} from 'rxjs/Subscription';
 
 export class Clock7 {
 
@@ -25,7 +26,7 @@ export class Clock7 {
     console.log('initialDelay ' + initialDelay);
     console.log('period ' + period);
     let clock: Observable<number>;
-    clock = Observable.timer(initialDelay, period); // Call after 10 second.. Please set your time
+    clock = observableTimer(initialDelay, period); // Call after 10 second.. Please set your time
     this._clockSubscription = clock.subscribe(t => {
       this.tick.emit(t);
     });
