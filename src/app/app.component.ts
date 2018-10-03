@@ -264,7 +264,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    if (false) {
+ /*   if (false) {
       let o = new Object();
       o['root'] = this.root.serialize();
       o['devices'] = [];
@@ -284,10 +284,10 @@ export class AppComponent implements OnInit {
       this.collector.savePlant(o).subscribe((result) => {
         console.log('saved plant ' + result);
       });
-    }
+    }*/
 
 
-    /*let q = { 'measurement': 'Pool',
+/*    let q = { 'measurement': 'Pool',
       'fields':
         [
           {'fldName': 'liqflow'}
@@ -300,7 +300,7 @@ export class AppComponent implements OnInit {
       'type': {'name': 'avg',
         'startDate':  123445,
         'endDate':  456748458}
-    };
+    };*/
 
     let query = new Query('ElMotor', 'last');
     query.addField('Hours');
@@ -325,7 +325,7 @@ export class AppComponent implements OnInit {
     this.collector.queryMeasure(query2).subscribe( (result) => {
       console.log('received query2');
       console.log(result);
-    });*/
+    });
   }
 
   motorSwitch() {

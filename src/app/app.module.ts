@@ -12,6 +12,7 @@ import { LogicIOService} from './logic-io.service';
 import { SensorComponent } from './sensor/sensor.component';
 import { NodeComponent} from './node/node.component';
 import { MotorComponent } from './motor/motor.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { MotorComponent } from './motor/motor.component';
   imports: [
     BrowserModule,
     FormsModule,
-    HttpClientModule
+    HttpClientModule,
+    BrowserAnimationsModule
   ],
   providers: [
     CommDriverService,

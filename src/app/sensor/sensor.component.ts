@@ -1,8 +1,5 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output} from '@angular/core';
-import {ClockService} from '../clock.service';
-import {Subscription} from 'rxjs/Subscription';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {DataPointType} from '../models/DataPointType';
-import {Measure} from '../models/Measure';
 
 @Component({
   selector: 'app-sensor',
@@ -14,11 +11,14 @@ export class SensorComponent implements OnInit, OnDestroy {
   @Input()
   config: DataPointType;
 
-  constructor() { }
+  constructor() {
+  }
 
-  ngOnInit(): void { }
+  ngOnInit(): void {
+  }
 
-  ngOnDestroy(): void { }
+  ngOnDestroy(): void {
+  }
 
   getValue() {
     return this.config.scaledValue;

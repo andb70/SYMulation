@@ -13,6 +13,7 @@ export class Clock7 {
   constructor() { }
 
   start(initialDelay?: number, period?: number) {
+    console.log('Clock7.start');
     if (!initialDelay) {
       initialDelay = 1000;
     }

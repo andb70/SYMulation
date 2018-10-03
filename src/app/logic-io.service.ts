@@ -71,6 +71,7 @@ export class LogicIOService {
     }
   }
   scanStart(initialDelay?: number, period?: number) {
+    console.log('logic-io.service.scanStart');
     this.clock.start(initialDelay, period).tick.subscribe( (t) => {
       this.updateIO.emit(t);
       this.scan(t);
