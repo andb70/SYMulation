@@ -257,14 +257,14 @@ export class AppComponent implements OnInit {
       .hasMeasure('ElMotor')
       .appendSensors(this.motore2.map(logicIO))
     ;
-    this.collector.loadPlant().subscribe((result) => {
+/*    this.collector.loadPlant().subscribe((result) => {
       console.log('loaded plant ' + result);
       // this.root = result as ObjectType;
-    });
+    });*/
   }
 
   ngOnInit() {
- /*   if (false) {
+    if (false) {
       let o = new Object();
       o['root'] = this.root.serialize();
       o['devices'] = [];
@@ -284,7 +284,7 @@ export class AppComponent implements OnInit {
       this.collector.savePlant(o).subscribe((result) => {
         console.log('saved plant ' + result);
       });
-    }*/
+    }
 
 
 /*    let q = { 'measurement': 'Pool',
@@ -302,7 +302,7 @@ export class AppComponent implements OnInit {
         'endDate':  456748458}
     };*/
 
-    let query = new Query('ElMotor', 'last');
+    /*let query = new Query('ElMotor', 'last');
     query.addField('Hours');
     query.tags = this.root.getChild(0).getChild(0).getChild(0).getTags([]);
 
@@ -325,7 +325,7 @@ export class AppComponent implements OnInit {
     this.collector.queryMeasure(query2).subscribe( (result) => {
       console.log('received query2');
       console.log(result);
-    });
+    });*/
   }
 
   motorSwitch() {

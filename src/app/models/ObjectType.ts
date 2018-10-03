@@ -125,6 +125,10 @@ export class ObjectType {
   }
 
   getTags(tags: any[]) {
+    tags.push({
+      tagName: 'fldname',
+      value: this.name
+    });
     tags.push({tagName: this.tagName, value: this.tag});
     if (this.getParent()) {
       return this.getParent().getTags(tags);

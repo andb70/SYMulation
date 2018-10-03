@@ -17,7 +17,7 @@ export class CommDriverService {
   clock: Clock7;
   constructor(private http: HttpClient, private clockService: ClockService) {
     this.clock = new Clock7();
-    let serverLocal = 'http://localhost:8088/api/sensor/';
+    let serverLocal = 'http://localhost:5001/api/';
     let serverPavo = 'http://192.168.101.47:5000/api/sensor/';
     let serverFabio = 'http://192.168.43.75:5000/api/sensor/';
     let serverFilippo = 'http://192.168.101.129:5000/mqtt/';
@@ -80,7 +80,7 @@ export class CommDriverService {
     let data = this.cue;
     this.cue = [];
     console.log('posting ' + (data.length - 1));
-    this.http.post(this.server + 'write/', data).subscribe( () => {
+    this.http.post(this.server + 'datalog', data).subscribe( () => {
       console.log('posted');
     });
 
@@ -88,20 +88,20 @@ export class CommDriverService {
   queryMeasure(data: any) {
 
     console.log('query ' + (data.length - 1));
-    return this.http.post(this.server + 'get/', data);
+    return this.http.post('http://localhost:8088/api/ToDoItems/' , data);
 
   }
 
   savePlant(plant: any) {
 
-    console.log('save plant');
-    return this.http.post(this.server + 'saveroot/', plant);
+    console.log('save plant ', 'http://localhost:8088/api/ToDoItems/' + 'saveroot');
+    return this.http.post('http://localhost:8088/api/ToDoItems/' + 'saveroot', plant);
   }
 
   loadPlant() {
 
     console.log('load plant');
-    return this.http.get(this.server + 'loadroot/');
+    return this.http.get(this.server + 'loadroot');
   }
 
 
