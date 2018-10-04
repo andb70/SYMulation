@@ -7,8 +7,15 @@ temperatura media dei forni (ogni 10 minuti) <br>
 livello massimo e minimo vasche di trattamento (ogni ora) <br>
 
 <button  type="button" mat-button
-         [ngClass]="{'motorON': isON,'motorOFF': isOFF}"
+         [ngClass]="{'motorON': isON(),'motorOFF': isOFF()}"
          (click)="motorSwitch()">switch</button>
+
+
+<button  type="button" mat-button
+         (click)="savePlant()">Save Plant</button>
+
+
+
 <h3>Controlli impianto</h3>
 
 <app-motor [config]="pompa1"></app-motor>

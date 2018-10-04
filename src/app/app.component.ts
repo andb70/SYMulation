@@ -179,7 +179,7 @@ export class AppComponent implements OnInit {
 
 
 
-  switch = true;
+  switch: boolean;
   root: ObjectType;
 
   constructor(private logicIO: LogicIOService, private collector: CommDriverService) {
@@ -257,10 +257,10 @@ export class AppComponent implements OnInit {
       .hasMeasure('ElMotor')
       .appendSensors(this.motore2.map(logicIO))
     ;
-/*    this.collector.loadPlant().subscribe((result) => {
-      console.log('loaded plant ' + result);
-      // this.root = result as ObjectType;
-    });*/
+    /*    this.collector.loadPlant().subscribe((result) => {
+          console.log('loaded plant ' + result);
+          // this.root = result as ObjectType;
+        });*/
   }
 
   ngOnInit() {
@@ -287,20 +287,20 @@ export class AppComponent implements OnInit {
     }
 
 
-/*    let q = { 'measurement': 'Pool',
-      'fields':
-        [
-          {'fldName': 'liqflow'}
-        ],
-      'tags':
-        [
-          {'tagName': 'section', 'value': 2},
-          {'tagName': 'plant', 'value': 1}
-        ],
-      'type': {'name': 'avg',
-        'startDate':  123445,
-        'endDate':  456748458}
-    };*/
+    /*    let q = { 'measurement': 'Pool',
+          'fields':
+            [
+              {'fldName': 'liqflow'}
+            ],
+          'tags':
+            [
+              {'tagName': 'section', 'value': 2},
+              {'tagName': 'plant', 'value': 1}
+            ],
+          'type': {'name': 'avg',
+            'startDate':  123445,
+            'endDate':  456748458}
+        };*/
 
     /*let query = new Query('ElMotor', 'last');
     query.addField('Hours');
@@ -326,6 +326,15 @@ export class AppComponent implements OnInit {
       console.log('received query2');
       console.log(result);
     });*/
+    this.switch = true;
+  }
+  savePlant() {
+    let o = new Object();
+    o['root'] = this.root.serialize();
+    console.log('save plant', o);
+    this.collector.savePlant(o).subscribe((result) => {
+      console.log('saved plant ' + result);
+    });
   }
 
   motorSwitch() {

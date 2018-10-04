@@ -1,25 +1,24 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
+import {Injectable, Output} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Measure} from './models/Measure';
 import {ClockService} from './clock.service';
 import {Clock7} from './models/Clock7';
 import {MqttService} from 'ngx-mqtt';
 
+const MqttTopic = 'SYMulation/DataLogger/sensori';
 @Injectable()
 export class CommDriverService {
   @Output()
-  /*sync = new EventEmitter();*/
 
   cue = [];
   maxLength = 0;
 
-  server: string;
+  server = 'indirizzo_api_che_permette_il_salvataggio_e_il_recupero_della_configurazione_dell\'impianto_tramite_POST_e_GET/';
 
   clock: Clock7;
-  constructor(/*private http: HttpClient,*/ private clockService: ClockService, private mqttService: MqttService) {
+  constructor(private http: HttpClient, private clockService: ClockService, private mqttService: MqttService) {
     this.clock = new Clock7();
 
-    // mqttService.publish('SYMulation/DataLogger/sensori', 'ciao');
    /* let serverLocal = 'http://localhost:5001/api/';
     let serverPavo = 'http://192.168.101.47:5000/api/sensor/';
     let serverFabio = 'http://192.168.43.75:5000/api/sensor/';
@@ -43,11 +42,6 @@ export class CommDriverService {
         this.server = null;
     }*/
 
-/*    this.clock = new Clock7();
-    this.clock.start(0, 1000).tick.subscribe( () => {
-      /!*console.log('tick');*!/
-      this.sync.emit();
-    });*/
 
   }
 
@@ -66,9 +60,9 @@ export class CommDriverService {
     this.cue.push(new Measure(name, fields, tags));
     /*console.log('new measure ' + this.cue[this.cue.length - 1].name);*/
     /*console.log('new measure ' + this.cue);*/
-   // if (this.cue.length > this.maxLength) {
+    if (this.cue.length > this.maxLength) {
       this.fireMeasure();
-   /* } else {
+    } else {
       if (this.clock.isBusy()) {return; }
       this.clock.start(1000, 10000).tick.subscribe( () => {
         console.log('new measure timeout' );
@@ -77,7 +71,7 @@ export class CommDriverService {
           this.fireMeasure();
         }
       });
-    }*/
+    }
   }
   fireMeasure() {
     let data = this.cue;
@@ -87,7 +81,7 @@ export class CommDriverService {
       console.log('posted');
     });*/
 
-    this.mqttService.publish('SYMulation/DataLogger/sensori', JSON.stringify(data)).subscribe( () => {
+    this.mqttService.publish( MqttTopic, JSON.stringify(data)).subscribe( () => {
       console.log('posted');
     });
 
@@ -100,9 +94,8 @@ export class CommDriverService {
   }
 
   savePlant(plant: any) {
-
-   /* console.log('save plant ', 'http://localhost:8088/api/ToDoItems/' + 'saveroot');
-    return this.http.post('http://localhost:8088/api/ToDoItems/' + 'saveroot', plant);*/
+    console.log('save plant ', this.server + 'saveroot');
+    return this.http.post(this.server + 'saveroot', plant);
   }
 
   loadPlant() {
