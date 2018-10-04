@@ -13,7 +13,16 @@ import { SensorComponent } from './sensor/sensor.component';
 import { NodeComponent} from './node/node.component';
 import { MotorComponent } from './motor/motor.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import { MqttModule, MqttService, IMqttServiceOptions } from 'ngx-mqtt';
+export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
+  // hostname: 'localhost',
+  hostname: '192.168.101.25',
+  port: 1884,
+  path: '',
+  username: 'admin',
+  password: 'secret',
+  clientId: 'GeneratoreDati Datalogger' // 'Dashboard angular'
+};
 
 @NgModule({
   declarations: [
@@ -26,7 +35,8 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     BrowserModule,
     FormsModule,
     HttpClientModule,
-    BrowserAnimationsModule
+    BrowserAnimationsModule,
+    MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
   ],
   providers: [
     CommDriverService,

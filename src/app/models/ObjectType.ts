@@ -112,9 +112,13 @@ export class ObjectType {
 
   getFields() {
     let flds = [];
+    flds.push({
+      fldName: 'deviceName',
+      value: this.name
+    });
     for (let i = 0; i < this.sensors.length; i++) {
       flds.push({
-          fldname: this.sensors[i].fldName,
+          fldName: this.sensors[i].fldName,
           value: this.sensors[i].scaledValue/*,
           tag: this.sensors[i],
           timestamp: Measure.getTimeStamp()*/
@@ -125,10 +129,10 @@ export class ObjectType {
   }
 
   getTags(tags: any[]) {
-    tags.push({
+    /*tags.push({
       tagName: 'fldname',
       value: this.name
-    });
+    });*/
     tags.push({tagName: this.tagName, value: this.tag});
     if (this.getParent()) {
       return this.getParent().getTags(tags);

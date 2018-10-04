@@ -281,9 +281,9 @@ export class AppComponent implements OnInit {
       o['devices'].push(this.motore2.serialize());
 
       console.log(o);
-      this.collector.savePlant(o).subscribe((result) => {
+      /*this.collector.savePlant(o).subscribe((result) => {
         console.log('saved plant ' + result);
-      });
+      });*/
     }
 
 
