@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "todolist": {
+    "SYMulator": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -54,18 +54,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "todolist:build"
+            "browserTarget": "SYMulator:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "todolist:build:production"
+              "browserTarget": "SYMulator:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "todolist:build"
+            "browserTarget": "SYMulator:build"
           }
         },
         "test": {
@@ -105,7 +105,7 @@
         }
       }
     },
-    "todolist-e2e": {
+    "SYMulator-e2e": {
       "root": "",
       "sourceRoot": "",
       "projectType": "application",
@@ -114,7 +114,7 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "./protractor.conf.js",
-            "devServerTarget": "todolist:serve"
+            "devServerTarget": "SYMulator:serve"
           }
         },
         "lint": {
@@ -131,7 +131,7 @@
       }
     }
   },
-  "defaultProject": "todolist",
+  "defaultProject": "SYMulator",
   "schematics": {
     "@schematics/angular:component": {
       "prefix": "app",
