@@ -20,8 +20,8 @@ import { MqttModule, IMqttServiceOptions } from 'ngx-mqtt';
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   // hostname: 'localhost',
-  hostname: '0.0.0.0',
-  port: 1884,
+  hostname: '7tech.ddns.net',
+  port: 8888,
   path: '',
   username: 'admin',
   password: 'secret',
