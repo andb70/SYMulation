@@ -20,7 +20,7 @@
  * */
 export class Measure {
 
-  constructor(public measurement: String, public fields: any, public tags: any, public timestamp?: number) {
+  constructor(public measurement: String, public fields: any, public tags: any, public deviceName: string, public timestamp?: number) {
     if (!this.timestamp) {
       this.timestamp = Measure.getTimeStamp();
     }

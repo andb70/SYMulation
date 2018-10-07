@@ -3,6 +3,8 @@ import {Measure} from './Measure';
 import {EventEmitter, Output} from '@angular/core';
 import {JUtil} from './JUtil';
 
+export const ObjectUpdateInterval = 2000; // ms di attesa prima che un oggetto noitifichi il cambiamento dei dati
+
 export class ObjectType {
   private _id = JUtil.getUID();
   private parent: ObjectType = null;
@@ -40,10 +42,10 @@ export class ObjectType {
   }
   onUpdate() {
     let now = Measure.getTimeStamp();
-    if (now - this._lastUpdate > 1000) {
+    if (now - this._lastUpdate > ObjectUpdateInterval) {
       console.log('DataType.update');
       this._lastUpdate = now;
-      this.update.emit([this._measureName, this.getFields(), this.getTags([])]);
+      this.update.emit([this._measureName, this.getFields(), this.getTags([]), this.name]);
     }
   }
   getChildren() {
@@ -112,10 +114,6 @@ export class ObjectType {
 
   getFields() {
     let flds = [];
-    flds.push({
-      fldName: 'deviceName',
-      value: this.name
-    });
     for (let i = 0; i < this.sensors.length; i++) {
       flds.push({
           fldName: this.sensors[i].fldName,

@@ -15,6 +15,8 @@ import { MotorComponent } from './motor/motor.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MqttModule, IMqttServiceOptions } from 'ngx-mqtt';
 
+// come gestire un file JSON per la configurazione del progetto:
+// https://stackoverflow.com/questions/47206924/angular-5-service-to-read-local-json-file
 
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   // hostname: 'localhost',

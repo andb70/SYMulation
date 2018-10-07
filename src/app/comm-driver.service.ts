@@ -53,11 +53,11 @@ export class CommDriverService {
    *    svuota cue
    *    effettua la chiamata POST(data)
    */
-  newData(name, fields, tags) {
+  newData(name, fields, tags, deviceName) {
 /*    if (!this.server) {
       return;
     }*/
-    this.cue.push(new Measure(name, fields, tags));
+    this.cue.push(new Measure(name, fields, tags, deviceName));
     /*console.log('new measure ' + this.cue[this.cue.length - 1].name);*/
     /*console.log('new measure ' + this.cue);*/
     if (this.cue.length > this.maxLength) {
@@ -76,7 +76,7 @@ export class CommDriverService {
   fireMeasure() {
     let data = this.cue;
     this.cue = [];
-    console.log('posting ' + (data.length - 1));
+    console.log('posting ' + (data.length - 1), data);
    /* this.http.post(this.server + 'datalog', data).subscribe( () => {
       console.log('posted');
     });*/

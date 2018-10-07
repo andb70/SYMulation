@@ -19,8 +19,8 @@ export class NodeComponent implements OnInit {
      * in modo da inviare i dati con scansione regolare
      * */
     this.object.update.subscribe((args) => {
-      console.log('node_object.update: ' + this.object.name);
-      this.collector.newData(args[0], args[1], args[2]);
+      console.log('node_object.update' + this.object, args[0], args[1], args[2]);
+      this.collector.newData(args[0], args[1], args[2], args[3]);
     });
     /*if (this.object.getSensorCount()) {
       console.log('subscription: ' + this.object.name);
