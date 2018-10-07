@@ -14,19 +14,23 @@ import { NodeComponent} from './node/node.component';
 import { MotorComponent } from './motor/motor.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MqttModule, IMqttServiceOptions } from 'ngx-mqtt';
+import {SettingsService} from './settings.service';
 
-// come gestire un file JSON per la configurazione del progetto:
-// https://stackoverflow.com/questions/47206924/angular-5-service-to-read-local-json-file
 
-export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
+
+export let Settings = require('./../assets/config.json');
+
+export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = Settings.MQTT_SERVICE_OPTIONS;
+
+/*export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   // hostname: 'localhost',
   hostname: '7tech.ddns.net',
-  port: 8888,
+  port: 8883,
   path: '',
   username: 'admin',
   password: 'secret',
   clientId: 'GeneratoreDati Datalogger' // 'Dashboard angular'
-};
+};*/
 
 @NgModule({
   declarations: [
@@ -45,7 +49,8 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   providers: [
     CommDriverService,
     LogicIOService,
-    ClockService
+    ClockService,
+    SettingsService
   ],
   bootstrap: [AppComponent]
 })

@@ -2,8 +2,9 @@ import {DataPointType} from './DataPointType';
 import {Measure} from './Measure';
 import {EventEmitter, Output} from '@angular/core';
 import {JUtil} from './JUtil';
+import {Settings} from '../app.module';
 
-export const ObjectUpdateInterval = 2000; // ms di attesa prima che un oggetto noitifichi il cambiamento dei dati
+const ObjectUpdateInterval = 2000; // ms di attesa prima che un oggetto noitifichi il cambiamento dei dati
 
 export class ObjectType {
   private _id = JUtil.getUID();

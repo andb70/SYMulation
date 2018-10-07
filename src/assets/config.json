@@ -1,0 +1,12 @@
+{
+  "MQTT_SERVICE_OPTIONS": {
+    "hostname": "7tech.ddns.net",
+    "port": 8883,
+    "path": "",
+    "username": "admin",
+    "password": "secret",
+    "clientId": "GeneratoreDati Datalogger"
+  },
+  "ObjectUpdateInterval": 2000,
+  "PlantName": "Nome impianto"
+}

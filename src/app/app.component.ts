@@ -267,7 +267,7 @@ export class AppComponent implements OnInit {
     if (false) {
       let o = new Object();
       o['root'] = this.root.serialize();
-      o['devices'] = [];
+/*      o['devices'] = [];
       o['devices'].push(this.pompa1.serialize());
       o['devices'].push(this.vasca1.serialize());
       o['devices'].push(this.pompa2.serialize());
@@ -278,7 +278,7 @@ export class AppComponent implements OnInit {
       o['devices'].push(this.vasca5.serialize());
       o['devices'].push(this.vasca6.serialize());
       o['devices'].push(this.motore1.serialize());
-      o['devices'].push(this.motore2.serialize());
+      o['devices'].push(this.motore2.serialize());*/
 
       console.log(o);
       /*this.collector.savePlant(o).subscribe((result) => {
