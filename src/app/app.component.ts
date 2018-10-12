@@ -25,6 +25,7 @@ import {Result} from './models/Result';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  status: string;
   sCurrent = new DataPointType('current',
     0,
     1023,
@@ -185,13 +186,35 @@ export class AppComponent implements OnInit {
 
   switch: boolean;
   root: ObjectType;
+  prelavaggio: ObjectType;
+  lavaggio: ObjectType;
+  asciugatura: ObjectType;
+  impilatore: ObjectType;
 
   constructor(private logicIO: LogicIOService, private collector: CommDriverService) {
-
+    this.status = 'OFF';
 /*    this.IOs.updateIO.subscribe( t => {
       // console.log('evento update');
       this.config.updateParam();
     });*/
+
+
+
+    //TODO prelevare dati delle unità
+    this.prelavaggio = new ObjectType('Dati Prelavaggio', 'device', 3);
+    this.prelavaggio
+      .appendSensors(this.vasca1.map(logicIO));
+
+    this.lavaggio = new ObjectType('Dati Lavaggio', 'device', 11);
+    this.lavaggio
+      .appendSensors(this.vasca2.map(logicIO));
+
+    this.asciugatura = new ObjectType('Dati Asciugatura', 'device', 19);
+    this.asciugatura
+      .appendSensors(this.vasca3.map(logicIO));
+
+
+
 
     this.root = new ObjectType('root', 'plant', 1);
     this.root
@@ -272,6 +295,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.switch = false;
     if (false) {
       let o = new Object();
       o['root'] = this.root.serialize();
@@ -347,6 +371,7 @@ export class AppComponent implements OnInit {
   }
 
   motorSwitch() {
+    this.status == 'OFF' ? this.status = 'ON' : this.status = 'OFF';
     this.switch = !this.switch;
     console.log('motor switch ' + this.switch);
     if (this.switch) {

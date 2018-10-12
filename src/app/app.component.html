@@ -1,23 +1,15 @@
-<h3>Dati da recuperare in forma aggregata</h3>
-consumo globale di corrente impianto (ogni minuto) <br>
-consumo instantaneo per ogni componente (ogni minuto) <br>
-consumo globale acqua lavaggio (ogni giorno) <br>
-consumo corrente forni (ogni minuto) <br>
-temperatura media dei forni (ogni 10 minuti) <br>
-livello massimo e minimo vasche di trattamento (ogni ora) <br>
+<div class="containerTitolo">
+  <h1>Controlli Impianto Angus</h1>
 
-<button  type="button" mat-button
-         [ngClass]="{'motorON': isON(),'motorOFF': isOFF()}"
-         (click)="motorSwitch()">switch</button>
+  <button type="button" mat-raised-button class="startButtonImpianto"
+          [ngClass]="{'motorON': isON(),'motorOFF': isOFF()}"
+          (click)="motorSwitch()">{{status}}
+  </button>
+</div>
 
+<hr>
 
-<button  type="button" mat-button
-         (click)="savePlant()">Save Plant</button>
-
-
-
-<h3>Controlli impianto</h3>
-
+<!--
 <app-motor [config]="pompa1"></app-motor>
 <app-pool [config]="vasca1" [sRPM]="pompa1.getsRPM()"></app-pool>
 <app-motor [config]="pompa2"></app-motor>
@@ -25,5 +17,51 @@ livello massimo e minimo vasche di trattamento (ogni ora) <br>
 <app-motor [config]="ventilatore1"></app-motor>
 <app-motor [config]="motore1"></app-motor>
 <app-motor [config]="motore2"></app-motor>
-<h3>Dati prodotti</h3>
-<app-node [object]="root"></app-node>
+-->
+
+<div class="containerDevice">
+  <div>
+    <h1>Sezione lavaggio</h1>
+    <div class="containerUnit">
+      <div>
+        <h3>Prelavaggio</h3>
+        <app-motor [config]="pompa1"></app-motor>
+        <app-pool [config]="vasca1" [sRPM]="pompa1.getsRPM()"></app-pool>
+      </div>
+      <div class="unitData">
+        <app-node [object]="prelavaggio"></app-node>
+      </div>
+    </div>
+    <div class="containerUnit">
+      <div>
+        <h3>Lavaggio</h3>
+        <app-motor [config]="pompa2"></app-motor>
+        <app-pool [config]="vasca2" [sRPM]="pompa2.getsRPM()"></app-pool>
+      </div>
+      <div class="unitData">
+        <app-node [object]="lavaggio"></app-node>
+      </div>
+    </div>
+    <div class="containerUnit">
+      <div>
+        <h3>Asciugatura</h3>
+        <app-motor [config]="ventilatore1"></app-motor>
+      </div>
+      <div class="unitData">
+        <app-node [object]="asciugatura"></app-node>
+      </div>
+    </div>
+  </div>
+  <div>
+    <h1>Sezione stoccaggio</h1>
+    <div class="containerUnit">
+      <div>
+        <h3>Impilatore</h3>
+        <app-motor [config]="motore1"></app-motor>
+        <app-motor [config]="motore2"></app-motor>
+      </div>
+    </div>
+  </div>
+</div>
+<!--<h3>Dati prodotti</h3>
+<app-node [object]="root"></app-node>-->

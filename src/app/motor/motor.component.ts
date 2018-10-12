@@ -12,12 +12,14 @@ import {LogicIOService} from '../logic-io.service';
 export class MotorComponent implements OnInit, OnDestroy {
   @Input()
   config: MotorClass;
+  status: string;
 
   constructor(private IOs: LogicIOService) {
     this.IOs.updateIO.subscribe( t => {
       // console.log('evento update');
       this.config.updateParam();
     });
+    this.status = 'OFF';
   }
 
   ngOnInit(): void { }
@@ -25,6 +27,7 @@ export class MotorComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void { }
 
   motorSwitch() {
+    this.status == 'OFF' ? this.status = 'ON' : this.status = 'OFF';
     console.log('motor switch ' + this.config.name);
     this.config.motorSwitch();
   }
