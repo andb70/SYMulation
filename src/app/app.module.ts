@@ -15,6 +15,7 @@ import { MotorComponent } from './motor/motor.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MqttModule, IMqttServiceOptions } from 'ngx-mqtt';
 import { PoolComponent } from './pool/pool.component';
+import {MatButtonModule, MatCardModule, MatInputModule, MatSelectModule} from '@angular/material';
 
 
 // todo: implementare l'utilizzo del file json per la configurazione della connessione
@@ -44,6 +45,10 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
     FormsModule,
     HttpClientModule,
     BrowserAnimationsModule,
+    MatCardModule,
+    MatButtonModule,
+    MatInputModule,
+    MatSelectModule,
     MqttModule.forRoot(MQTT_SERVICE_OPTIONS)
   ],
   providers: [

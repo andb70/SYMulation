@@ -1,4 +1,4 @@
-<div>{{object.name}}</div>
+<h3>{{object.name}}</h3>
 <div  class="padLeft">
   <app-node *ngFor="let o of object.getChildren()" [object]="o"></app-node>
   <app-sensor  *ngFor="let s of object.getSensors()" [config]="s"></app-sensor>

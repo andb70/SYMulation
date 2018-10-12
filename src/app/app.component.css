@@ -1,0 +1,52 @@
+.containerTitolo {
+  margin-bottom: 20px;
+  margin-top: 10px;
+  margin-left: 20px;
+}
+
+.containerTitolo h1 {
+  display: inline-block;
+}
+
+.containerDevice {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 34px;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.containerUnit {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  border: 2px solid orangered;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 5px 6px 20px 5px rgba(0, 0, 0, 0.19) !important;
+  border-radius: 15px;
+  padding: 20px;
+  margin-bottom: 25px;
+}
+
+.containerUnit h3{
+  margin-bottom: 18px;
+}
+
+.containerDevice h1 {
+  margin-bottom: 0;
+  margin-left: 10px;
+}
+
+.startButtonImpianto{
+  margin-left: 15px;
+}
+
+.unitData {
+  margin-left: 130px;
+  margin-right: 120px;
+  margin-top: 50px;
+}
+
+@media screen and (max-width: 1163px){
+  .containerDevice{
+    grid-template-columns: 1fr;
+  }
+}

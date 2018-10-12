@@ -1,3 +1,10 @@
 .padLeft {
-  padding-left: 24px;
+  padding: 30px;
+  border: 2px solid grey;
+  border-radius: 5px;
+}
+
+h3{
+  margin-left: 33px;
+  margin-bottom: 15px;
 }

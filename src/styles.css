@@ -5,5 +5,13 @@
   background-color: grey;
 }
 
+button {
+  border-radius: 4px!important;
+}
+
+li{
+  font-size: large;
+}
+
 html, body { height: 100%; }
 body { margin: 0; font-family: 'Roboto', sans-serif; }
