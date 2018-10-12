@@ -25,6 +25,7 @@ import {Result} from './models/Result';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+  showTree = true;
   status: string;
   sCurrent = new DataPointType('current',
     0,
