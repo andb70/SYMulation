@@ -45,19 +45,19 @@ export class AppComponent implements OnInit {
   );
   sHours = new DataPointType('hours',
     0,
-    1023,
+    1000000000000,
     0,
-    2000,
+    1000000000000,
     0,
     1.6,
     0.8
   );
   sLiquidFlow = new DataPointType('contatoreAcqua',
     0,
-    1023,
+    1000000000000,
     0,
-    600,
-    20,
+    1000000000000,
+    0,
     22,
     0.8
   );
@@ -128,17 +128,21 @@ export class AppComponent implements OnInit {
     DataPointType.fromTemplate(this.sRPM, 45, 13),
     DataPointType.fromTemplate(this.sHours, 46, 14));
 
-  vasca1: PoolClass = new PoolClass('Vasca 1', {minT: 4, maxT: 96, maxLevel: 1400} as PoolConfigType,
-    {state: switchState.OFF, LiquidFlow: 0, Temperature: 48, LiquidLevel: 1000} as PoolParamType,
+  vasca1: PoolClass = new PoolClass('Vasca 1', {minT: 4, maxT: 96, maxLevel: 1800} as PoolConfigType,
+    {state: switchState.OFF, LiquidFlow: 0, Temperature: 48, LiquidLevel: 300} as PoolParamType,
     DataPointType.fromTemplate(this.sLiquidFlow, 8, 15),
     DataPointType.fromTemplate(this.sTemperature, 9, 16),
-    DataPointType.fromTemplate(this.sLiquidLevel, 10, 17));
+    DataPointType.fromTemplate(this.sLiquidLevel, 10, 17),
+    100,
+    10);
 
   vasca2: PoolClass = new PoolClass('Vasca 2', {minT: 4, maxT: 96, maxLevel: 1400} as PoolConfigType,
-    {state: switchState.OFF, LiquidFlow: 0, Temperature: 48, LiquidLevel: 1000} as PoolParamType,
+    {state: switchState.OFF, LiquidFlow: 0, Temperature: 48, LiquidLevel: 100} as PoolParamType,
     DataPointType.fromTemplate(this.sLiquidFlow, 16, 18),
     DataPointType.fromTemplate(this.sTemperature, 17, 19),
-    DataPointType.fromTemplate(this.sLiquidLevel, 18, 20));
+    DataPointType.fromTemplate(this.sLiquidLevel, 18, 20),
+    0.2,
+    0.4);
 
   vasca3: Pool1Class = new Pool1Class('Vasca 3', {minT: 4, maxT: 96, maxRH: 0.7} as PoolConfig1Type,
     {state: switchState.OFF, LiquidFlow: 0, Temperature: 48, RH: 0.5} as PoolParam1Type,
@@ -184,6 +188,10 @@ export class AppComponent implements OnInit {
 
   constructor(private logicIO: LogicIOService, private collector: CommDriverService) {
 
+/*    this.IOs.updateIO.subscribe( t => {
+      // console.log('evento update');
+      this.config.updateParam();
+    });*/
 
     this.root = new ObjectType('root', 'plant', 1);
     this.root
@@ -326,8 +334,9 @@ export class AppComponent implements OnInit {
       console.log('received query2');
       console.log(result);
     });*/
-    this.switch = true;
   }
+
+
   savePlant() {
     let o = new Object();
     o['root'] = this.root.serialize();

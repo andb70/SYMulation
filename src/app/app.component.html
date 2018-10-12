@@ -19,7 +19,9 @@ livello massimo e minimo vasche di trattamento (ogni ora) <br>
 <h3>Controlli impianto</h3>
 
 <app-motor [config]="pompa1"></app-motor>
+<app-pool [config]="vasca1" [sRPM]="pompa1.getsRPM()"></app-pool>
 <app-motor [config]="pompa2"></app-motor>
+<app-pool [config]="vasca2" [sRPM]="pompa2.getsRPM()"></app-pool>
 <app-motor [config]="ventilatore1"></app-motor>
 <app-motor [config]="motore1"></app-motor>
 <app-motor [config]="motore2"></app-motor>

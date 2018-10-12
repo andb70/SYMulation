@@ -1,7 +1,7 @@
 {
   "MQTT_SERVICE_OPTIONS": {
-    "hostname": "7tech.ddns.net",
-    "port": 8883,
+    "hostname": "localhost",
+    "port": 1883,
     "path": "",
     "username": "admin",
     "password": "secret",

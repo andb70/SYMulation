@@ -14,30 +14,30 @@ import { NodeComponent} from './node/node.component';
 import { MotorComponent } from './motor/motor.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MqttModule, IMqttServiceOptions } from 'ngx-mqtt';
-import {SettingsService} from './settings.service';
+import { PoolComponent } from './pool/pool.component';
 
 
+// todo: implementare l'utilizzo del file json per la configurazione della connessione
+// export let Settings = require('./../assets/config.json');
 
-export let Settings = require('./../assets/config.json');
-
-export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = Settings.MQTT_SERVICE_OPTIONS;
-
-/*export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
+export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   // hostname: 'localhost',
-  hostname: '7tech.ddns.net',
-  port: 8883,
+  hostname: '7technode.ddns.net',
+  port: 3000,
   path: '',
   username: 'admin',
   password: 'secret',
-  clientId: 'GeneratoreDati Datalogger' // 'Dashboard angular'
-};*/
+  clientId: 'GeneratoreDati Datalogger', // 'Dashboard angular'
+  protocol: 'ws'
+};
 
 @NgModule({
   declarations: [
     AppComponent,
     NodeComponent,
     SensorComponent,
-    MotorComponent
+    MotorComponent,
+    PoolComponent
   ],
   imports: [
     BrowserModule,
@@ -49,8 +49,7 @@ export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = Settings.MQTT_SERVICE_O
   providers: [
     CommDriverService,
     LogicIOService,
-    ClockService,
-    SettingsService
+    ClockService
   ],
   bootstrap: [AppComponent]
 })

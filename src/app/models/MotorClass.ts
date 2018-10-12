@@ -1,10 +1,10 @@
-import {OnDestroy, OnInit} from '@angular/core';
+import {OnInit} from '@angular/core';
 import {DataPointType} from './DataPointType';
 import {LogicIOService} from '../logic-io.service';
 import {Measure} from './Measure';
 import {JUtil} from './JUtil';
 
-export class MotorClass implements OnInit, OnDestroy {
+export class MotorClass implements OnInit {
   private _id = JUtil.getUID();
   private IOs: LogicIOService;
   private state = true;
@@ -18,15 +18,15 @@ export class MotorClass implements OnInit, OnDestroy {
               private config: MotorConfigType,
               private param: MotorParamType,
               private sCurrent: DataPointType,
-              private sRPM: DataPointType,
+              private  sRPM: DataPointType,
               private sHours: DataPointType) {
   }
   ngOnInit(): void { }
 
-  ngOnDestroy(): void { }
+/*  ngOnDestroy(): void { }
   getID(): number {
     return this._id;
-  }
+  }*/
   serialize() {
     let o = new Object();
     o['id'] = this._id;
@@ -46,12 +46,17 @@ export class MotorClass implements OnInit, OnDestroy {
     inputs.push(this.sHours);
     this.IOs = provider as LogicIOService;
     this.IOs.map(inputs);
-    this.IOs.updateIO.subscribe( () => {
+    /*this.IOs.updateIO.subscribe( () => {
       // console.log('Motor fire ' + this.sCurrent.fldName);
       this.IOs.nextValue( this.sCurrent.map, this.param.I);
       this.IOs.nextValue( this.sRPM.map, this.param.RPM);
       this.IOs.nextValue( this.sHours.map, this.param.H);
     });
+    console.log('Motor fire ' + this.name);
+    // imposta i valori iniziali in base a param
+    this.IOs.nextValue( this.sCurrent.map, this.param.I);
+    this.IOs.nextValue( this.sRPM.map, this.param.RPM);
+    this.IOs.nextValue( this.sHours.map, this.param.H);*/
     return inputs;
   }
 
@@ -129,10 +134,14 @@ export class MotorClass implements OnInit, OnDestroy {
       this.param.H += this.workPeriod();
       this.timeON = Measure.getTimeStamp();
     }
+    this.IOs.nextValue( this.sCurrent.map, this.param.I);
+    this.IOs.nextValue( this.sRPM.map, this.param.RPM);
+    this.IOs.nextValue( this.sHours.map, this.param.H);
+
   }
-  setDefaults(fldName: string, value: number) {
+/*  setDefaults(fldName: string, value: number) {
     this.param[fldName] = value;
-  }
+  }*/
   getHours() {
       return this.param.H;
   }

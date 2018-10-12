@@ -1,11 +1,40 @@
 import {ObjectType} from './ObjectType';
 import {JUtil} from './JUtil';
 
+/**
+ * function block di mappatura e scalatura di un ingresso fisico
+ *
+ * il DataPoint si appoggia su un ingresso logico di tipo CLogicIO
+ * e il cui indice è <map> che simula un ingresso fisico: analogico o fld seriale
+ *
+ * nel momento in cui il DataPoint viene arruolato da un oggetto come sensore
+ * l'oggetto proprietario esegue il mapping del sensore all'ingresso logico,
+ * creando una corrispondenza tra il DataPoint e il CLoggicIO con indice = map,
+ * questo, in SIMULAZIONE  consente all'oggetto proprietaro del sensore di aggiornarne
+ * il valore (motore > sensore RPM), e.g:
+ *    il motore aumenta la velocità e deve aggiornare il valore contenuto dal
+ *    CLogicIO in modo che di conseguenza aumenti anche la lettura del DataPoint
+ *
+ * sia CLogicIO implementano l'interfaccia INotify che permette di passare il nuovo valore:
+ * quando IO.service esegue il task ciclico di lettura
+ * 1. _________________
+ *  emette l'evento updateIO
+ *  che viene ricevuto da tutti i COMPONENTI che richiamano updateParam dei loro oggetti
+ *  di configurazione (e.g. di tipo  MotorClass, che arruola il sensore rRPM di tipo DataPoint)
+ * da updateParam l'oggetto proprietario prepara tutti i nuovi valori degli ingressi logici
+ * e li notifica ad IOs.service mediante una chaimata simile alla seguente:
+ *    this.IOs.nextValue( this.sLiquidFlow.map, this.param.LiquidFlow);
+ * 2. _________________
+ *  notifica i cambiamenti a tutti i DataPoint mappati con una chiamata simile;
+ *    IOs[map].callback.notify(IOs[map].value);
+ *
+ */
 export class DataPointType implements INotify {
   private _id = JUtil.getUID();
   public tag: number;
-  public map: number;
+  public map: number; // indice del LogicIO da cui appoggiare il valore
   private _value: number;
+  private _valueOld: number;
   private parent: ObjectType;
    public constructor(public fldName: string,
                      public inMin: number,
@@ -41,8 +70,10 @@ export class DataPointType implements INotify {
                outMin: number,
                outMax: number
   ): number {
-    return (x - inMin) / (inMax - inMin)
-      * (outMax - outMin) + outMin;
+      let result = (x - inMin) / (inMax - inMin) * (outMax - outMin) + outMin;
+      result = result < outMin ? outMin : result;
+      result = result > outMax ? outMax : result;
+      return result;
   }
 
   getID(): number {
@@ -77,12 +108,17 @@ export class DataPointType implements INotify {
    *
    * */
   notify(newValue: number) {
+    this._valueOld = this._value;
     this._value = newValue;
     this.parent.onUpdate();
   }
 
   get value(): number {
     return this._value;
+  }
+
+  get increment(): number {
+    return this._value - this._valueOld ;
   }
 
   get scaledValue(): number {
@@ -92,20 +128,35 @@ export class DataPointType implements INotify {
       this.scaleMin,
       this.scaleMax);
   }
+  get scaledIncrement(): number {
+    return DataPointType.scale(this.increment,
+      this.inMin,
+      this.inMax,
+      this.scaleMin,
+      this.scaleMax);
+  }
+
+  get percentValue(): number {
+    return DataPointType.scale(this._value,
+      this.inMin,
+      this.inMax,
+      0,
+      1);
+  }
 }
 
 
-export interface IMap {
+/*export interface IMap {
   map(inputs: DataPointType[], slots: number[], provider: any): DataPointType[];
-}
+}*/
 
 export interface INotify {
   notify(newValue: number);
 }
 
-export interface ItranseferFN {
+/*export interface ItranseferFN {
   update(inputs: DataPointType[]): DataPointType[];
-}
+}*/
 
 export interface ILogicIO {
   value: number;

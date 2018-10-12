@@ -2,9 +2,9 @@ import {DataPointType} from './DataPointType';
 import {Measure} from './Measure';
 import {EventEmitter, Output} from '@angular/core';
 import {JUtil} from './JUtil';
-import {Settings} from '../app.module';
+// import {Settings} from '../app.module';
 
-const ObjectUpdateInterval = 2000; // ms di attesa prima che un oggetto noitifichi il cambiamento dei dati
+const ObjectUpdateInterval = 1000; // ms di attesa prima che un oggetto notifichi al broker il cambiamento dei dati
 
 export class ObjectType {
   private _id = JUtil.getUID();
@@ -44,7 +44,7 @@ export class ObjectType {
   onUpdate() {
     let now = Measure.getTimeStamp();
     if (now - this._lastUpdate > ObjectUpdateInterval) {
-      console.log('DataType.update');
+      // console.log('DataType.update');
       this._lastUpdate = now;
       this.update.emit([this._measureName, this.getFields(), this.getTags([]), this.name]);
     }

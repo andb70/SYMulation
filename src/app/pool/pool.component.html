@@ -1,0 +1,16 @@
+qui devono esser inseriti i controlli per gestire
+<b>{{config.name}}</b>
+<ul mat-list>
+  <li mat-list-item>switch on-of
+    <button  type="button" mat-button
+             [ngClass]="{'motorON': config.isON,'motorOFF': config.isOFF}"
+             (click)="poolSwitch()">Svuota</button>
+  </li>
+
+  ----------
+  <li mat-list-item>Contatore in ingresso  {{liquidInCount | number:'1.1-1'}}</li>
+  <li mat-list-item>Flusso in ingresso  {{liquidInput | number:'1.1-1'}}</li>
+  <li mat-list-item>Flusso in uscita  {{liquidOutput | number:'1.1-2'}}</li>
+  <li mat-list-item>Livello liquido {{liquidLevel | number:'1.0-0'}}</li>
+  <li mat-list-item>Temperatura  {{actualTemperature | number:'1.3-3'}}</li>
+</ul>

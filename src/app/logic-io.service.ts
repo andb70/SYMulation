@@ -6,7 +6,7 @@ import {Clock7} from './models/Clock7';
 @Injectable()
 export class LogicIOService {
 
-  private IOs: ILogicIO[] = [];
+  private readonly IOs: ILogicIO[] = [];
   private clock: Clock7;
 
   /**
@@ -20,7 +20,7 @@ export class LogicIOService {
     this.IOs = CLogicIO.create(40);
   }
   public nextValue(i: number, value: number) {
-    // console.log('nextValue ' + i + ' v: ' + value);
+    console.log('nextValue ' + i + ' v: ' + value);
     let IO: ILogicIO = this.IOs[i];
     IO.nextValue = value;
   }
@@ -28,7 +28,7 @@ export class LogicIOService {
     /**
      *  foreach fld of flds{
      *    update(fld)
-     *    if (fld.changed) {
+     *    if (fld.hasNewValue) {
      *      fld.callback.notify(fld.value)
      *    }
      *  }
@@ -38,7 +38,7 @@ export class LogicIOService {
      for (let i = 0; i < this.IOs.length; i++) {
       let IO: ILogicIO = this.IOs[i];
       if (this.isMapped(IO)) {
-        if (this.validateIO(IO)) {
+        if (this.hasNewValue(IO)) {
           IO.callback.notify(IO.value);
         }
       } /*else {
@@ -48,12 +48,8 @@ export class LogicIOService {
     console.log(t);
   }
 
-  private validateIO(IO: ILogicIO): boolean {
-    if (IO.nextValue > 1023) {
-      IO.nextValue = 1023;
-    } else if (IO.nextValue < 0) {
-      IO.nextValue = 0;
-    }
+  private hasNewValue(IO: ILogicIO): boolean {
+
     if (IO.value === IO.nextValue) {
       return false;
     }
@@ -70,6 +66,18 @@ export class LogicIOService {
       this.IOs[inputs[i].map].callback = inputs[i];
     }
   }
+
+  /**
+   * Scansione dei campi valore
+   *
+   * quando il clock è attivo notifica a tutti i DataPoint mappati
+   * di aggiornare il proprio valore
+   * quindi richiama il metodo scan che notifica i cambiamenti
+   * avvenuti
+   *
+   * @param {number} initialDelay
+   * @param {number} period
+   */
   scanStart(initialDelay?: number, period?: number) {
     console.log('logic-io.service.scanStart');
     this.clock.start(initialDelay, period).tick.subscribe( (t) => {

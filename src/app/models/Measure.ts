@@ -31,7 +31,7 @@ export class Measure {
    *
    * let measure = new Object();
    * measure['Measure'] = Measure.build(name, fields, tags);
-   * this.cue.push(measure);
+   * this.queue.push(measure);
    *
    *   public static build(measurement: String, fields: any[], tags: any[]) {
       let oFlds = new Object();
