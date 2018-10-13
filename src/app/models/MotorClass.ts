@@ -18,7 +18,7 @@ export class MotorClass implements OnInit {
               private config: MotorConfigType,
               private param: MotorParamType,
               private sCurrent: DataPointType,
-              private  sRPM: DataPointType,
+              private sRPM: DataPointType,
               private sHours: DataPointType) {
   }
   ngOnInit(): void { }

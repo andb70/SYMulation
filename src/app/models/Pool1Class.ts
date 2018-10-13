@@ -135,12 +135,27 @@ export class PoolClass implements OnInit {
     return (this.param.state === switchState.OFF);
   }
 
+  public get isHeatON(): boolean {
+    return (this.param.heatState === switchState.ON);
+  }
+
+  public get isHeatOFF(): boolean {
+    return (this.param.heatState === switchState.OFF);
+  }
+
   public poolSwitch() {
     if (this.isON) {
       this.param.state = switchState.OFF;
     } else {
       this.param.state = switchState.ON;
     }
+  }
+  public poolHeatON() {
+/*    if (this.isON) {
+      this.param.state = switchState.OFF;
+    } else {
+      this.param.state = switchState.ON;
+    }*/
   }
 }
 
@@ -342,6 +357,7 @@ export class PoolConfigType {
 
 export class PoolParamType {
   constructor(public state: switchState,
+              public heatState: switchState,
               public LiquidFlow: number,
               public Temperature: number,
               public LiquidLevel: number) {

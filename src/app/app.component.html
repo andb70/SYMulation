@@ -9,10 +9,23 @@
           [ngClass]="{'motorON': showTree,'motorOFF': !showTree}"
           (click)="showTree = ! showTree">{{showTree ? 'Nascondi albero impianto' : 'Mostra albero impianto'}}
   </button>
+  <button type="button" mat-raised-button class="startButtonImpianto"
+          [ngClass]="{'motorON': showGoals,'motorOFF': !showGoals}"
+          (click)="showGoals = ! showGoals">{{showGoals ? 'Nascondi gli obiettivi' : 'Mostra gli obiettivi'}}
+  </button>
 </div>
 
 <hr>
 
+<div class="containerDevice" *ngIf="showGoals">
+  <h1>Vogliamo le seguenti misure:</h1>
+  <p>consumo globale di corrente impianto (ogni minuto)</p>
+  <p>consumo instantaneo per ogni componente (ogni minuto)</p>
+  <p>consumo globale acqua lavaggio (ogni giorno)</p>
+  <p>consumo corrente forni (ogni minuto)</p>
+  <p>temperatura media dei forni (ogni 10 minuti)</p>
+  <p>livello massimo e minimo vasche di trattamento (ogni ora)</p>
+</div>
 <!--
 <app-motor [config]="pompa1"></app-motor>
 <app-pool [config]="vasca1" [sRPM]="pompa1.getsRPM()"></app-pool>

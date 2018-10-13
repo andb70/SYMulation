@@ -27,6 +27,10 @@ export class PoolComponent implements OnInit {
     console.log('pool switch ' + this.config.name);
     this.config.poolSwitch();
   }
+  poolHeatON() {
+    console.log('pool heatON ' + this.config.name);
+    this.config.poolHeatON();
+  }
 
   get liquidInput(): number {
     return this.config.liquidFlowIN;

@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
+import {LogicIOService} from './logic-io.service';
 import {DataPointType} from './models/DataPointType';
 import {ObjectType} from './models/ObjectType';
 import {MotorClass, MotorConfigType, MotorParamType, switchState} from './models/MotorClass';
-import {LogicIOService} from './logic-io.service';
-import {JUtil} from './models/JUtil';
 import {
   Pool1Class,
   Pool2Class,
@@ -18,6 +17,7 @@ import {CommDriverService} from './comm-driver.service';
 import {Query} from './models/Query';
 import {Measure} from './models/Measure';
 import {Result} from './models/Result';
+import {JUtil} from './models/JUtil';
 
 @Component({
   selector: 'app-root',
@@ -26,6 +26,7 @@ import {Result} from './models/Result';
 })
 export class AppComponent implements OnInit {
   showTree = true;
+  showGoals = true;
   status: string;
   sCurrent = new DataPointType('current',
     0,
@@ -201,7 +202,7 @@ export class AppComponent implements OnInit {
 
 
 
-    //TODO prelevare dati delle unità
+/*    // TODO prelevare dati delle unità
     this.prelavaggio = new ObjectType('Dati Prelavaggio', 'device', 3);
     this.prelavaggio
       .appendSensors(this.vasca1.map(logicIO));
@@ -212,10 +213,115 @@ export class AppComponent implements OnInit {
 
     this.asciugatura = new ObjectType('Dati Asciugatura', 'device', 19);
     this.asciugatura
-      .appendSensors(this.vasca3.map(logicIO));
+      .appendSensors(this.vasca3.map(logicIO));*/
 
 
+    /*
+      lo scopo di quanto segue è spiegare come funziona la creazione di oggetti e sensori
+      e la composizione dell'albero che descrive dell'impianto per comprendere come dal
+      sensore si arriva alla generazione della measure.
 
+      la procedura seguente permette di creare l'albero dell'impianto che dovrà
+      essere esportato in un file JSON e costituisce la configurazione dell'impianto
+
+      la struttura creata si basa sul pattern Composite secondo la descrizione che segue:
+        nodo è un oggetto di tipo ObjectType
+        ogni nodo può contenere altri nodi, cioè children di tipo ObjectType
+        ogni nodo può avere sensors di tipo DataPointType (leaf)
+        ogni nodo ha un parent di tipo ObjectType
+        ogni sensor ha un parent di tipo ObjectType
+        root il nodo più alto e non ha parent
+
+      *** Creazione del nodo root:
+      this.root = new ObjectType('root', 'plant', 1);
+
+      *** Aggiunta di nodi
+      ad un nodo può essere aggiunto un numero indefinito di nodi figli
+        .appendObject(new ObjectType(name: 'Sezione lavaggio',
+                                     tagName: 'section',
+                                     tag: 2))
+
+      .appendObject(...) restituisce il nodo a cui stiamo appendendo un figlio
+        nodoR.appendObject(nodo1).appendObject(nodo2)
+        appenderà nodo1 e nodo2 a nodoR e saranno entrambi children di nodoR
+
+      .newObject() restituisce il nodo appena appeso
+        nodoR.appendObject(nodo1).newObject.appendObject(nodo2)
+        appenderà nodo1 a nodoR e nodo2 a nodo1
+
+      .appendSensors() restituisce il nodo a cui sono stati aggiunti i sensori
+      nodo1.appendSensors([
+                            new DataPointType('current',
+                                                ...
+                                              ),
+                            new DataPointType('rpm',
+                                                ...
+                                              ),
+                            new DataPointType('hours',
+                                                ...
+                                              )
+                          ])
+      appende 3 sensori a nodo1 e restituisce nodo1
+
+
+      ***************************************************************************
+      ***   aggiunta di sensori appartenenti a devices creati in precedenza   ***
+      ***************************************************************************
+
+      la creazione di un device  dovrebbe restituire un'interfaccia universale ma
+      è stata implementata come segue:
+        motore2: MotorClass = new MotorClass(name:     'Motore 2',
+                                             config:   {maxI: 90, maxRPM: 1800, acceleration: .1} as MotorConfigType,
+                                             param:    {state: switchState.OFF, I: 1, RPM: 120, H: 24} as MotorParamType,
+                                             sCurrent: DataPointType.fromTemplate(sensor: this.sCurrent,
+                                                                                  tag: 44,
+                                                                                  map: 12),
+                                             sRPM:     DataPointType.fromTemplate(sensor: this.sRPM,
+                                                                                  tag: 45,
+                                                                                  map: 13),
+                                             sHours:   DataPointType.fromTemplate(sensor: this.sHours,
+                                                                                  tag: 46,
+                                                                                  map: 14));
+        vasca6: Pool2Class =  new Pool2Class(name:     'Vasca 6',
+                                             config:   {minLevel: 200, minPH: 7.0, maxPH: 7.6} as PoolConfig2Type,
+                                             param:    {state: switchState.OFF, LiquidLevel: 1000, PH: 7.1} as PoolParam2Type,
+                                             sLiquidLevel: DataPointType.fromTemplate(this.sLiquidLevel, 35, 28),
+                                             sPh:      DataPointType.fromTemplate(this.spH, 36, 29));
+
+      di seguito useremo <DeviceClass> dove qui abbiamo usato MotorClass o Pool2Class
+      per ricordare che l'implementazione deve permettere il polimorfismo
+
+      procedura:
+        1.  creazione del device con definizione dei parametri dell'oggetto e
+            dei parametri di mappatura
+        2.  esecuzione della mappatura nel provider dei dati, di tipo LogicIO.service,
+            cioè l'oggetto che simula i campi numerici corrispondenti agli ingressi
+            del dispositivo fisico
+        3.  creazione di una Measure che contiene i dati dei sensori
+        4.  utilizzo dei sensori nell'albero impianto, identificati dalla Measure
+
+      Il device è definito a livello di componente ma l'esecuzione della mappatura
+      avviene qui, dove il LogicIO service è disponibile, la riga seguente:
+
+        sensors = <DeviceClass>.map(logicIO)
+
+      aseegna a sensors i sensori di <DeviceClass> di cui ha anche eseguito la mappatura
+      nel LogicIO service
+
+      il codice seguente:
+
+        root.appendObject(new ObjectType('myNode1', 'section', 2))
+          .newObject().hasMeasure('MyMeasure')
+            .appendSensors(this.<myDevice>.map(logicIO))
+
+        crea il nodo myNode1 a root,
+          naviga fino a myNode1 e crea la misura MyMeasure
+            mappa i sensori di myDevice e li arruola in myNode1
+
+        da questo momento quando il servizio mqtt è in funzione la modifica dei dati dei
+        sensori appartenenti a myNode1 comporta lo sparo della misura myMeasure
+
+     */
 
     this.root = new ObjectType('root', 'plant', 1);
     this.root
@@ -372,7 +478,7 @@ export class AppComponent implements OnInit {
   }
 
   motorSwitch() {
-    this.status == 'OFF' ? this.status = 'ON' : this.status = 'OFF';
+    this.status === 'OFF' ? this.status = 'ON' : this.status = 'OFF';
     this.switch = !this.switch;
     console.log('motor switch ' + this.switch);
     if (this.switch) {

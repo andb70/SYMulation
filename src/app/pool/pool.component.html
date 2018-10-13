@@ -3,15 +3,18 @@
     <mat-card-title><h4>{{config.name}}</h4></mat-card-title>
   </mat-card-header>
   <mat-card-content class="containerPoolComponent">
-      <li>Contatore in ingresso: {{liquidInCount | number:'1.1-1'}}</li>
-      <li>Flusso in ingresso: {{liquidInput | number:'1.1-1'}}</li>
-      <li>Flusso in uscita: {{liquidOutput | number:'1.1-2'}}</li>
-      <li>Livello liquid: {{liquidLevel | number:'1.0-0'}}</li>
-      <li>Temperatura: {{actualTemperature | number:'1.3-3'}}</li>
+      <li>Contatore in ingresso: {{liquidInCount | number:'1.1-1'}} l</li>
+      <li>Flusso in ingresso: {{liquidInput | number:'1.1-1'}} l/h</li>
+      <li>Flusso in uscita: {{liquidOutput | number:'1.1-2'}} l/h</li>
+      <li>Livello liquido: {{liquidLevel | number:'1.0-0'}} l</li>
+      <li>Temperatura: {{actualTemperature | number:'1.3-3'}} °C</li>
   </mat-card-content>
   <mat-card-actions>
     <button  type="button" mat-button
              [ngClass]="{'motorON': config.isON,'motorOFF': config.isOFF}"
              (click)="poolSwitch()">Svuota</button>
-  </mat-card-actions>
+    <button  type="button" mat-button
+              [ngClass]="{'motorON': config.isHeatON,'motorOFF': config.isHeatOFF}"
+              (click)="poolHeatON()">Scalda</button>
+</mat-card-actions>
 </mat-card>
