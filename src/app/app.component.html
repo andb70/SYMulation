@@ -5,6 +5,10 @@
           [ngClass]="{'motorON': isON(),'motorOFF': isOFF()}"
           (click)="motorSwitch()">{{status}}
   </button>
+  <button type="button" mat-raised-button class="startButtonImpianto"
+          [ngClass]="{'motorON': showTree,'motorOFF': !showTree}"
+          (click)="showTree = ! showTree">{{showTree ? 'Nascondi albero impianto' : 'Mostra albero impianto'}}
+  </button>
 </div>
 
 <hr>
@@ -28,9 +32,9 @@
         <app-motor [config]="pompa1"></app-motor>
         <app-pool [config]="vasca1" [sRPM]="pompa1.getsRPM()"></app-pool>
       </div>
-      <div class="unitData">
+     <!-- <div class="unitData">
         <app-node [object]="prelavaggio"></app-node>
-      </div>
+      </div>-->
     </div>
     <div class="containerUnit">
       <div>
@@ -38,9 +42,9 @@
         <app-motor [config]="pompa2"></app-motor>
         <app-pool [config]="vasca2" [sRPM]="pompa2.getsRPM()"></app-pool>
       </div>
-      <div class="unitData">
+<!--      <div class="unitData">
         <app-node [object]="lavaggio"></app-node>
-      </div>
+      </div>-->
     </div>
     <div class="containerUnit">
       <div>
@@ -63,5 +67,7 @@
     </div>
   </div>
 </div>
-<!--<h3>Dati prodotti</h3>
-<app-node [object]="root"></app-node>-->
+<div *ngIf="showTree">
+  <h3>Dati prodotti</h3>
+  <app-node [object]="root"></app-node>
+</div>
