@@ -20,7 +20,7 @@ export class LogicIOService {
     this.IOs = CLogicIO.create(40);
   }
   public nextValue(i: number, value: number) {
-    if (i === 0) {console.log('nextValue ' + i + ' v: ' + value); }
+    // if (i === 0) {console.log('nextValue ' + i + ' v: ' + value); }
     let IO: ILogicIO = this.IOs[i];
     IO.nextValue = value;
   }

@@ -77,7 +77,7 @@ export class DeviceClass implements OnInit {
       null,
       null,
       null);
-      console.log('DeviceClass.newPoolFlowTempRH', sLiquidFlow, sTemperature, sRH);
+      // console.log('DeviceClass.newPoolFlowTempRH', sLiquidFlow, sTemperature, sRH);
     return device;
   }
 
@@ -145,13 +145,13 @@ export class DeviceClass implements OnInit {
     if (this.sHours)       {this.IOs.nextValue( this.sHours.map, this.param.H); }
   }
   updateFlowTempRH() {
-    console.log('DeviceClass.updateFlowTempRH', this.sLiquidFlow, this.liquidFlowINdigital);
+    // console.log('DeviceClass.updateFlowTempRH', this.sLiquidFlow, this.liquidFlowINdigital);
     let liquidFlow = this.liquidFlowINdigital + this.sLiquidFlow.scaledValue;
     this.param.LiquidFlow = this.sLiquidFlow.scaleToInput(liquidFlow);
     this.nextValue();
   }
   updateLevelPH() {
-    console.log('DeviceClass.updateLevelPH', this.sLiquidLevel);
+    // console.log('DeviceClass.updateLevelPH', this.sLiquidLevel);
     this.updateLiquidLevel(this.liquidFlowINdigital);
     // update ph
     this.nextValue();
@@ -259,7 +259,7 @@ export class DeviceClass implements OnInit {
     return false;
   }
   private updateRPM(targetRPM: number): boolean {
-    console.log();
+    // console.log();
 
     if (this.speedTargeted(targetRPM)) {
       this._acceleration = 0;
@@ -272,7 +272,7 @@ export class DeviceClass implements OnInit {
     let dTerm = 0;
     if ((targetRPM - this.param.RPM) > 0) {dTerm = Math.pow((targetRPM - this.param.RPM) / this.config.maxRPM, 2) / 4 ; }
     this.param.I = (dTerm + this.param.RPM / this.config.maxRPM) * this.config.maxI * this.getStress();
-    console.log('DeviceClass 265 dTerm:', dTerm, 'config:', this.config, 'stress:', this.getStress(), 'param:', this.param);
+    // console.log('DeviceClass 265 dTerm:', dTerm, 'config:', this.config, 'stress:', this.getStress(), 'param:', this.param);
 
     this.param.RPM += this._acceleration * (targetRPM - this.param.RPM);
     return false;

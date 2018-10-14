@@ -17,14 +17,14 @@ export class MotorComponent implements AfterViewInit {
     });
   }
   ngAfterViewInit() {
-    console.log('motor.component 18 stress:', this.device.stress);
+    // console.log('motor.component 18 stress:', this.device.stress);
     // this.device.stress = 0;
   }
   stressValues() {
     return [0, 1, 2, 4];
   }
   get stress(): number {
-    console.log('motor.component 27 stress:', this.device.stress);
+    // console.log('motor.component 27 stress:', this.device.stress);
     return this.device.stress;
   }
   set stress(value: number) {
