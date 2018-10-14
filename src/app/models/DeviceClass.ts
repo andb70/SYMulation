@@ -144,15 +144,15 @@ export class DeviceClass implements OnInit {
     if (this.sRPM)         {this.IOs.nextValue( this.sRPM.map, this.param.RPM); }
     if (this.sHours)       {this.IOs.nextValue( this.sHours.map, this.param.H); }
   }
-  updateFlowTempRH(sRPM: DataPointType) {
-    let liquidFlow = sRPM.percentValue * this.config.flowRateIN + this.sLiquidFlow.scaledValue;
-    this.param.LiquidFlow = DataPointType.scale(liquidFlow,
-      this.sLiquidFlow.scaleMin, this.sLiquidFlow.scaleMax, this.sLiquidFlow.inMin, this.sLiquidFlow.inMax);
-    console.log('DeviceClass 149', this.sLiquidFlow);
+  updateFlowTempRH() {
+    console.log('DeviceClass.updateFlowTempRH', this.sLiquidFlow, this.liquidFlowINdigital);
+    let liquidFlow = this.liquidFlowINdigital + this.sLiquidFlow.scaledValue;
+    this.param.LiquidFlow = this.sLiquidFlow.scaleToInput(liquidFlow);
     this.nextValue();
   }
-  updateLevelPH(sRPM: DataPointType) {
-    this.updateLiquidLevel(sRPM.percentValue * this.config.flowRateIN);
+  updateLevelPH() {
+    console.log('DeviceClass.updateLevelPH', this.sLiquidLevel);
+    this.updateLiquidLevel(this.liquidFlowINdigital);
     // update ph
     this.nextValue();
   }
@@ -307,17 +307,22 @@ export class DeviceClass implements OnInit {
   }
 
   speedTargeted(targetSpeed: number) {
-    // console.log('speedTargeted ' + targetSpeed + ', RPM: ' + this.param.RPM + ', max: ' + this.config.maxRPM);
     return (Math.abs(this.param.RPM - targetSpeed) / this.config.maxRPM < 0.0001);
   }
 
   set targetSpeed(RPM: number) {
-    this._targetRPM = DataPointType.scale(RPM, this.sRPM.scaleMin, this.sRPM.scaleMax, this.sRPM.inMin, this.sRPM.inMax);
+    this._targetRPM = this.sRPM.scaleToInput(RPM);
   }
   get targetSpeed(): number {
-    return DataPointType.scale(this._targetRPM, this.sRPM.inMin, this.sRPM.inMax, this.sRPM.scaleMin, this.sRPM.scaleMax);
+    return this.sRPM.scaleToOutput(this._targetRPM);
   }
 
+  get liquidFlowINdigital(): number {
+    if (this.isOFF) {      // is draining
+      return this.config.flowRateIN;
+    }
+    return 0;
+  }
   get liquidFlowOUT(): number {
     if (this.isON) {      // is draining
       return this.config.flowRateOUT;
@@ -330,42 +335,33 @@ export class DeviceClass implements OnInit {
   }
 
   get liquidFlowTotal(): number {
-    /*if (this.name = 'Vasca 3') {
-    console.log('DeviceClass.liquidFlowTotal', this.sLiquidFlow); }
-    if (this.sLiquidFlow) {*/
-      return this.sLiquidFlow.scaledValue;
-    /*}
-    return 0;*/
+    return this.sLiquidFlow.scaledValue;
   }
 
   get temperature(): number {
-    /*if (this.name = 'Vasca 3') {
-      console.log('DeviceClass.temperature', this.sTemperature, this);}
-    if (this.sTemperature) {*/
-      return this.sTemperature.scaledValue;
-    /*}
-    return 0;*/
+    return this.sTemperature.scaledValue;
   }
 
   get liquidLevel(): number {
-    /*console.log('DeviceClass.liquidLevel', this.sLiquidLevel);
-    if (this.sLiquidLevel) {*/
-      return this.sLiquidLevel.scaledValue;
-   /* }
-    return 0;*/
+    return this.sLiquidLevel.scaledValue;
   }
 
   get ph(): number {
     return this.sPH.scaledValue;
   }
+  phInc() {
+    let newValue = this.sPH.scaledValue + .1;
+    if (newValue > this.config.phMax) { newValue = this.config.phMax; }
+    this.param.PH = this.sPH.scaleToInput(newValue);
+  }
+  phDec() {
+    let newValue = this.sPH.scaledValue - .1;
+    if (newValue < this.config.phMin) { newValue = this.config.phMin; }
+    this.param.PH = this.sPH.scaleToInput(newValue);
+  }
 
   get rh(): number {
-    /*if (this.name = 'Vasca 3') {
-    console.log('DeviceClass.rh', this.sRH); }
-    if (this.sRH) {*/
-      return this.sRH.scaledValue;
-    /*}
-    return 0;*/
+    return this.sRH.scaledValue;
   }
 
 

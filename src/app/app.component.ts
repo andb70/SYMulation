@@ -14,6 +14,20 @@ import {Measure} from './models/Measure';
 import {Result} from './models/Result';
 import {JUtil} from './models/JUtil';
 
+const MqttTopicOLD = 'SYMulation/DataLogger/sensori';
+const MqttTopicPath = 'SYMulation/DataLogger/';
+const MqttTopicPompa1 = MqttTopicPath + 'Pompa1';
+const MqttTopicPompa2 =  MqttTopicPath + 'Pompa2';
+const MqttTopicVentilatore =  MqttTopicPath + 'Ventilatore';
+const MqttTopicMotore1 =  MqttTopicPath + 'Motore1';
+const MqttTopicMotore2 =  MqttTopicPath + 'Motore2';
+const MqttTopicVasca1 =  MqttTopicPath + 'Vasca1';
+const MqttTopicVasca2 =  MqttTopicPath + 'Vasca2';
+const MqttTopicVasca3 =  MqttTopicPath + 'Vasca3';
+const MqttTopicVasca4 =  MqttTopicPath + 'Vasca4';
+const MqttTopicVasca5 =  MqttTopicPath + 'Vasca5';
+const MqttTopicVasca6 =  MqttTopicPath + 'Vasca6';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -106,57 +120,57 @@ export class AppComponent implements OnInit {
     'PH'
   );
   pompa1: DeviceClass = DeviceClass.newMotorCurrentRpmHours('Pompa 1',
-    {maxI: 60, maxRPM: 4500, acceleration: .3, stress: 1} as DeviceConfigType,
+    {maxI: 60, maxRPM: 4000, acceleration: .4, stress: 1} as DeviceConfigType,
     {state: SwitchState.OFF, I: 0, RPM: 0, H: 0} as DeviceParamType,
     DataPointType.fromTemplate(this.sCurrent, 5, 0),
     DataPointType.fromTemplate(this.sRPM, 6, 1),
     DataPointType.fromTemplate(this.sHours, 7, 2));
 
   pompa2: DeviceClass = DeviceClass.newMotorCurrentRpmHours('Pompa 2',
-    {maxI: 30, maxRPM: 2000, acceleration: .1, stress: 0} as DeviceConfigType,
+    {maxI: 60, maxRPM: 4000, acceleration: .4, stress: 0} as DeviceConfigType,
     {state: SwitchState.OFF, I: 0, RPM: 0, H: 0} as DeviceParamType,
     DataPointType.fromTemplate(this.sCurrent, 13, 3),
     DataPointType.fromTemplate(this.sRPM, 14, 4),
     DataPointType.fromTemplate(this.sHours, 15, 5));
 
   ventilatore1: DeviceClass = DeviceClass.newMotorCurrentRpmHours('Ventilatore 1',
-    {maxI: 22, maxRPM: 1400, acceleration: .1, stress: 0} as DeviceConfigType,
-    {state: SwitchState.OFF, I: 1, RPM: 120, H: 24} as DeviceParamType,
+    {maxI: 22, maxRPM: 1400, acceleration: .5, stress: 0} as DeviceConfigType,
+    {state: SwitchState.OFF, I: 0, RPM: 0, H: 24} as DeviceParamType,
     DataPointType.fromTemplate(this.sCurrent, 21, 6),
     DataPointType.fromTemplate(this.sRPM, 22, 7),
     DataPointType.fromTemplate(this.sHours, 23, 8));
 
 
   motore1: DeviceClass = DeviceClass.newMotorCurrentRpmHours('Motore 1',
-    {maxI: 90, maxRPM: 1800, acceleration: .1, stress: 0} as DeviceConfigType,
-    {state: SwitchState.OFF, I: 1, RPM: 120, H: 24} as DeviceParamType,
+    {maxI: 90, maxRPM: 1800, acceleration: .8, stress: 0} as DeviceConfigType,
+    {state: SwitchState.OFF, I: 0, RPM: 0, H: 24} as DeviceParamType,
     DataPointType.fromTemplate(this.sCurrent, 40, 9),
     DataPointType.fromTemplate(this.sRPM, 41, 10),
     DataPointType.fromTemplate(this.sHours, 42, 11));
 
   motore2: DeviceClass = DeviceClass.newMotorCurrentRpmHours('Motore 2',
-    {maxI: 90, maxRPM: 1800, acceleration: .1, stress: 0} as DeviceConfigType,
-    {state: SwitchState.OFF, I: 1, RPM: 120, H: 24} as DeviceParamType,
+    {maxI: 90, maxRPM: 1800, acceleration: .8, stress: 0} as DeviceConfigType,
+    {state: SwitchState.OFF, I: 0, RPM: 0, H: 24} as DeviceParamType,
     DataPointType.fromTemplate(this.sCurrent, 44, 12),
     DataPointType.fromTemplate(this.sRPM, 45, 13),
     DataPointType.fromTemplate(this.sHours, 46, 14));
 
   vasca1: DeviceClass = DeviceClass.newPoolFlowTempLevel('Vasca 1',
-    {tempMin: 4, tempMax: 96, tempSP: 20, flowRateIN: 100, flowRateOUT: 10, levelMax: 1800} as DeviceConfigType,
+    {tempMin: 4, tempMax: 96, tempSP: 20, flowRateIN: 100, flowRateOUT: 20, levelMax: 1800} as DeviceConfigType,
     {state: SwitchState.OFF, heatState: SwitchState.OFF, LiquidFlow: 0, Temperature: 48, LiquidLevel: 300} as DeviceParamType,
     DataPointType.fromTemplate(this.sLiquidFlow, 8, 15),
     DataPointType.fromTemplate(this.sTemperature, 9, 16),
     DataPointType.fromTemplate(this.sLiquidLevel, 10, 17));
 
   vasca2: DeviceClass = DeviceClass.newPoolFlowTempLevel('Vasca 2',
-    {tempMin: 4, tempMax: 96, tempSP: 20, flowRateIN: 100, flowRateOUT: 10, levelMax: 1400} as DeviceConfigType,
+    {tempMin: 4, tempMax: 96, tempSP: 20, flowRateIN: 100, flowRateOUT: 20, levelMax: 1400} as DeviceConfigType,
     {state: SwitchState.OFF, LiquidFlow: 0, Temperature: 48, LiquidLevel: 100} as DeviceParamType,
     DataPointType.fromTemplate(this.sLiquidFlow, 16, 18),
     DataPointType.fromTemplate(this.sTemperature, 17, 19),
     DataPointType.fromTemplate(this.sLiquidLevel, 18, 20));
 
   vasca3: DeviceClass = DeviceClass.newPoolFlowTempRH('Vasca 3',
-    {tempMin: 4, tempMax: 96, tempSP: 20, flowRateIN: 100, flowRateOUT: 100, rhMax: 0.7} as DeviceConfigType,
+    {tempMin: 4, tempMax: 96, tempSP: 80, flowRateIN: 100, flowRateOUT: 100, rhMax: 0.7} as DeviceConfigType,
     {state: SwitchState.OFF, LiquidFlow: 0, Temperature: 48, RH: 0.5} as DeviceParamType,
     DataPointType.fromTemplate(this.sLiquidFlow, 24, 21),
     DataPointType.fromTemplate(this.sTemperature, 25, 22),
@@ -164,19 +178,19 @@ export class AppComponent implements OnInit {
 
 
   vasca4: DeviceClass = DeviceClass.newPoolLevelPH('Vasca 4',
-    {levelMin: 200, phMin: 7.0, phMax: 7.6} as DeviceConfigType,
+    {levelMin: 200, levelMax: 1500, phMin: 9.0, phMax: 14.0, flowRateIN: 10, flowRateOUT: 10} as DeviceConfigType,
     {state: SwitchState.OFF, LiquidLevel: 1000, PH: 7.5} as DeviceParamType,
     DataPointType.fromTemplate(this.sLiquidLevel, 29, 24),
     DataPointType.fromTemplate(this.sPH, 30, 25));
 
   vasca5: DeviceClass = DeviceClass.newPoolLevelPH('Vasca 5',
-    {levelMin: 200, phMin: 7.0, phMax: 7.6} as DeviceConfigType,
+    {levelMin: 200, levelMax: 1500, phMin: 7.0, phMax: 10.0, flowRateIN: 10, flowRateOUT: 10} as DeviceConfigType,
     {state: SwitchState.OFF, LiquidLevel: 1000, PH: 7.3} as DeviceParamType,
     DataPointType.fromTemplate(this.sLiquidLevel, 32, 26),
     DataPointType.fromTemplate(this.sPH, 33, 27));
 
   vasca6: DeviceClass = DeviceClass.newPoolLevelPH('Vasca 6',
-    {levelMin: 200, phMin: 7.0, phMax: 7.6} as DeviceConfigType,
+    {levelMin: 200, levelMax: 1500, phMin: 6.5, phMax: 7.5, flowRateIN: 10, flowRateOUT: 10} as DeviceConfigType,
     {state: SwitchState.OFF, LiquidLevel: 1000, PH: 7.1} as DeviceParamType,
     DataPointType.fromTemplate(this.sLiquidLevel, 35, 28),
     DataPointType.fromTemplate(this.sPH, 36, 29));
@@ -316,10 +330,10 @@ export class AppComponent implements OnInit {
       .newObject()
       .appendObject(new ObjectType('Pompa 1', 'device', 4))
       .newObject()
-      .hasMeasure('ElMotor')
+      .hasMeasure('ElMotor', MqttTopicPompa1)
       .appendSensors(this.pompa1.map(logicIO))
       .getParent()
-      .hasMeasure('Pool1')
+      .hasMeasure('Pool1', MqttTopicVasca1)
       .appendSensors(this.vasca1.map(logicIO))
       .getParent()
       .getParent()
@@ -328,10 +342,10 @@ export class AppComponent implements OnInit {
       .newObject()
       .appendObject(new ObjectType('Pompa 2', 'device', 12))
       .newObject()
-      .hasMeasure('ElMotor')
+      .hasMeasure('ElMotor', MqttTopicPompa2)
       .appendSensors(this.pompa2.map(logicIO))
       .getParent()
-      .hasMeasure('Pool1')
+      .hasMeasure('Pool1', MqttTopicVasca2)
       .appendSensors(this.vasca2.map(logicIO))
       .getParent()
       .getParent()
@@ -340,10 +354,10 @@ export class AppComponent implements OnInit {
       .newObject()
       .appendObject(new ObjectType('Ventilatore', 'device', 20))
       .newObject()
-      .hasMeasure('ElMotor')
+      .hasMeasure('ElMotor', MqttTopicVentilatore)
       .appendSensors(this.ventilatore1.map(logicIO))
       .getParent()
-      .hasMeasure('Pool2')
+      .hasMeasure('Pool2', MqttTopicVasca3)
       .appendSensors(this.vasca3.map(logicIO))
       .getParent()
       .getParent()
@@ -352,17 +366,17 @@ export class AppComponent implements OnInit {
       .newObject()
       .appendObject(new ObjectType('Vasca pre trattamento', 'unit', 28))
       .newObject()
-      .hasMeasure('Pool3')
+      .hasMeasure('Pool3', MqttTopicVasca4)
       .appendSensors(this.vasca4.map(logicIO))
       .getParent()
       .appendObject(new ObjectType('Vasca primer', 'unit', 31))
       .newObject()
-      .hasMeasure('Pool3')
+      .hasMeasure('Pool3', MqttTopicVasca5)
       .appendSensors(this.vasca5.map(logicIO))
       .getParent()
       .appendObject(new ObjectType('Vasca finisher', 'unit', 34))
       .newObject()
-      .hasMeasure('Pool3')
+      .hasMeasure('Pool3', MqttTopicVasca6)
       .appendSensors(this.vasca6.map(logicIO))
       .getParent().getParent()
 
@@ -372,12 +386,12 @@ export class AppComponent implements OnInit {
       .newObject()
       .appendObject(new ObjectType('Motore 1', 'device', 39))
       .newObject()
-      .hasMeasure('ElMotor')
+      .hasMeasure('ElMotor', MqttTopicMotore1)
       .appendSensors(this.motore1.map(logicIO))
       .getParent()
       .appendObject(new ObjectType('Motore 2', 'device', 43))
       .newObject()
-      .hasMeasure('ElMotor')
+      .hasMeasure('ElMotor', MqttTopicMotore2)
       .appendSensors(this.motore2.map(logicIO))
     ;
     /*    this.collector.loadPlant().subscribe((result) => {

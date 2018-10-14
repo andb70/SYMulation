@@ -3,7 +3,7 @@
     <mat-card-title><h4>{{device.name}}</h4></mat-card-title>
   </mat-card-header>
   <mat-card-content class="containerPoolComponent">
-      <li>Contatore in ingresso: {{device.liquidFlowTotal | number:'1.1-1'}} l</li>
+      <li>Contatore: {{device.liquidFlowTotal | number:'1.1-1'}} l</li>
       <li>Flusso in ingresso: {{device.liquidFlowIN | number:'1.1-1'}} l/h</li>
       <li>Flusso in uscita: {{device.liquidFlowOUT | number:'1.1-2'}} l/h</li>
       <li>Livello liquido: {{device.liquidLevel | number:'1.0-0'}} l</li>

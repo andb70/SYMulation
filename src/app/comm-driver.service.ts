@@ -4,17 +4,15 @@ import {Measure} from './models/Measure';
 import {ClockService} from './clock.service';
 import {Clock7} from './models/Clock7';
 import {MqttService} from 'ngx-mqtt';
+import {Queue} from './models/Queue';
 
-const MqttTopic = 'SYMulation/DataLogger/sensori';
+const  server = 'indirizzo_api_che_permette_il_salvataggio_e_il_recupero_della_configurazione_dell\'impianto_tramite_POST_e_GET/';
+
+const  maxLength = 0;
 @Injectable()
 export class CommDriverService {
   @Output()
-
-  queue = [];
-  maxLength = 0;
-
-  server = 'indirizzo_api_che_permette_il_salvataggio_e_il_recupero_della_configurazione_dell\'impianto_tramite_POST_e_GET/';
-
+  queue = new Queue(maxLength);
   clock: Clock7;
   constructor(private http: HttpClient, private clockService: ClockService, private mqttService: MqttService) {
     this.clock = new Clock7();
@@ -57,16 +55,11 @@ export class CommDriverService {
 
 
 
-  newData(name, fields, tags, deviceName) {
-/*    if (!this.server) {
-      return;
-    }*/
-    this.queue.push(new Measure(name, fields, tags, deviceName));
-    /*console.log('new measure ' + this.queue[this.queue.length - 1].name);*/
-    /*console.log('new measure ' + this.queue);*/
-    if (this.queue.length > this.maxLength) {
-      this.fireMeasure();
-    } else {
+  newData(name, fields, tags, MqttTopic: string) {
+
+    if (this.queue.add(new Measure(name, fields, tags), MqttTopic) ) {
+      this.fireMeasure(this.queue.pull(MqttTopic), MqttTopic);
+    } /*else {
       if (this.clock.isBusy()) {return; }
       this.clock.start(1000, 10000).tick.subscribe( () => {
         console.log('new measure timeout' );
@@ -75,15 +68,9 @@ export class CommDriverService {
           this.fireMeasure();
         }
       });
-    }
+    }*/
   }
-  fireMeasure() {
-    let data = this.queue;
-    this.queue = [];
-    // console.log('posting ' + (data.length - 1), data);
-   /* this.http.post(this.server + 'datalog', data).subscribe( () => {
-      console.log('posted');
-    });*/
+  fireMeasure(data: any, MqttTopic: string) {
 
     this.mqttService.publish( MqttTopic, JSON.stringify(data)).subscribe( () => {
       console.log('posted');
@@ -98,8 +85,8 @@ export class CommDriverService {
   }
 
   savePlant(plant: any) {
-    console.log('save plant ', this.server + 'saveroot');
-    return this.http.post(this.server + 'saveroot', plant);
+    console.log('save plant ', server + 'saveroot');
+    return this.http.post(server + 'saveroot', plant);
   }
 
   loadPlant() {

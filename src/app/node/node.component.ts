@@ -23,7 +23,7 @@ export class NodeComponent implements OnInit {
      * */
     this.object.update.subscribe((args) => {
       // console.log('node_object.update' + this.object, args[0], args[1], args[2]);
-      //             newData(name,    fields,  tags,    deviceName)
+      //             newData(name,    fields,  tags,    topic)
       this.collector.newData(args[0], args[1], args[2], args[3]);
     });
     /*if (this.object.getSensorCount()) {

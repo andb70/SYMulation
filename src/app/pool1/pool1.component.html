@@ -3,14 +3,16 @@
     <mat-card-title><h4>{{device.name}}</h4></mat-card-title>
   </mat-card-header>
   <mat-card-content class="containerPoolComponent">
-    <li>Flusso liquido: {{device.liquidFlowTotal | number:'1.0-0'}} l</li>
+    <li>Contatore: {{device.liquidFlowTotal | number:'1.0-0'}} l</li>
+    <li>Flusso in ingresso: {{device.liquidFlowIN | number:'1.1-1'}} l/h</li>
+    <li>Flusso in uscita: {{device.liquidFlowOUT | number:'1.1-2'}} l/h</li>
     <li>Temperatura: {{device.temperature | number:'1.3-3'}} °C</li>
     <li>Umidità rel.: {{device.rh | number:'1.3-3'}} %RH</li>
   </mat-card-content>
   <mat-card-actions>
     <button  type="button" mat-button
              [ngClass]="{'motorON': device.isON,'motorOFF': device.isOFF}"
-             (click)="device.deviceSwitch()">Svuota</button>
+             (click)="device.deviceSwitch()">{{device.isON ? 'Svuota' : 'Riempi'}}</button>
     <button  type="button" mat-button
              [ngClass]="{'motorON': device.isHeatON,'motorOFF': device.isHeatOFF}"
              (click)="device.heatSwitch()">Scalda</button>

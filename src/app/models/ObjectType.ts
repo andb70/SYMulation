@@ -12,6 +12,7 @@ export class ObjectType {
   private children: ObjectType[] = [];
   private sensors: DataPointType[] = [];
   private _measureName: string;
+  private _topic: string;
   private _lastUpdate;
   @Output()
   update = new EventEmitter();
@@ -46,7 +47,7 @@ export class ObjectType {
     if (now - this._lastUpdate > ObjectUpdateInterval) {
       // console.log('DataType.update');
       this._lastUpdate = now;
-      this.update.emit([this._measureName, this.getFields(), this.getTags([]), this.name]);
+      this.update.emit([this._measureName, this.getFields(), this.getTags([]), this.topic]);
     }
   }
   getChildren() {
@@ -97,9 +98,14 @@ export class ObjectType {
     return this.children[this.children.length - 1];
   }
 
-  hasMeasure(name: string) {
+  hasMeasure(name: string, topic: string) {
     this._measureName = name;
+    this._topic = topic;
     return this;
+  }
+
+  get topic(): string {
+    return this._topic;
   }
 
   get measureName(): string {

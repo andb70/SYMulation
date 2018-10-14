@@ -122,7 +122,20 @@ export class DataPointType implements INotify {
   get increment(): number {
     return this._value - this._valueOld ;
   }
-
+  scaleToInput(newValue: number): number {
+    return DataPointType.scale(newValue,
+      this.scaleMin,
+      this.scaleMax,
+      this.inMin,
+      this.inMax);
+  }
+  scaleToOutput(newValue: number): number {
+    return DataPointType.scale(newValue,
+      this.inMin,
+      this.inMax,
+      this.scaleMin,
+      this.scaleMax);
+  }
   get scaledValue(): number {
     return DataPointType.scale(this._value,
       this.inMin,
