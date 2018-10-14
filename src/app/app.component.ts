@@ -2,17 +2,12 @@ import {Component, OnInit} from '@angular/core';
 import {LogicIOService} from './logic-io.service';
 import {DataPointType} from './models/DataPointType';
 import {ObjectType} from './models/ObjectType';
-import {MotorClass, MotorConfigType, MotorParamType, switchState} from './models/MotorClass';
 import {
-  Pool1Class,
-  Pool2Class,
-  PoolClass,
-  PoolConfig1Type,
-  PoolConfig2Type,
-  PoolConfigType,
-  PoolParam1Type, PoolParam2Type,
-  PoolParamType
-} from './models/Pool1Class';
+  DeviceClass,
+  DeviceConfigType,
+  DeviceParamType,
+  SwitchState
+} from './models/DeviceClass';
 import {CommDriverService} from './comm-driver.service';
 import {Query} from './models/Query';
 import {Measure} from './models/Measure';
@@ -27,7 +22,9 @@ import {JUtil} from './models/JUtil';
 export class AppComponent implements OnInit {
   showTree = true;
   showGoals = true;
-  status: string;
+  scanning = false;
+  root: ObjectType;
+
   sCurrent = new DataPointType('current',
     0,
     1023,
@@ -35,7 +32,8 @@ export class AppComponent implements OnInit {
     125,
     0,
     1,
-    0.8
+    0.8,
+    'A'
   );
   sRPM = new DataPointType('rpm',
     0,
@@ -44,7 +42,8 @@ export class AppComponent implements OnInit {
     4500,
     0,
     1.1,
-    0.5
+    0.5,
+    'RPM'
   );
   sHours = new DataPointType('hours',
     0,
@@ -53,7 +52,8 @@ export class AppComponent implements OnInit {
     1000000000000,
     0,
     1.6,
-    0.8
+    0.8,
+    'H'
   );
   sLiquidFlow = new DataPointType('contatoreAcqua',
     0,
@@ -62,7 +62,8 @@ export class AppComponent implements OnInit {
     1000000000000,
     0,
     22,
-    0.8
+    0.8,
+    'l'
   );
   sTemperature = new DataPointType('temperatura',
     0,
@@ -71,7 +72,8 @@ export class AppComponent implements OnInit {
     600,
     20,
     15,
-    0.8
+    0.8,
+    '°C'
   );
   sLiquidLevel = new DataPointType('livelloAcqua',
     0,
@@ -80,7 +82,8 @@ export class AppComponent implements OnInit {
     2000,
     1400,
     10,
-    0.8
+    0.8,
+    'mm'
   );
   sRH = new DataPointType('umidità',
     0,
@@ -89,85 +92,94 @@ export class AppComponent implements OnInit {
     100,
     60,
     5,
-    0.8
+    0.8,
+    '%RH'
   );
-  spH = new DataPointType('pH',
+  sPH = new DataPointType('pH',
     0,
     1023,
     0,
     14,
     7.3,
     4,
-    0.8
+    0.8,
+    'PH'
   );
-  pompa1: MotorClass = new MotorClass('Pompa 1', {maxI: 60, maxRPM: 4500, acceleration: .3} as MotorConfigType,
-    {state: switchState.OFF, I: 0, RPM: 0, H: 0} as MotorParamType,
+  pompa1: DeviceClass = DeviceClass.newMotorCurrentRpmHours('Pompa 1',
+    {maxI: 60, maxRPM: 4500, acceleration: .3, stress: 1} as DeviceConfigType,
+    {state: SwitchState.OFF, I: 0, RPM: 0, H: 0} as DeviceParamType,
     DataPointType.fromTemplate(this.sCurrent, 5, 0),
     DataPointType.fromTemplate(this.sRPM, 6, 1),
     DataPointType.fromTemplate(this.sHours, 7, 2));
 
-  pompa2: MotorClass = new MotorClass('Pompa 2', {maxI: 30, maxRPM: 2000, acceleration: .1} as MotorConfigType,
-    {state: switchState.OFF, I: 1, RPM: 120, H: 24} as MotorParamType,
+  pompa2: DeviceClass = DeviceClass.newMotorCurrentRpmHours('Pompa 2',
+    {maxI: 30, maxRPM: 2000, acceleration: .1, stress: 0} as DeviceConfigType,
+    {state: SwitchState.OFF, I: 0, RPM: 0, H: 0} as DeviceParamType,
     DataPointType.fromTemplate(this.sCurrent, 13, 3),
     DataPointType.fromTemplate(this.sRPM, 14, 4),
     DataPointType.fromTemplate(this.sHours, 15, 5));
 
-  ventilatore1: MotorClass = new MotorClass('Ventilatore 1', {maxI: 22, maxRPM: 1400, acceleration: .1} as MotorConfigType,
-    {state: switchState.OFF, I: 1, RPM: 120, H: 24} as MotorParamType,
+  ventilatore1: DeviceClass = DeviceClass.newMotorCurrentRpmHours('Ventilatore 1',
+    {maxI: 22, maxRPM: 1400, acceleration: .1, stress: 0} as DeviceConfigType,
+    {state: SwitchState.OFF, I: 1, RPM: 120, H: 24} as DeviceParamType,
     DataPointType.fromTemplate(this.sCurrent, 21, 6),
     DataPointType.fromTemplate(this.sRPM, 22, 7),
     DataPointType.fromTemplate(this.sHours, 23, 8));
 
 
-  motore1: MotorClass = new MotorClass('Motore 1', {maxI: 90, maxRPM: 1800, acceleration: .1} as MotorConfigType,
-    {state: switchState.OFF, I: 1, RPM: 120, H: 24} as MotorParamType,
+  motore1: DeviceClass = DeviceClass.newMotorCurrentRpmHours('Motore 1',
+    {maxI: 90, maxRPM: 1800, acceleration: .1, stress: 0} as DeviceConfigType,
+    {state: SwitchState.OFF, I: 1, RPM: 120, H: 24} as DeviceParamType,
     DataPointType.fromTemplate(this.sCurrent, 40, 9),
     DataPointType.fromTemplate(this.sRPM, 41, 10),
     DataPointType.fromTemplate(this.sHours, 42, 11));
 
-  motore2: MotorClass = new MotorClass('Motore 2', {maxI: 90, maxRPM: 1800, acceleration: .1} as MotorConfigType,
-    {state: switchState.OFF, I: 1, RPM: 120, H: 24} as MotorParamType,
+  motore2: DeviceClass = DeviceClass.newMotorCurrentRpmHours('Motore 2',
+    {maxI: 90, maxRPM: 1800, acceleration: .1, stress: 0} as DeviceConfigType,
+    {state: SwitchState.OFF, I: 1, RPM: 120, H: 24} as DeviceParamType,
     DataPointType.fromTemplate(this.sCurrent, 44, 12),
     DataPointType.fromTemplate(this.sRPM, 45, 13),
     DataPointType.fromTemplate(this.sHours, 46, 14));
 
-  vasca1: PoolClass = new PoolClass('Vasca 1', {minT: 4, maxT: 96, maxLevel: 1800} as PoolConfigType,
-    {state: switchState.OFF, LiquidFlow: 0, Temperature: 48, LiquidLevel: 300} as PoolParamType,
+  vasca1: DeviceClass = DeviceClass.newPoolFlowTempLevel('Vasca 1',
+    {tempMin: 4, tempMax: 96, tempSP: 20, flowRateIN: 100, flowRateOUT: 10, levelMax: 1800} as DeviceConfigType,
+    {state: SwitchState.OFF, heatState: SwitchState.OFF, LiquidFlow: 0, Temperature: 48, LiquidLevel: 300} as DeviceParamType,
     DataPointType.fromTemplate(this.sLiquidFlow, 8, 15),
     DataPointType.fromTemplate(this.sTemperature, 9, 16),
-    DataPointType.fromTemplate(this.sLiquidLevel, 10, 17),
-    100,
-    10);
+    DataPointType.fromTemplate(this.sLiquidLevel, 10, 17));
 
-  vasca2: PoolClass = new PoolClass('Vasca 2', {minT: 4, maxT: 96, maxLevel: 1400} as PoolConfigType,
-    {state: switchState.OFF, LiquidFlow: 0, Temperature: 48, LiquidLevel: 100} as PoolParamType,
+  vasca2: DeviceClass = DeviceClass.newPoolFlowTempLevel('Vasca 2',
+    {tempMin: 4, tempMax: 96, tempSP: 20, flowRateIN: 100, flowRateOUT: 10, levelMax: 1400} as DeviceConfigType,
+    {state: SwitchState.OFF, LiquidFlow: 0, Temperature: 48, LiquidLevel: 100} as DeviceParamType,
     DataPointType.fromTemplate(this.sLiquidFlow, 16, 18),
     DataPointType.fromTemplate(this.sTemperature, 17, 19),
-    DataPointType.fromTemplate(this.sLiquidLevel, 18, 20),
-    0.2,
-    0.4);
+    DataPointType.fromTemplate(this.sLiquidLevel, 18, 20));
 
-  vasca3: Pool1Class = new Pool1Class('Vasca 3', {minT: 4, maxT: 96, maxRH: 0.7} as PoolConfig1Type,
-    {state: switchState.OFF, LiquidFlow: 0, Temperature: 48, RH: 0.5} as PoolParam1Type,
+  vasca3: DeviceClass = DeviceClass.newPoolFlowTempRH('Vasca 3',
+    {tempMin: 4, tempMax: 96, tempSP: 20, flowRateIN: 100, flowRateOUT: 100, rhMax: 0.7} as DeviceConfigType,
+    {state: SwitchState.OFF, LiquidFlow: 0, Temperature: 48, RH: 0.5} as DeviceParamType,
     DataPointType.fromTemplate(this.sLiquidFlow, 24, 21),
     DataPointType.fromTemplate(this.sTemperature, 25, 22),
     DataPointType.fromTemplate(this.sRH, 26, 23));
 
 
-  vasca4: Pool2Class = new Pool2Class('Vasca 4', {minLevel: 200, minPH: 7.0, maxPH: 7.6} as PoolConfig2Type,
-    {state: switchState.OFF, LiquidLevel: 1000, PH: 7.5} as PoolParam2Type,
+  vasca4: DeviceClass = DeviceClass.newPoolLevelPH('Vasca 4',
+    {levelMin: 200, phMin: 7.0, phMax: 7.6} as DeviceConfigType,
+    {state: SwitchState.OFF, LiquidLevel: 1000, PH: 7.5} as DeviceParamType,
     DataPointType.fromTemplate(this.sLiquidLevel, 29, 24),
-    DataPointType.fromTemplate(this.spH, 30, 25));
+    DataPointType.fromTemplate(this.sPH, 30, 25));
 
-  vasca5: Pool2Class = new Pool2Class('Vasca 5', {minLevel: 200, minPH: 7.0, maxPH: 7.6} as PoolConfig2Type,
-    {state: switchState.OFF, LiquidLevel: 1000, PH: 7.3} as PoolParam2Type,
+  vasca5: DeviceClass = DeviceClass.newPoolLevelPH('Vasca 5',
+    {levelMin: 200, phMin: 7.0, phMax: 7.6} as DeviceConfigType,
+    {state: SwitchState.OFF, LiquidLevel: 1000, PH: 7.3} as DeviceParamType,
     DataPointType.fromTemplate(this.sLiquidLevel, 32, 26),
-    DataPointType.fromTemplate(this.spH, 33, 27));
+    DataPointType.fromTemplate(this.sPH, 33, 27));
 
-  vasca6: Pool2Class = new Pool2Class('Vasca 6', {minLevel: 200, minPH: 7.0, maxPH: 7.6} as PoolConfig2Type,
-    {state: switchState.OFF, LiquidLevel: 1000, PH: 7.1} as PoolParam2Type,
+  vasca6: DeviceClass = DeviceClass.newPoolLevelPH('Vasca 6',
+    {levelMin: 200, phMin: 7.0, phMax: 7.6} as DeviceConfigType,
+    {state: SwitchState.OFF, LiquidLevel: 1000, PH: 7.1} as DeviceParamType,
     DataPointType.fromTemplate(this.sLiquidLevel, 35, 28),
-    DataPointType.fromTemplate(this.spH, 36, 29));
+    DataPointType.fromTemplate(this.sPH, 36, 29));
 
 
   /**
@@ -186,35 +198,8 @@ export class AppComponent implements OnInit {
 
 
 
-  switch: boolean;
-  root: ObjectType;
-  prelavaggio: ObjectType;
-  lavaggio: ObjectType;
-  asciugatura: ObjectType;
-  impilatore: ObjectType;
 
   constructor(private logicIO: LogicIOService, private collector: CommDriverService) {
-    this.status = 'OFF';
-/*    this.IOs.updateIO.subscribe( t => {
-      // console.log('evento update');
-      this.config.updateParam();
-    });*/
-
-
-
-/*    // TODO prelevare dati delle unità
-    this.prelavaggio = new ObjectType('Dati Prelavaggio', 'device', 3);
-    this.prelavaggio
-      .appendSensors(this.vasca1.map(logicIO));
-
-    this.lavaggio = new ObjectType('Dati Lavaggio', 'device', 11);
-    this.lavaggio
-      .appendSensors(this.vasca2.map(logicIO));
-
-    this.asciugatura = new ObjectType('Dati Asciugatura', 'device', 19);
-    this.asciugatura
-      .appendSensors(this.vasca3.map(logicIO));*/
-
 
     /*
       lo scopo di quanto segue è spiegare come funziona la creazione di oggetti e sensori
@@ -270,9 +255,9 @@ export class AppComponent implements OnInit {
 
       la creazione di un device  dovrebbe restituire un'interfaccia universale ma
       è stata implementata come segue:
-        motore2: MotorClass = new MotorClass(name:     'Motore 2',
-                                             config:   {maxI: 90, maxRPM: 1800, acceleration: .1} as MotorConfigType,
-                                             param:    {state: switchState.OFF, I: 1, RPM: 120, H: 24} as MotorParamType,
+        motore2: DeviceClass = DeviceClass.newMotorCurrentRpmHours(name:     'Motore 2',
+                                             config:   {maxI: 90, maxRPM: 1800, acceleration: .1} as DeviceConfigType,
+                                             param:    {state: SwitchState.OFF, I: 1, RPM: 120, H: 24} as DeviceParamType,
                                              sCurrent: DataPointType.fromTemplate(sensor: this.sCurrent,
                                                                                   tag: 44,
                                                                                   map: 12),
@@ -283,10 +268,10 @@ export class AppComponent implements OnInit {
                                                                                   tag: 46,
                                                                                   map: 14));
         vasca6: Pool2Class =  new Pool2Class(name:     'Vasca 6',
-                                             config:   {minLevel: 200, minPH: 7.0, maxPH: 7.6} as PoolConfig2Type,
-                                             param:    {state: switchState.OFF, LiquidLevel: 1000, PH: 7.1} as PoolParam2Type,
+                                             config:   {levelMin: 200, phMin: 7.0, phMax: 7.6} as PoolConfig2Type,
+                                             param:    {state: SwitchState.OFF, LiquidLevel: 1000, PH: 7.1} as PoolParam2Type,
                                              sLiquidLevel: DataPointType.fromTemplate(this.sLiquidLevel, 35, 28),
-                                             sPh:      DataPointType.fromTemplate(this.spH, 36, 29));
+                                             sPH:      DataPointType.fromTemplate(this.sPH, 36, 29));
 
       di seguito useremo <DeviceClass> dove qui abbiamo usato MotorClass o Pool2Class
       per ricordare che l'implementazione deve permettere il polimorfismo
@@ -402,7 +387,7 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.switch = false;
+
     if (false) {
       let o = new Object();
       o['root'] = this.root.serialize();
@@ -454,7 +439,7 @@ export class AppComponent implements OnInit {
 
     this.collector.queryMeasure(query).subscribe( (result: Result) => {
       console.log('received query result ' + query.path);
-      switch (query.path)  {
+      scanning (query.path)  {
         case '/plant/1/section/2/unit/3/device/4':
           this.pompa1.setDefaults('H', result.result[0].fields[0].Hours);
       }
@@ -477,23 +462,9 @@ export class AppComponent implements OnInit {
     });
   }
 
-  motorSwitch() {
-    this.status === 'OFF' ? this.status = 'ON' : this.status = 'OFF';
-    this.switch = !this.switch;
-    console.log('motor switch ' + this.switch);
-    if (this.switch) {
-      this.logicIO.scanStart(0, 1000);
-    } else {
-      this.logicIO.scanStop();
-    }
+  deviceSwitch() {
+    this.scanning = !this.scanning;
+    // console.log('motor scanning ' + this.scanning);
+    this.scanning ? this.logicIO.scanStart(0, 1000) : this.logicIO.scanStop();
   }
-
-  isON() {
-    return this.switch;
-  }
-
-  isOFF() {
-    return !this.switch;
-  }
-
 }

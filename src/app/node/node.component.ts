@@ -15,11 +15,15 @@ export class NodeComponent implements OnInit {
 
   ngOnInit(): void {
     /**
-     * se l'oggetto contiene sensori sottoscrive collector.sync
-     * in modo da inviare i dati con scansione regolare
+     * se l'oggetto contiene sensori sottoscrive object.update
+     * dove arrivano e notifiche di cambiamento dei dati di input
+     * dei sensori
+     * di conseguenza le notifiche vengono inviate al driver di comunicazione
+     * per essere trattate
      * */
     this.object.update.subscribe((args) => {
       // console.log('node_object.update' + this.object, args[0], args[1], args[2]);
+      //             newData(name,    fields,  tags,    deviceName)
       this.collector.newData(args[0], args[1], args[2], args[3]);
     });
     /*if (this.object.getSensorCount()) {

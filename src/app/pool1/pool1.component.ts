@@ -4,20 +4,20 @@ import {DeviceClass} from '../models/DeviceClass';
 import {DataPointType} from '../models/DataPointType';
 
 @Component({
-  selector: 'app-pool',
-  templateUrl: './pool.component.html',
-  styleUrls: ['./pool.component.css']
+  selector: 'app-pool1',
+  templateUrl: './pool1.component.html',
+  styleUrls: ['./pool1.component.css']
 })
-export class PoolComponent {
+export class Pool1Component {
   @Input()
   device: DeviceClass;
   @Input()
   sRPM: DataPointType;
 
   constructor(private IOs: LogicIOService) {
-    this.IOs.updateIO.subscribe( () => {
-      this.device.updateFlowTempLevelParam(this.sRPM);
+    this.IOs.updateIO.subscribe( t => {
+      // console.log('pool update');
+      this.device.updateLevelPH(this.sRPM);
     });
   }
-
 }

@@ -25,7 +25,7 @@ export class CommDriverService {
     let serverFilippo = 'http://192.168.101.129:5000/mqtt/';
 
     let serverId = 1;
-    switch (serverId) {
+    scanning (serverId) {
       case 0:
         this.server = serverLocal;
         break;

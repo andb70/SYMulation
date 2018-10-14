@@ -1,0 +1,17 @@
+<mat-card class="card">
+  <mat-card-header>
+    <mat-card-title><h4>{{device.name}}</h4></mat-card-title>
+  </mat-card-header>
+  <mat-card-content class="containerPoolComponent">
+    <li>Livello liquido: {{device.liquidLevel | number:'1.0-0'}} l</li>
+    <li>Temperatura: {{device.ph | number:'1.3-3'}} °C</li>
+  </mat-card-content>
+  <mat-card-actions>
+    <button  type="button" mat-button
+             [ngClass]="{'motorON': device.isON,'motorOFF': device.isOFF}"
+             (click)="device.deviceSwitch()">Svuota</button>
+    <button  type="button" mat-button
+             [ngClass]="{'motorON': device.isHeatON,'motorOFF': device.isHeatOFF}"
+             (click)="device.heatSwitch()">Scalda</button>
+  </mat-card-actions>
+</mat-card>

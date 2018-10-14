@@ -1,0 +1,26 @@
+.card {
+  min-height: 290px !important;
+  max-width: 500px;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
+  margin-bottom: 20px;
+}
+
+.containerPoolComponent {
+  display: grid;
+  grid-template-columns: 1fr;
+  min-width: 390px;
+  margin-left: 150px;
+}
+
+.containerPoolComponent li {
+  margin-bottom: 25px;
+}
+
+button{
+  margin-left: 345px!important;
+  margin-bottom: 16px!important;
+}
+
+mat-card-actions {
+  margin-left: 10px;
+}

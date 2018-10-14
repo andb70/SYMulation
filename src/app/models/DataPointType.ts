@@ -32,7 +32,7 @@ import {JUtil} from './JUtil';
 export class DataPointType implements INotify {
   private _id = JUtil.getUID();
   public tag: number;
-  public map: number; // indice del LogicIO da cui appoggiare il valore
+  public map: number; // indice del LogicIO a cui appoggiare il valore
   private _value: number;
   private _valueOld: number;
   private parent: ObjectType;
@@ -43,7 +43,8 @@ export class DataPointType implements INotify {
                      public scaleMax: number,
                      public initValue: number,
                      public updtRate: number,
-                     public updtTHS: number
+                     public updtTHS: number,
+                     public unit: string
   ) {
     this._value = DataPointType.scale(initValue, scaleMin, scaleMax, inMin, inMax);
   }
@@ -58,7 +59,8 @@ export class DataPointType implements INotify {
       template.scaleMax,
       template.initValue,
       template.updtRate,
-      template.updtTHS);
+      template.updtTHS,
+      template.unit);
     dtp.tag = tag;
     dtp.map = map;
     return dtp;
@@ -146,17 +148,9 @@ export class DataPointType implements INotify {
 }
 
 
-/*export interface IMap {
-  map(inputs: DataPointType[], slots: number[], provider: any): DataPointType[];
-}*/
-
 export interface INotify {
   notify(newValue: number);
 }
-
-/*export interface ItranseferFN {
-  update(inputs: DataPointType[]): DataPointType[];
-}*/
 
 export interface ILogicIO {
   value: number;

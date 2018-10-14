@@ -1,30 +1,33 @@
 <mat-card class="card">
   <mat-card-header>
-    <mat-card-title><h4>{{config.name}}</h4></mat-card-title>
+    <mat-card-title><h4>{{device.name}}</h4></mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <div mat-list class="containerMotorComponent">
       <div class="setDeviceData">
         <mat-form-field>
           <input matInput placeholder="velocità" type="text" name="tSpeed" #Title="ngModel"
-                 [(ngModel)]="targetSpeed"></mat-form-field>
+                 [(ngModel)]="device.targetSpeed"></mat-form-field>
         <p><i style="color: darkgray; font-size: smaller">sforzo</i>
-          <select name="sStress" [(ngModel)]="stress" class="form-control w70 floatR">
-            <option *ngFor="let i of stressValues()" [ngValue]="i">{{i}}</option> <!--TODO Aggiungere select di Angular Material-->
-          </select>
-        </p>
+          <mat-form-field>
+            <mat-select name="sStress" [(value)]="device.stress" class="form-control w70 floatR">
+              <mat-option *ngFor="let i of stressValues()" value="{{i}}">{{i}}</mat-option> <!--TODO Aggiungere select di Angular Material-->
+            </mat-select>
+          </mat-form-field>
+        <p>You selected: {{device.stress}}</p>
+
       </div>
       <ul class="deviceData">
-        <li mat-list-item>velocità: {{actualSpeed | number:'1.0-0'}}</li>
-        <li mat-list-item>assorbimento: {{actualCurrent | number:'1.1-1'}}</li>
-        <li mat-list-item>ore lavoro: {{actualHours | number:'1.3-3'}}</li>
+        <li mat-list-item>velocità: {{device.RPM | number:'1.0-0'}}</li>
+        <li mat-list-item>assorbimento: {{device.current | number:'1.1-1'}}</li>
+        <li mat-list-item>ore lavoro: {{device.hours | number:'1.3-3'}}</li>
       </ul>
     </div>
   </mat-card-content>
   <mat-card-actions>
     <button mat-raised-button class="startButton" type="button"
-            [ngClass]="{'motorON': config.isON,'motorOFF': config.isOFF}"
-            (click)="motorSwitch()"> {{status}}
+            [ngClass]="{'motorON': device.isON, 'motorOFF': device.isOFF}"
+            (click)="device.deviceSwitch()">{{device.isON ? 'ON' : 'OFF'}}
     </button>
   </mat-card-actions>
 </mat-card>
