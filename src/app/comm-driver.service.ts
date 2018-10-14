@@ -8,7 +8,7 @@ import {Queue} from './models/Queue';
 
 const  server = 'indirizzo_api_che_permette_il_salvataggio_e_il_recupero_della_configurazione_dell\'impianto_tramite_POST_e_GET/';
 
-const  maxLength = 0;
+const  maxLength = 10;
 @Injectable()
 export class CommDriverService {
   @Output()
