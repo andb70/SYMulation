@@ -17,16 +17,16 @@ import {JUtil} from './models/JUtil';
 const MqttTopicOLD = 'SYMulation/DataLogger/sensori';
 const MqttTopicPath = 'SYMulation/DataLogger/';
 const MqttTopicPompa1 = MqttTopicPath; // + 'Pompa1';
-const MqttTopicPompa2 =  MqttTopicPath; // + 'Pompa2';
-const MqttTopicVentilatore =  MqttTopicPath; // + 'Ventilatore';
-const MqttTopicMotore1 =  MqttTopicPath; // + 'Motore1';
-const MqttTopicMotore2 =  MqttTopicPath; // + 'Motore2';
-const MqttTopicVasca1 =  MqttTopicPath; // + 'Vasca1';
-const MqttTopicVasca2 =  MqttTopicPath; // + 'Vasca2';
-const MqttTopicVasca3 =  MqttTopicPath; // + 'Vasca3';
-const MqttTopicVasca4 =  MqttTopicPath; // + 'Vasca4';
-const MqttTopicVasca5 =  MqttTopicPath; // + 'Vasca5';
-const MqttTopicVasca6 =  MqttTopicPath; // + 'Vasca6';
+const MqttTopicPompa2 = MqttTopicPath; // + 'Pompa2';
+const MqttTopicVentilatore = MqttTopicPath; // + 'Ventilatore';
+const MqttTopicMotore1 = MqttTopicPath; // + 'Motore1';
+const MqttTopicMotore2 = MqttTopicPath; // + 'Motore2';
+const MqttTopicVasca1 = MqttTopicPath; // + 'Vasca1';
+const MqttTopicVasca2 = MqttTopicPath; // + 'Vasca2';
+const MqttTopicVasca3 = MqttTopicPath; // + 'Vasca3';
+const MqttTopicVasca4 = MqttTopicPath; // + 'Vasca4';
+const MqttTopicVasca5 = MqttTopicPath; // + 'Vasca5';
+const MqttTopicVasca6 = MqttTopicPath; // + 'Vasca6';
 
 @Component({
   selector: 'app-root',
@@ -164,14 +164,14 @@ export class AppComponent implements OnInit {
 
   vasca2: DeviceClass = DeviceClass.newPoolFlowTempLevel('Vasca 2',
     {tempMin: 4, tempMax: 96, tempSP: 20, flowRateIN: 100, flowRateOUT: 20, levelMax: 1400} as DeviceConfigType,
-    {state: SwitchState.OFF, LiquidFlow: 0, Temperature: 48, LiquidLevel: 100} as DeviceParamType,
+    {state: SwitchState.OFF, heatState: SwitchState.OFF, LiquidFlow: 0, Temperature: 48, LiquidLevel: 100} as DeviceParamType,
     DataPointType.fromTemplate(this.sLiquidFlow, 16, 18),
     DataPointType.fromTemplate(this.sTemperature, 17, 19),
     DataPointType.fromTemplate(this.sLiquidLevel, 18, 20));
 
   vasca3: DeviceClass = DeviceClass.newPoolFlowTempRH('Vasca 3',
     {tempMin: 4, tempMax: 96, tempSP: 80, flowRateIN: 100, flowRateOUT: 100, rhMax: 0.7} as DeviceConfigType,
-    {state: SwitchState.OFF, LiquidFlow: 0, Temperature: 48, RH: 0.5} as DeviceParamType,
+    {state: SwitchState.OFF, heatState: SwitchState.OFF, LiquidFlow: 0, Temperature: 48, RH: 0.5} as DeviceParamType,
     DataPointType.fromTemplate(this.sLiquidFlow, 24, 21),
     DataPointType.fromTemplate(this.sTemperature, 25, 22),
     DataPointType.fromTemplate(this.sRH, 26, 23));
@@ -405,18 +405,18 @@ export class AppComponent implements OnInit {
     if (false) {
       let o = new Object();
       o['root'] = this.root.serialize();
-/*      o['devices'] = [];
-      o['devices'].push(this.pompa1.serialize());
-      o['devices'].push(this.vasca1.serialize());
-      o['devices'].push(this.pompa2.serialize());
-      o['devices'].push(this.vasca2.serialize());
-      o['devices'].push(this.ventilatore1.serialize());
-      o['devices'].push(this.vasca3.serialize());
-      o['devices'].push(this.vasca4.serialize());
-      o['devices'].push(this.vasca5.serialize());
-      o['devices'].push(this.vasca6.serialize());
-      o['devices'].push(this.motore1.serialize());
-      o['devices'].push(this.motore2.serialize());*/
+      /*      o['devices'] = [];
+            o['devices'].push(this.pompa1.serialize());
+            o['devices'].push(this.vasca1.serialize());
+            o['devices'].push(this.pompa2.serialize());
+            o['devices'].push(this.vasca2.serialize());
+            o['devices'].push(this.ventilatore1.serialize());
+            o['devices'].push(this.vasca3.serialize());
+            o['devices'].push(this.vasca4.serialize());
+            o['devices'].push(this.vasca5.serialize());
+            o['devices'].push(this.vasca6.serialize());
+            o['devices'].push(this.motore1.serialize());
+            o['devices'].push(this.motore2.serialize());*/
 
       console.log(o);
       /*this.collector.savePlant(o).subscribe((result) => {

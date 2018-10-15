@@ -9,7 +9,7 @@
   display: grid;
   grid-template-columns: 1fr;
   min-width: 390px;
-  margin-left: 150px;
+  margin-left: 100px;
 }
 
 .containerPoolComponent li {
@@ -17,10 +17,14 @@
 }
 
 button{
-  margin-left: 345px!important;
+  height: 60px;
+  width: 200px;
+  font-size: x-large;
+  margin-left: 190px!important;
   margin-bottom: 16px!important;
+
 }
 
 mat-card-actions {
-  margin-left: 10px;
+  margin-left: 60px;
 }

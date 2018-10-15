@@ -14,7 +14,7 @@
              [ngClass]="{'motorON': device.isON,'motorOFF': device.isOFF}"
              (click)="device.deviceSwitch()">{{device.isON ? 'Svuota' : 'Riempi'}}</button>
     <button  type="button" mat-button
-             [ngClass]="{'motorON': device.isHeatON,'motorOFF': device.isHeatOFF}"
+             [ngClass]="{'motorON': device.isON,'motorOFF': device.isHeatOFF}"
              (click)="device.heatSwitch()">Scalda</button>
   </mat-card-actions>
 </mat-card>
