@@ -26,12 +26,12 @@ import { Pool2Component } from './pool2/pool2.component';
 export const MQTT_SERVICE_OPTIONS: IMqttServiceOptions = {
   // hostname: 'localhost',
   hostname: '7technode.ddns.net',
-  port: 3000,
+  port: 3001,
   path: '',
   username: 'admin',
   password: 'secret',
   clientId: 'GeneratoreDati Datalogger', // 'Dashboard angular'
-  protocol: 'ws'
+  protocol: 'wss'
 };
 
 @NgModule({

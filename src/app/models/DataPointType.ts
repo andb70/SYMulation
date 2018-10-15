@@ -112,7 +112,7 @@ export class DataPointType implements INotify {
   notify(newValue: number) {
     this._valueOld = this._value;
     this._value = newValue;
-    this.parent.onUpdate();
+    this.parent.onUpdate(this);
   }
 
   get value(): number {

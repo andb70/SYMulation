@@ -16,17 +16,17 @@ import {JUtil} from './models/JUtil';
 
 const MqttTopicOLD = 'SYMulation/DataLogger/sensori';
 const MqttTopicPath = 'SYMulation/DataLogger/';
-const MqttTopicPompa1 = MqttTopicPath + 'Pompa1';
-const MqttTopicPompa2 =  MqttTopicPath + 'Pompa2';
-const MqttTopicVentilatore =  MqttTopicPath + 'Ventilatore';
-const MqttTopicMotore1 =  MqttTopicPath + 'Motore1';
-const MqttTopicMotore2 =  MqttTopicPath + 'Motore2';
-const MqttTopicVasca1 =  MqttTopicPath + 'Vasca1';
-const MqttTopicVasca2 =  MqttTopicPath + 'Vasca2';
-const MqttTopicVasca3 =  MqttTopicPath + 'Vasca3';
-const MqttTopicVasca4 =  MqttTopicPath + 'Vasca4';
-const MqttTopicVasca5 =  MqttTopicPath + 'Vasca5';
-const MqttTopicVasca6 =  MqttTopicPath + 'Vasca6';
+const MqttTopicPompa1 = MqttTopicPath; // + 'Pompa1';
+const MqttTopicPompa2 =  MqttTopicPath; // + 'Pompa2';
+const MqttTopicVentilatore =  MqttTopicPath; // + 'Ventilatore';
+const MqttTopicMotore1 =  MqttTopicPath; // + 'Motore1';
+const MqttTopicMotore2 =  MqttTopicPath; // + 'Motore2';
+const MqttTopicVasca1 =  MqttTopicPath; // + 'Vasca1';
+const MqttTopicVasca2 =  MqttTopicPath; // + 'Vasca2';
+const MqttTopicVasca3 =  MqttTopicPath; // + 'Vasca3';
+const MqttTopicVasca4 =  MqttTopicPath; // + 'Vasca4';
+const MqttTopicVasca5 =  MqttTopicPath; // + 'Vasca5';
+const MqttTopicVasca6 =  MqttTopicPath; // + 'Vasca6';
 
 @Component({
   selector: 'app-root',

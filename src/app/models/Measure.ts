@@ -58,6 +58,22 @@ export class Measure {
     return new Date().getTime();
   }
 }
+export class MqttPacket {
+
+  constructor(public value: number, public timestamp?: number) {
+    if (!this.timestamp) {
+      this.timestamp = Measure.getTimeStamp();
+    }
+  }
+
+  /**
+   * restituisce il TimeStamp del momento attuale
+   *
+   * */
+  public static getTimeStamp(): number {
+    return new Date().getTime();
+  }
+}
 
 export class Field {
   constructor(

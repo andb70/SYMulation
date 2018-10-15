@@ -16,16 +16,21 @@ export class ObjectType {
   private _lastUpdate;
   @Output()
   update = new EventEmitter();
+  @Output()
+  updateMqtt = new EventEmitter();
   constructor(public name: string,
               public tagName: string,
               public tag: number
   ) {this._lastUpdate =  Measure.getTimeStamp(); }
 
+  static deleteSpaces(topic: string): string {
+    return topic.replace(' ', '');
+  }
   getID(): number {
     return this._id;
   }
   serialize() {
-    let o = new Object();
+    let o = {};
     o['id'] = this._id;
     o['name'] = this.name;
     o['tagName'] = this.tagName;
@@ -42,12 +47,18 @@ export class ObjectType {
     });
     return o;
   }
-  onUpdate() {
+  onUpdate(sensor: DataPointType) {
     let now = Measure.getTimeStamp();
     if (now - this._lastUpdate > ObjectUpdateInterval) {
       // console.log('DataType.update');
       this._lastUpdate = now;
-      this.update.emit([this._measureName, this.getFields(), this.getTags([]), this.topic]);
+      this.update.emit([
+        this._measureName,
+        this.getFields(),
+        this.getTags([])
+      ]);
+      this.updateMqtt.emit([ObjectType.deleteSpaces(this._topic + this.getTopic() + sensor.fldName),
+        sensor.scaledValue]);
     }
   }
   getChildren() {
@@ -144,4 +155,11 @@ export class ObjectType {
     }
     return tags;
   }
+  getTopic(): string {
+    if (this.getParent()) {
+      return this.getParent().getTopic() + this.name + '/';
+    }
+    return this.name + '/';
+  }
+
 }

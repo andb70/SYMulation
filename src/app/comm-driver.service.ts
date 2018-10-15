@@ -1,6 +1,6 @@
 import {Injectable, Output} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {Measure} from './models/Measure';
+import {Measure, MqttPacket} from './models/Measure';
 import {ClockService} from './clock.service';
 import {Clock7} from './models/Clock7';
 import {MqttService} from 'ngx-mqtt';
@@ -35,23 +35,21 @@ export class CommDriverService {
 
 
 
-  newData(name, fields, tags, MqttTopic: string) {
-    console.log('new measure', name, MqttTopic);
-    if (this.queue.add(new Measure(name, fields, tags), MqttTopic) ) {
+  newDataMqtt(MqttTopic: string, value: number) {
+    console.log('newDataMqtt', MqttTopic, value);
+    if (this.queue.add(new MqttPacket(value), MqttTopic) ) {
       this.fireMeasure(this.queue.pull(MqttTopic), MqttTopic);
-    } /*else {
-      if (this.clock.isBusy()) {return; }
-      this.clock.start(1000, 10000).tick.subscribe( () => {
-        console.log('new measure timeout' );
-        this.clock.stop7();
-        if (this.queue.length > 0) {
-          this.fireMeasure();
-        }
-      });
-    }*/
+    }
+  }
+  newData(name, fields, tags) {
+    const MqttTopicInflux = 'SYMulation/DataLogger/sensori';
+
+    if (this.queue.add(new Measure(name, fields, tags), MqttTopicInflux) ) {
+      this.fireMeasure(this.queue.pull(MqttTopicInflux), MqttTopicInflux);
+    }
   }
   fireMeasure(data: any, MqttTopic: string) {
-    console.log('fire measure', MqttTopic, data.lenght, data);
+    console.log('fire measure', MqttTopic, data);
     this.mqttService.publish( MqttTopic, JSON.stringify(data)).subscribe( () => {
       console.log('fired');
     });

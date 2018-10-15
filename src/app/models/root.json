@@ -1,0 +1,1316 @@
+{
+  "root": {
+    "id": 50,
+    "name": "root",
+    "tagName": "plant",
+    "tag": 1,
+    "parent": null,
+    "measureName": null,
+    "sensors": [],
+    "children": [{
+      "id": 51,
+      "name": "Sezione lavaggio",
+      "tagName": "section",
+      "tag": 2,
+      "parent": 50,
+      "measureName": null,
+      "sensors": [],
+      "children": [{
+        "id": 52,
+        "name": "Prelavaggio",
+        "tagName": "unit",
+        "tag": 3,
+        "parent": 51,
+        "measureName": "Pool1",
+        "sensors": [{
+          "id": 29,
+          "tag": 8,
+          "map": 15,
+          "value": 34.1,
+          "parent": 52,
+          "fldName": "contatoreAcqua",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 600,
+          "initValue": 20,
+          "updtRate": 22,
+          "updtTHS": 0.8
+        },
+          {
+            "id": 30,
+            "tag": 9,
+            "map": 16,
+            "value": 281.32500000000005,
+            "parent": 52,
+            "fldName": "temperatura",
+            "inMin": 0,
+            "inMax": 1023,
+            "scaleMin": -200,
+            "scaleMax": 600,
+            "initValue": 20,
+            "updtRate": 15,
+            "updtTHS": 0.8
+          },
+          {
+            "id": 31,
+            "tag": 10,
+            "map": 17,
+            "value": 716.0999999999999,
+            "parent": 52,
+            "fldName": "livelloAcqua",
+            "inMin": 0,
+            "inMax": 1023,
+            "scaleMin": 0,
+            "scaleMax": 2000,
+            "initValue": 1400,
+            "updtRate": 10,
+            "updtTHS": 0.8
+          }
+        ],
+        "children": [{
+          "id": 53,
+          "name": "Pompa 1",
+          "tagName": "device",
+          "tag": 4,
+          "parent": 52,
+          "measureName": "ElMotor",
+          "sensors": [{
+            "id": 9,
+            "tag": 5,
+            "map": 0,
+            "value": 0,
+            "parent": 53,
+            "fldName": "current",
+            "inMin": 0,
+            "inMax": 1023,
+            "scaleMin": 0,
+            "scaleMax": 125,
+            "initValue": 0,
+            "updtRate": 1,
+            "updtTHS": 0.8
+          },
+            {
+              "id": 10,
+              "tag": 6,
+              "map": 1,
+              "value": 0,
+              "parent": 53,
+              "fldName": "rpm",
+              "inMin": 0,
+              "inMax": 1023,
+              "scaleMin": 0,
+              "scaleMax": 4500,
+              "initValue": 0,
+              "updtRate": 1.1,
+              "updtTHS": 0.5
+            },
+            {
+              "id": 11,
+              "tag": 7,
+              "map": 2,
+              "value": 0,
+              "parent": 53,
+              "fldName": "hours",
+              "inMin": 0,
+              "inMax": 1023,
+              "scaleMin": 0,
+              "scaleMax": 2000,
+              "initValue": 0,
+              "updtRate": 1.6,
+              "updtTHS": 0.8
+            }
+          ],
+          "children": []
+        }]
+      },
+        {
+          "id": 54,
+          "name": "Lavaggio",
+          "tagName": "unit",
+          "tag": 11,
+          "parent": 51,
+          "measureName": "Pool1",
+          "sensors": [{
+            "id": 33,
+            "tag": 16,
+            "map": 18,
+            "value": 34.1,
+            "parent": 54,
+            "fldName": "contatoreAcqua",
+            "inMin": 0,
+            "inMax": 1023,
+            "scaleMin": 0,
+            "scaleMax": 600,
+            "initValue": 20,
+            "updtRate": 22,
+            "updtTHS": 0.8
+          },
+            {
+              "id": 34,
+              "tag": 17,
+              "map": 19,
+              "value": 281.32500000000005,
+              "parent": 54,
+              "fldName": "temperatura",
+              "inMin": 0,
+              "inMax": 1023,
+              "scaleMin": -200,
+              "scaleMax": 600,
+              "initValue": 20,
+              "updtRate": 15,
+              "updtTHS": 0.8
+            },
+            {
+              "id": 35,
+              "tag": 18,
+              "map": 20,
+              "value": 716.0999999999999,
+              "parent": 54,
+              "fldName": "livelloAcqua",
+              "inMin": 0,
+              "inMax": 1023,
+              "scaleMin": 0,
+              "scaleMax": 2000,
+              "initValue": 1400,
+              "updtRate": 10,
+              "updtTHS": 0.8
+            }
+          ],
+          "children": [{
+            "id": 55,
+            "name": "Pompa 2",
+            "tagName": "device",
+            "tag": 12,
+            "parent": 54,
+            "measureName": "ElMotor",
+            "sensors": [{
+              "id": 13,
+              "tag": 13,
+              "map": 3,
+              "value": 0,
+              "parent": 55,
+              "fldName": "current",
+              "inMin": 0,
+              "inMax": 1023,
+              "scaleMin": 0,
+              "scaleMax": 125,
+              "initValue": 0,
+              "updtRate": 1,
+              "updtTHS": 0.8
+            },
+              {
+                "id": 14,
+                "tag": 14,
+                "map": 4,
+                "value": 0,
+                "parent": 55,
+                "fldName": "rpm",
+                "inMin": 0,
+                "inMax": 1023,
+                "scaleMin": 0,
+                "scaleMax": 4500,
+                "initValue": 0,
+                "updtRate": 1.1,
+                "updtTHS": 0.5
+              },
+              {
+                "id": 15,
+                "tag": 15,
+                "map": 5,
+                "value": 0,
+                "parent": 55,
+                "fldName": "hours",
+                "inMin": 0,
+                "inMax": 1023,
+                "scaleMin": 0,
+                "scaleMax": 2000,
+                "initValue": 0,
+                "updtRate": 1.6,
+                "updtTHS": 0.8
+              }
+            ],
+            "children": []
+          }]
+        },
+        {
+          "id": 56,
+          "name": "Asciugatura",
+          "tagName": "unit",
+          "tag": 19,
+          "parent": 51,
+          "measureName": "Pool2",
+          "sensors": [{
+            "id": 37,
+            "tag": 24,
+            "map": 21,
+            "value": 34.1,
+            "parent": 56,
+            "fldName": "contatoreAcqua",
+            "inMin": 0,
+            "inMax": 1023,
+            "scaleMin": 0,
+            "scaleMax": 600,
+            "initValue": 20,
+            "updtRate": 22,
+            "updtTHS": 0.8
+          },
+            {
+              "id": 38,
+              "tag": 25,
+              "map": 22,
+              "value": 281.32500000000005,
+              "parent": 56,
+              "fldName": "temperatura",
+              "inMin": 0,
+              "inMax": 1023,
+              "scaleMin": -200,
+              "scaleMax": 600,
+              "initValue": 20,
+              "updtRate": 15,
+              "updtTHS": 0.8
+            },
+            {
+              "id": 39,
+              "tag": 26,
+              "map": 23,
+              "value": 613.8,
+              "parent": 56,
+              "fldName": "umidità",
+              "inMin": 0,
+              "inMax": 1023,
+              "scaleMin": 0,
+              "scaleMax": 100,
+              "initValue": 60,
+              "updtRate": 5,
+              "updtTHS": 0.8
+            }
+          ],
+          "children": [{
+            "id": 57,
+            "name": "Ventilatore",
+            "tagName": "device",
+            "tag": 20,
+            "parent": 56,
+            "measureName": "ElMotor",
+            "sensors": [{
+              "id": 17,
+              "tag": 21,
+              "map": 6,
+              "value": 0,
+              "parent": 57,
+              "fldName": "current",
+              "inMin": 0,
+              "inMax": 1023,
+              "scaleMin": 0,
+              "scaleMax": 125,
+              "initValue": 0,
+              "updtRate": 1,
+              "updtTHS": 0.8
+            },
+              {
+                "id": 18,
+                "tag": 22,
+                "map": 7,
+                "value": 0,
+                "parent": 57,
+                "fldName": "rpm",
+                "inMin": 0,
+                "inMax": 1023,
+                "scaleMin": 0,
+                "scaleMax": 4500,
+                "initValue": 0,
+                "updtRate": 1.1,
+                "updtTHS": 0.5
+              },
+              {
+                "id": 19,
+                "tag": 23,
+                "map": 8,
+                "value": 0,
+                "parent": 57,
+                "fldName": "hours",
+                "inMin": 0,
+                "inMax": 1023,
+                "scaleMin": 0,
+                "scaleMax": 2000,
+                "initValue": 0,
+                "updtRate": 1.6,
+                "updtTHS": 0.8
+              }
+            ],
+            "children": []
+          }]
+        }
+      ]
+    },
+      {
+        "id": 58,
+        "name": "Sezione pretrattamento",
+        "tagName": "section",
+        "tag": 27,
+        "parent": 50,
+        "measureName": null,
+        "sensors": [],
+        "children": [{
+          "id": 59,
+          "name": "Vasca pre trattamento",
+          "tagName": "unit",
+          "tag": 28,
+          "parent": 58,
+          "measureName": "Pool3",
+          "sensors": [{
+            "id": 41,
+            "tag": 29,
+            "map": 24,
+            "value": 716.0999999999999,
+            "parent": 59,
+            "fldName": "livelloAcqua",
+            "inMin": 0,
+            "inMax": 1023,
+            "scaleMin": 0,
+            "scaleMax": 2000,
+            "initValue": 1400,
+            "updtRate": 10,
+            "updtTHS": 0.8
+          },
+            {
+              "id": 42,
+              "tag": 30,
+              "map": 25,
+              "value": 533.4214285714286,
+              "parent": 59,
+              "fldName": "pH",
+              "inMin": 0,
+              "inMax": 1023,
+              "scaleMin": 0,
+              "scaleMax": 14,
+              "initValue": 7.3,
+              "updtRate": 4,
+              "updtTHS": 0.8
+            }
+          ],
+          "children": []
+        },
+          {
+            "id": 60,
+            "name": "Vasca primer",
+            "tagName": "unit",
+            "tag": 31,
+            "parent": 58,
+            "measureName": "Pool3",
+            "sensors": [{
+              "id": 44,
+              "tag": 32,
+              "map": 26,
+              "value": 716.0999999999999,
+              "parent": 60,
+              "fldName": "livelloAcqua",
+              "inMin": 0,
+              "inMax": 1023,
+              "scaleMin": 0,
+              "scaleMax": 2000,
+              "initValue": 1400,
+              "updtRate": 10,
+              "updtTHS": 0.8
+            },
+              {
+                "id": 45,
+                "tag": 33,
+                "map": 27,
+                "value": 533.4214285714286,
+                "parent": 60,
+                "fldName": "pH",
+                "inMin": 0,
+                "inMax": 1023,
+                "scaleMin": 0,
+                "scaleMax": 14,
+                "initValue": 7.3,
+                "updtRate": 4,
+                "updtTHS": 0.8
+              }
+            ],
+            "children": []
+          },
+          {
+            "id": 61,
+            "name": "Vasca finisher",
+            "tagName": "unit",
+            "tag": 34,
+            "parent": 58,
+            "measureName": "Pool3",
+            "sensors": [{
+              "id": 47,
+              "tag": 35,
+              "map": 28,
+              "value": 716.0999999999999,
+              "parent": 61,
+              "fldName": "livelloAcqua",
+              "inMin": 0,
+              "inMax": 1023,
+              "scaleMin": 0,
+              "scaleMax": 2000,
+              "initValue": 1400,
+              "updtRate": 10,
+              "updtTHS": 0.8
+            },
+              {
+                "id": 48,
+                "tag": 36,
+                "map": 29,
+                "value": 533.4214285714286,
+                "parent": 61,
+                "fldName": "pH",
+                "inMin": 0,
+                "inMax": 1023,
+                "scaleMin": 0,
+                "scaleMax": 14,
+                "initValue": 7.3,
+                "updtRate": 4,
+                "updtTHS": 0.8
+              }
+            ],
+            "children": []
+          }
+        ]
+      },
+      {
+        "id": 62,
+        "name": "Sezione stoccaggio",
+        "tagName": "section",
+        "tag": 37,
+        "parent": 50,
+        "measureName": null,
+        "sensors": [],
+        "children": [{
+          "id": 63,
+          "name": "Impilatore",
+          "tagName": "unit",
+          "tag": 38,
+          "parent": 62,
+          "measureName": null,
+          "sensors": [],
+          "children": [{
+            "id": 64,
+            "name": "Motore 1",
+            "tagName": "device",
+            "tag": 39,
+            "parent": 63,
+            "measureName": "ElMotor",
+            "sensors": [{
+              "id": 21,
+              "tag": 40,
+              "map": 9,
+              "value": 0,
+              "parent": 64,
+              "fldName": "current",
+              "inMin": 0,
+              "inMax": 1023,
+              "scaleMin": 0,
+              "scaleMax": 125,
+              "initValue": 0,
+              "updtRate": 1,
+              "updtTHS": 0.8
+            },
+              {
+                "id": 22,
+                "tag": 41,
+                "map": 10,
+                "value": 0,
+                "parent": 64,
+                "fldName": "rpm",
+                "inMin": 0,
+                "inMax": 1023,
+                "scaleMin": 0,
+                "scaleMax": 4500,
+                "initValue": 0,
+                "updtRate": 1.1,
+                "updtTHS": 0.5
+              },
+              {
+                "id": 23,
+                "tag": 42,
+                "map": 11,
+                "value": 0,
+                "parent": 64,
+                "fldName": "hours",
+                "inMin": 0,
+                "inMax": 1023,
+                "scaleMin": 0,
+                "scaleMax": 2000,
+                "initValue": 0,
+                "updtRate": 1.6,
+                "updtTHS": 0.8
+              }
+            ],
+            "children": []
+          },
+            {
+              "id": 65,
+              "name": "Motore 2",
+              "tagName": "device",
+              "tag": 43,
+              "parent": 63,
+              "measureName": "ElMotor",
+              "sensors": [{
+                "id": 25,
+                "tag": 44,
+                "map": 12,
+                "value": 0,
+                "parent": 65,
+                "fldName": "current",
+                "inMin": 0,
+                "inMax": 1023,
+                "scaleMin": 0,
+                "scaleMax": 125,
+                "initValue": 0,
+                "updtRate": 1,
+                "updtTHS": 0.8
+              },
+                {
+                  "id": 26,
+                  "tag": 45,
+                  "map": 13,
+                  "value": 0,
+                  "parent": 65,
+                  "fldName": "rpm",
+                  "inMin": 0,
+                  "inMax": 1023,
+                  "scaleMin": 0,
+                  "scaleMax": 4500,
+                  "initValue": 0,
+                  "updtRate": 1.1,
+                  "updtTHS": 0.5
+                },
+                {
+                  "id": 27,
+                  "tag": 46,
+                  "map": 14,
+                  "value": 0,
+                  "parent": 65,
+                  "fldName": "hours",
+                  "inMin": 0,
+                  "inMax": 1023,
+                  "scaleMin": 0,
+                  "scaleMax": 2000,
+                  "initValue": 0,
+                  "updtRate": 1.6,
+                  "updtTHS": 0.8
+                }
+              ],
+              "children": []
+            }
+          ]
+        }]
+      }
+    ]
+  },
+  "devices": [{
+    "id": 12,
+    "name": "Pompa 1",
+    "config": {
+      "maxI": 60,
+      "maxRPM": 4500,
+      "acceleration": 0.3
+    },
+    "param": {
+      "state": 0,
+      "I": 0,
+      "RPM": 0,
+      "H": 0
+    },
+    "sCurrent": {
+      "id": 9,
+      "obj": {
+        "id": 9,
+        "tag": 5,
+        "map": 0,
+        "value": 0,
+        "parent": 53,
+        "fldName": "current",
+        "inMin": 0,
+        "inMax": 1023,
+        "scaleMin": 0,
+        "scaleMax": 125,
+        "initValue": 0,
+        "updtRate": 1,
+        "updtTHS": 0.8
+      }
+    },
+    "sRPM": {
+      "id": 10,
+      "obj": {
+        "id": 10,
+        "tag": 6,
+        "map": 1,
+        "value": 0,
+        "parent": 53,
+        "fldName": "rpm",
+        "inMin": 0,
+        "inMax": 1023,
+        "scaleMin": 0,
+        "scaleMax": 4500,
+        "initValue": 0,
+        "updtRate": 1.1,
+        "updtTHS": 0.5
+      }
+    },
+    "sHours": {
+      "id": 11,
+      "obj": {
+        "id": 11,
+        "tag": 7,
+        "map": 2,
+        "value": 0,
+        "parent": 53,
+        "fldName": "hours",
+        "inMin": 0,
+        "inMax": 1023,
+        "scaleMin": 0,
+        "scaleMax": 2000,
+        "initValue": 0,
+        "updtRate": 1.6,
+        "updtTHS": 0.8
+      }
+    },
+    "stress": 0
+  },
+    {
+      "id": 32,
+      "name": "Vasca 1",
+      "config": {
+        "minT": 4,
+        "maxT": 96,
+        "maxLevel": 1400
+      },
+      "param": {
+        "state": 0,
+        "LiquidFlow": 0,
+        "Temperature": 48,
+        "LiquidLevel": 1000
+      },
+      "sLiquidFlow": {
+        "id": 29,
+        "obj": {
+          "id": 29,
+          "tag": 8,
+          "map": 15,
+          "value": 34.1,
+          "parent": 52,
+          "fldName": "contatoreAcqua",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 600,
+          "initValue": 20,
+          "updtRate": 22,
+          "updtTHS": 0.8
+        }
+      },
+      "sTemperature": {
+        "id": 30,
+        "obj": {
+          "id": 30,
+          "tag": 9,
+          "map": 16,
+          "value": 281.32500000000005,
+          "parent": 52,
+          "fldName": "temperatura",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": -200,
+          "scaleMax": 600,
+          "initValue": 20,
+          "updtRate": 15,
+          "updtTHS": 0.8
+        }
+      },
+      "sLiquidLevel": {
+        "id": 31,
+        "obj": {
+          "id": 31,
+          "tag": 10,
+          "map": 17,
+          "value": 716.0999999999999,
+          "parent": 52,
+          "fldName": "livelloAcqua",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 2000,
+          "initValue": 1400,
+          "updtRate": 10,
+          "updtTHS": 0.8
+        }
+      }
+    },
+    {
+      "id": 16,
+      "name": "Pompa 2",
+      "config": {
+        "maxI": 30,
+        "maxRPM": 2000,
+        "acceleration": 0.1
+      },
+      "param": {
+        "state": 0,
+        "I": 1,
+        "RPM": 120,
+        "H": 24
+      },
+      "sCurrent": {
+        "id": 13,
+        "obj": {
+          "id": 13,
+          "tag": 13,
+          "map": 3,
+          "value": 0,
+          "parent": 55,
+          "fldName": "current",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 125,
+          "initValue": 0,
+          "updtRate": 1,
+          "updtTHS": 0.8
+        }
+      },
+      "sRPM": {
+        "id": 14,
+        "obj": {
+          "id": 14,
+          "tag": 14,
+          "map": 4,
+          "value": 0,
+          "parent": 55,
+          "fldName": "rpm",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 4500,
+          "initValue": 0,
+          "updtRate": 1.1,
+          "updtTHS": 0.5
+        }
+      },
+      "sHours": {
+        "id": 15,
+        "obj": {
+          "id": 15,
+          "tag": 15,
+          "map": 5,
+          "value": 0,
+          "parent": 55,
+          "fldName": "hours",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 2000,
+          "initValue": 0,
+          "updtRate": 1.6,
+          "updtTHS": 0.8
+        }
+      },
+      "stress": 0
+    },
+    {
+      "id": 36,
+      "name": "Vasca 2",
+      "config": {
+        "minT": 4,
+        "maxT": 96,
+        "maxLevel": 1400
+      },
+      "param": {
+        "state": 0,
+        "LiquidFlow": 0,
+        "Temperature": 48,
+        "LiquidLevel": 1000
+      },
+      "sLiquidFlow": {
+        "id": 33,
+        "obj": {
+          "id": 33,
+          "tag": 16,
+          "map": 18,
+          "value": 34.1,
+          "parent": 54,
+          "fldName": "contatoreAcqua",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 600,
+          "initValue": 20,
+          "updtRate": 22,
+          "updtTHS": 0.8
+        }
+      },
+      "sTemperature": {
+        "id": 34,
+        "obj": {
+          "id": 34,
+          "tag": 17,
+          "map": 19,
+          "value": 281.32500000000005,
+          "parent": 54,
+          "fldName": "temperatura",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": -200,
+          "scaleMax": 600,
+          "initValue": 20,
+          "updtRate": 15,
+          "updtTHS": 0.8
+        }
+      },
+      "sLiquidLevel": {
+        "id": 35,
+        "obj": {
+          "id": 35,
+          "tag": 18,
+          "map": 20,
+          "value": 716.0999999999999,
+          "parent": 54,
+          "fldName": "livelloAcqua",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 2000,
+          "initValue": 1400,
+          "updtRate": 10,
+          "updtTHS": 0.8
+        }
+      }
+    },
+    {
+      "id": 20,
+      "name": "Ventilatore 1",
+      "config": {
+        "maxI": 22,
+        "maxRPM": 1400,
+        "acceleration": 0.1
+      },
+      "param": {
+        "state": 0,
+        "I": 1,
+        "RPM": 120,
+        "H": 24
+      },
+      "sCurrent": {
+        "id": 17,
+        "obj": {
+          "id": 17,
+          "tag": 21,
+          "map": 6,
+          "value": 0,
+          "parent": 57,
+          "fldName": "current",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 125,
+          "initValue": 0,
+          "updtRate": 1,
+          "updtTHS": 0.8
+        }
+      },
+      "sRPM": {
+        "id": 18,
+        "obj": {
+          "id": 18,
+          "tag": 22,
+          "map": 7,
+          "value": 0,
+          "parent": 57,
+          "fldName": "rpm",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 4500,
+          "initValue": 0,
+          "updtRate": 1.1,
+          "updtTHS": 0.5
+        }
+      },
+      "sHours": {
+        "id": 19,
+        "obj": {
+          "id": 19,
+          "tag": 23,
+          "map": 8,
+          "value": 0,
+          "parent": 57,
+          "fldName": "hours",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 2000,
+          "initValue": 0,
+          "updtRate": 1.6,
+          "updtTHS": 0.8
+        }
+      },
+      "stress": 0
+    },
+    {
+      "id": 40,
+      "name": "Vasca 3",
+      "config": {
+        "minT": 4,
+        "maxT": 96,
+        "maxRH": 0.7
+      },
+      "param": {
+        "state": 0,
+        "LiquidFlow": 0,
+        "Temperature": 48,
+        "RH": 0.5
+      },
+      "sLiquidFlow": {
+        "id": 37,
+        "obj": {
+          "id": 37,
+          "tag": 24,
+          "map": 21,
+          "value": 34.1,
+          "parent": 56,
+          "fldName": "contatoreAcqua",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 600,
+          "initValue": 20,
+          "updtRate": 22,
+          "updtTHS": 0.8
+        }
+      },
+      "sTemperature": {
+        "id": 38,
+        "obj": {
+          "id": 38,
+          "tag": 25,
+          "map": 22,
+          "value": 281.32500000000005,
+          "parent": 56,
+          "fldName": "temperatura",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": -200,
+          "scaleMax": 600,
+          "initValue": 20,
+          "updtRate": 15,
+          "updtTHS": 0.8
+        }
+      },
+      "sPH": {
+        "id": 39,
+        "obj": {
+          "id": 39,
+          "tag": 26,
+          "map": 23,
+          "value": 613.8,
+          "parent": 56,
+          "fldName": "umidità",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 100,
+          "initValue": 60,
+          "updtRate": 5,
+          "updtTHS": 0.8
+        }
+      }
+    },
+    {
+      "id": 43,
+      "name": "Vasca 4",
+      "config": {
+        "minLevel": 200,
+        "minPH": 7,
+        "maxPH": 7.6
+      },
+      "param": {
+        "state": 0,
+        "LiquidLevel": 1000,
+        "PH": 7.5
+      },
+      "sLiquidLevel": {
+        "id": 41,
+        "obj": {
+          "id": 41,
+          "tag": 29,
+          "map": 24,
+          "value": 716.0999999999999,
+          "parent": 59,
+          "fldName": "livelloAcqua",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 2000,
+          "initValue": 1400,
+          "updtRate": 10,
+          "updtTHS": 0.8
+        }
+      },
+      "sPH": {
+        "id": 42,
+        "obj": {
+          "id": 42,
+          "tag": 30,
+          "map": 25,
+          "value": 533.4214285714286,
+          "parent": 59,
+          "fldName": "pH",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 14,
+          "initValue": 7.3,
+          "updtRate": 4,
+          "updtTHS": 0.8
+        }
+      }
+    },
+    {
+      "id": 46,
+      "name": "Vasca 5",
+      "config": {
+        "minLevel": 200,
+        "minPH": 7,
+        "maxPH": 7.6
+      },
+      "param": {
+        "state": 0,
+        "LiquidLevel": 1000,
+        "PH": 7.3
+      },
+      "sLiquidLevel": {
+        "id": 44,
+        "obj": {
+          "id": 44,
+          "tag": 32,
+          "map": 26,
+          "value": 716.0999999999999,
+          "parent": 60,
+          "fldName": "livelloAcqua",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 2000,
+          "initValue": 1400,
+          "updtRate": 10,
+          "updtTHS": 0.8
+        }
+      },
+      "sPH": {
+        "id": 45,
+        "obj": {
+          "id": 45,
+          "tag": 33,
+          "map": 27,
+          "value": 533.4214285714286,
+          "parent": 60,
+          "fldName": "pH",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 14,
+          "initValue": 7.3,
+          "updtRate": 4,
+          "updtTHS": 0.8
+        }
+      }
+    },
+    {
+      "id": 49,
+      "name": "Vasca 6",
+      "config": {
+        "minLevel": 200,
+        "minPH": 7,
+        "maxPH": 7.6
+      },
+      "param": {
+        "state": 0,
+        "LiquidLevel": 1000,
+        "PH": 7.1
+      },
+      "sLiquidLevel": {
+        "id": 47,
+        "obj": {
+          "id": 47,
+          "tag": 35,
+          "map": 28,
+          "value": 716.0999999999999,
+          "parent": 61,
+          "fldName": "livelloAcqua",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 2000,
+          "initValue": 1400,
+          "updtRate": 10,
+          "updtTHS": 0.8
+        }
+      },
+      "sPH": {
+        "id": 48,
+        "obj": {
+          "id": 48,
+          "tag": 36,
+          "map": 29,
+          "value": 533.4214285714286,
+          "parent": 61,
+          "fldName": "pH",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 14,
+          "initValue": 7.3,
+          "updtRate": 4,
+          "updtTHS": 0.8
+        }
+      }
+    },
+    {
+      "id": 24,
+      "name": "Motore 1",
+      "config": {
+        "maxI": 90,
+        "maxRPM": 1800,
+        "acceleration": 0.1
+      },
+      "param": {
+        "state": 0,
+        "I": 1,
+        "RPM": 120,
+        "H": 24
+      },
+      "sCurrent": {
+        "id": 21,
+        "obj": {
+          "id": 21,
+          "tag": 40,
+          "map": 9,
+          "value": 0,
+          "parent": 64,
+          "fldName": "current",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 125,
+          "initValue": 0,
+          "updtRate": 1,
+          "updtTHS": 0.8
+        }
+      },
+      "sRPM": {
+        "id": 22,
+        "obj": {
+          "id": 22,
+          "tag": 41,
+          "map": 10,
+          "value": 0,
+          "parent": 64,
+          "fldName": "rpm",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 4500,
+          "initValue": 0,
+          "updtRate": 1.1,
+          "updtTHS": 0.5
+        }
+      },
+      "sHours": {
+        "id": 23,
+        "obj": {
+          "id": 23,
+          "tag": 42,
+          "map": 11,
+          "value": 0,
+          "parent": 64,
+          "fldName": "hours",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 2000,
+          "initValue": 0,
+          "updtRate": 1.6,
+          "updtTHS": 0.8
+        }
+      },
+      "stress": 0
+    },
+    {
+      "id": 28,
+      "name": "Motore 2",
+      "config": {
+        "maxI": 90,
+        "maxRPM": 1800,
+        "acceleration": 0.1
+      },
+      "param": {
+        "state": 0,
+        "I": 1,
+        "RPM": 120,
+        "H": 24
+      },
+      "sCurrent": {
+        "id": 25,
+        "obj": {
+          "id": 25,
+          "tag": 44,
+          "map": 12,
+          "value": 0,
+          "parent": 65,
+          "fldName": "current",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 125,
+          "initValue": 0,
+          "updtRate": 1,
+          "updtTHS": 0.8
+        }
+      },
+      "sRPM": {
+        "id": 26,
+        "obj": {
+          "id": 26,
+          "tag": 45,
+          "map": 13,
+          "value": 0,
+          "parent": 65,
+          "fldName": "rpm",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 4500,
+          "initValue": 0,
+          "updtRate": 1.1,
+          "updtTHS": 0.5
+        }
+      },
+      "sHours": {
+        "id": 27,
+        "obj": {
+          "id": 27,
+          "tag": 46,
+          "map": 14,
+          "value": 0,
+          "parent": 65,
+          "fldName": "hours",
+          "inMin": 0,
+          "inMax": 1023,
+          "scaleMin": 0,
+          "scaleMax": 2000,
+          "initValue": 0,
+          "updtRate": 1.6,
+          "updtTHS": 0.8
+        }
+      },
+      "stress": 0
+    }
+  ]
+}
