@@ -45,7 +45,7 @@ export class LogicIOService {
         this.nextValue(i, Math.round(IO.value * (10.5 + Math.random()) / 10));
       }*/
     }
-    console.log(t);
+    // console.log(t);
   }
 
   private hasNewValue(IO: ILogicIO): boolean {

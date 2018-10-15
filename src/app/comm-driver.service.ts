@@ -36,7 +36,7 @@ export class CommDriverService {
 
 
   newDataMqtt(MqttTopic: string, value: number) {
-    console.log('newDataMqtt', MqttTopic, value);
+    // console.log('newDataMqtt', MqttTopic, value);
     if (this.queue.add(new MqttPacket(value), MqttTopic) ) {
       this.fireMeasure(this.queue.pull(MqttTopic), MqttTopic);
     }

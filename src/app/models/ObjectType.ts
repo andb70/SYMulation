@@ -24,7 +24,7 @@ export class ObjectType {
   ) {this._lastUpdate =  Measure.getTimeStamp(); }
 
   static deleteSpaces(topic: string): string {
-    return topic.replace(' ', '');
+    return topic.replace(/\s+/g, '').toLowerCase();
   }
   getID(): number {
     return this._id;
@@ -159,7 +159,7 @@ export class ObjectType {
     if (this.getParent()) {
       return this.getParent().getTopic() + this.name + '/';
     }
-    return this.name + '/';
+    return ''; // this.name + '/';
   }
 
 }
