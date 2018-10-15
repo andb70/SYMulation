@@ -20,7 +20,7 @@ export class LogicIOService {
     this.IOs = CLogicIO.create(40);
   }
   public nextValue(i: number, value: number) {
-    console.log('nextValue ' + i + ' v: ' + value);
+    // if (i === 0) {console.log('nextValue ' + i + ' v: ' + value); }
     let IO: ILogicIO = this.IOs[i];
     IO.nextValue = value;
   }
@@ -45,7 +45,7 @@ export class LogicIOService {
         this.nextValue(i, Math.round(IO.value * (10.5 + Math.random()) / 10));
       }*/
     }
-    console.log(t);
+    // console.log(t);
   }
 
   private hasNewValue(IO: ILogicIO): boolean {

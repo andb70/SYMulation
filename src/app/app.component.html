@@ -2,26 +2,31 @@
   <h1>Controlli Impianto Angus</h1>
 
   <button type="button" mat-raised-button class="startButtonImpianto"
-          [ngClass]="{'motorON': isON(),'motorOFF': isOFF()}"
-          (click)="motorSwitch()">{{status}}
+          [ngClass]="{'motorON': scanning,'motorOFF': !scanning}"
+          (click)="deviceSwitch()">{{scanning ? 'Arresta' : 'Avvia scansione'}}
   </button>
   <button type="button" mat-raised-button class="startButtonImpianto"
           [ngClass]="{'motorON': showTree,'motorOFF': !showTree}"
           (click)="showTree = ! showTree">{{showTree ? 'Nascondi albero impianto' : 'Mostra albero impianto'}}
   </button>
+  <button type="button" mat-raised-button class="startButtonImpianto"
+          [ngClass]="{'motorON': showGoals,'motorOFF': !showGoals}"
+          (click)="showGoals = ! showGoals">{{showGoals ? 'Nascondi gli obiettivi' : 'Mostra gli obiettivi'}}
+  </button>
 </div>
 
 <hr>
 
-<!--
-<app-motor [config]="pompa1"></app-motor>
-<app-pool [config]="vasca1" [sRPM]="pompa1.getsRPM()"></app-pool>
-<app-motor [config]="pompa2"></app-motor>
-<app-pool [config]="vasca2" [sRPM]="pompa2.getsRPM()"></app-pool>
-<app-motor [config]="ventilatore1"></app-motor>
-<app-motor [config]="motore1"></app-motor>
-<app-motor [config]="motore2"></app-motor>
--->
+<div class="containerDevice" *ngIf="showGoals">
+  <h1>Vogliamo le seguenti misure:</h1>
+  <p>consumo globale di corrente impianto (ogni minuto)</p>
+  <p>consumo instantaneo per ogni componente (ogni minuto)</p>
+  <p>consumo globale acqua lavaggio (ogni giorno)</p>
+  <p>consumo corrente forni (ogni minuto)</p>
+  <p>temperatura media dei forni (ogni 10 minuti)</p>
+  <p>livello massimo e minimo vasche di trattamento (ogni ora)</p>
+</div>
+
 
 <div class="containerDevice">
   <div>
@@ -29,43 +34,74 @@
     <div class="containerUnit">
       <div>
         <h3>Prelavaggio</h3>
-        <app-motor [config]="pompa1"></app-motor>
-        <app-pool [config]="vasca1" [sRPM]="pompa1.getsRPM()"></app-pool>
+        <app-motor [device]="pompa1"></app-motor>
+        <app-pool [device]="vasca1" [sRPM]="pompa1.getsRPM()"></app-pool>
       </div>
-     <!-- <div class="unitData">
-        <app-node [object]="prelavaggio"></app-node>
-      </div>-->
     </div>
     <div class="containerUnit">
       <div>
         <h3>Lavaggio</h3>
-        <app-motor [config]="pompa2"></app-motor>
-        <app-pool [config]="vasca2" [sRPM]="pompa2.getsRPM()"></app-pool>
+        <app-motor [device]="pompa2"></app-motor>
+        <app-pool [device]="vasca2" [sRPM]="pompa2.getsRPM()"></app-pool>
       </div>
-<!--      <div class="unitData">
-        <app-node [object]="lavaggio"></app-node>
-      </div>-->
     </div>
     <div class="containerUnit">
       <div>
         <h3>Asciugatura</h3>
-        <app-motor [config]="ventilatore1"></app-motor>
-      </div>
-      <div class="unitData">
-        <app-node [object]="asciugatura"></app-node>
+        <app-motor [device]="ventilatore1"></app-motor>
+        <app-pool1 [device]="vasca3"></app-pool1>
       </div>
     </div>
   </div>
+
+
+
+
+
+  <div>
+    <h1>Sezione pretrattamento</h1>
+    <div class="containerUnit">
+      <div>
+        <h3>Vasca pretrattamento</h3>
+        <app-pool2 [device]="vasca4"></app-pool2>
+      </div>
+    </div>
+    <div class="containerUnit">
+      <div>
+        <h3>Vasca Primer</h3>
+        <app-pool2 [device]="vasca5"></app-pool2>
+      </div>
+    </div>
+    <div class="containerUnit">
+      <div>
+        <h3>Vasca Finisher</h3>
+        <app-pool2 [device]="vasca6"></app-pool2>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
   <div>
     <h1>Sezione stoccaggio</h1>
     <div class="containerUnit">
       <div>
         <h3>Impilatore</h3>
-        <app-motor [config]="motore1"></app-motor>
-        <app-motor [config]="motore2"></app-motor>
+        <app-motor [device]="motore1"></app-motor>
+        <app-motor [device]="motore2"></app-motor>
       </div>
     </div>
   </div>
+
+
+
 </div>
 <div *ngIf="showTree">
   <h3>Dati prodotti</h3>

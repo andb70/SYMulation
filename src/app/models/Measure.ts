@@ -20,7 +20,7 @@
  * */
 export class Measure {
 
-  constructor(public measurement: String, public fields: any, public tags: any, public deviceName: string, public timestamp?: number) {
+  constructor(public measurement: String, public fields: any, public tags: any, public timestamp?: number) {
     if (!this.timestamp) {
       this.timestamp = Measure.getTimeStamp();
     }
@@ -49,6 +49,22 @@ export class Measure {
       return new Measure(measurement, oFlds, oTags, time);
     }*/
 
+
+  /**
+   * restituisce il TimeStamp del momento attuale
+   *
+   * */
+  public static getTimeStamp(): number {
+    return new Date().getTime();
+  }
+}
+export class MqttPacket {
+
+  constructor(public value: number, public timestamp?: number) {
+    if (!this.timestamp) {
+      this.timestamp = Measure.getTimeStamp();
+    }
+  }
 
   /**
    * restituisce il TimeStamp del momento attuale
