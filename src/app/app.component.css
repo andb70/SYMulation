@@ -10,9 +10,9 @@
 
 .containerDevice {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  grid-column-gap: 34px;
-  margin-left: 100px;
+  grid-template-columns: repeat(3, 1fr);
+  grid-column-gap: 54px;
+  margin-left: 40px;
   margin-right: 100px;
 }
 
@@ -37,6 +37,7 @@
 
 .startButtonImpianto{
   margin-left: 15px;
+  width: 240px!important;
 }
 
 .unitData {
@@ -45,7 +46,18 @@
   margin-top: 50px;
 }
 
-@media screen and (max-width: 1163px){
+button{
+  font-size: x-large;
+  height: 45px;
+}
+
+@media screen and (max-width: 1850px){
+  .containerDevice{
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media screen and (max-width: 1210px){
   .containerDevice{
     grid-template-columns: 1fr;
   }

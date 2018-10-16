@@ -1,17 +1,21 @@
 .card {
   min-height: 290px !important;
-  width: 900px;
+  /*width: 540px;*/
+  width: 100%;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19) !important;
   margin-bottom: 20px;
+  background-color: rgba(0, 0, 0, 0.04);
 }
 
 .containerMotorComponent {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: 1fr; /*repeat(2, 1fr);*/
   min-width: 390px;
+  margin-left: 100px;
 }
 
 .setDeviceData {
+  margin-top: 30px;
   margin-left: 10px;
 }
 
@@ -21,19 +25,24 @@
 }
 
 .deviceData {
-  margin-top: 35px;
+  margin-top: 50px;
   margin-left: 40px;
 }
 
-.deviceData li {
+/*.deviceData li {
   margin-bottom: 30px;
-}
+}*/
 
-button {
-  margin-left: 345px!important;
+/*button {
+  height: 60px;
+  width: 120px;
+  font-size: x-large;
+  !*margin-left: 360px!important;*!
   margin-bottom: 16px!important;
-}
+}*/
 
+/*
 mat-card-actions {
   margin-left: 10px;
 }
+*/
