@@ -8,13 +8,13 @@
         <mat-form-field>
           <input matInput placeholder="velocità" type="text" name="tSpeed" #Title="ngModel"
                  [(ngModel)]="device.targetSpeed"></mat-form-field>
-        <p><i style="color: darkgray; font-size: smaller">sforzo</i>
-          <mat-form-field>
-            <mat-select name="sStress" [(value)]="device.stress" class="form-control w70 floatR">
-              <mat-option *ngFor="let i of stressValues()" value="{{i}}">{{i}}</mat-option> <!--TODO Aggiungere select di Angular Material-->
+
+
+            <p><i style="color: darkgray; font-size: smaller">sforzo</i>
+              <br>
+            <mat-select name="sStress" [(value)]="device.stress" class="form-control w70 floatR" style="width: 185px;">
+              <mat-option *ngFor="let i of stressValues()" value="{{i}}">{{i}}</mat-option>
             </mat-select>
-          </mat-form-field>
-        <p>You selected: {{device.stress}}</p>
 
       </div>
       <ul class="deviceData">
