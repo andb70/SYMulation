@@ -50,13 +50,14 @@ export class ObjectType {
   onUpdate(sensor: DataPointType) {
     let now = Measure.getTimeStamp();
     if (now - this._lastUpdate > ObjectUpdateInterval) {
-      // console.log('DataType.update');
+      console.log('DataType.update');
       this._lastUpdate = now;
       this.update.emit([
         this._measureName,
         this.getFields(),
         this.getTags([])
       ]);
+      console.log('DataType.updateMqtt');
       this.updateMqtt.emit([ObjectType.deleteSpaces(this._topic + this.getTopic() + sensor.fldName),
         sensor.scaledValue]);
     }

@@ -112,6 +112,7 @@ export class DataPointType implements INotify {
   notify(newValue: number) {
     this._valueOld = this._value;
     this._value = newValue;
+    // console.log('DataType', this.fldName, newValue);
     this.parent.onUpdate(this);
   }
 
@@ -169,12 +170,14 @@ export interface ILogicIO {
   value: number;
   nextValue: number;
   callback: INotify;
+  cycles: number;
 }
 
 export class CLogicIO implements ILogicIO {
   callback: INotify;
-  nextValue: number;
-  value: number;
+  nextValue = 0;
+  value = 0;
+  cycles = 0;
 
   private constructor() {
     this.callback = null;

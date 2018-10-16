@@ -2,7 +2,7 @@ import {EventEmitter, Injectable, Output} from '@angular/core';
 import {CLogicIO, DataPointType, ILogicIO} from './models/DataPointType';
 import {isNull} from 'util';
 import {Clock7} from './models/Clock7';
-
+const maxCyclesOff = 5;
 @Injectable()
 export class LogicIOService {
 
@@ -40,10 +40,17 @@ export class LogicIOService {
       if (this.isMapped(IO)) {
         if (this.hasNewValue(IO)) {
           IO.callback.notify(IO.value);
+        } else {
+          IO.cycles++;
+          // console.log('ILogicIO', i, IO.cycles, maxCyclesOff );
+
+          if (IO.cycles > maxCyclesOff) {
+            IO.cycles = 0;
+            IO.callback.notify(IO.value);
+          }
+          // aggiornare dopo timeout
         }
-      } /*else {
-        this.nextValue(i, Math.round(IO.value * (10.5 + Math.random()) / 10));
-      }*/
+      }
     }
     // console.log(t);
   }

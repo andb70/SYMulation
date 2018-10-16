@@ -132,6 +132,7 @@ export class DeviceClass implements OnInit {
 
     this.IOs = provider as LogicIOService;
     this.IOs.map(inputs);
+    this.nextValue();
     return inputs;
   }
   private nextValue() {

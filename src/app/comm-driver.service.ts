@@ -36,7 +36,7 @@ export class CommDriverService {
 
 
   newDataMqtt(MqttTopic: string, value: number) {
-    // console.log('newDataMqtt', MqttTopic, value);
+    console.log('newDataMqtt', MqttTopic, value);
     if (this.queue.add(new MqttPacket(value), MqttTopic) ) {
       this.fireMeasure(this.queue.pull(MqttTopic), MqttTopic);
     }
@@ -44,6 +44,7 @@ export class CommDriverService {
   newData(name, fields, tags) {
     const MqttTopicInflux = 'SYMulation/DataLogger/sensori';
 
+    console.log('newData', name, fields, tags);
     if (this.queue.add(new Measure(name, fields, tags), MqttTopicInflux) ) {
       this.fireMeasure(this.queue.pull(MqttTopicInflux), MqttTopicInflux);
     }
