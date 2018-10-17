@@ -57,8 +57,8 @@ export class ObjectType {
         this.getFields(),
         this.getTags([])
       ]);
-      console.log('ObjectType.onUpdate.updateMqtt', ObjectType.deleteSpaces(this._topic + this.getTopic() + sensor.fldName),
-        sensor.scaledValue);
+      /*console.log('ObjectType.onUpdate.updateMqtt', ObjectType.deleteSpaces(this._topic + this.getTopic() + sensor.fldName),
+        sensor.scaledValue);*/
       this.updateMqtt.emit([ObjectType.deleteSpaces(this._topic + this.getTopic() + sensor.fldName),
         sensor.scaledValue]);
     }
