@@ -35,9 +35,8 @@ const MqttTopicVasca6 = MqttTopicPath; // + 'Vasca6';
 })
 export class AppComponent implements OnInit {
   showTree = true;
-  showGoals = true;
+  showGoals = false;
   scanning = false;
-  root: ObjectType;
 
   sCurrent = new DataPointType('current',
     0,
@@ -210,7 +209,7 @@ export class AppComponent implements OnInit {
 
 
 
-
+  root: ObjectType;
 
 
   constructor(private logicIO: LogicIOService, private collector: CommDriverService) {
@@ -321,6 +320,7 @@ export class AppComponent implements OnInit {
         sensori appartenenti a myNode1 comporta lo sparo della misura myMeasure
 
      */
+
 
     this.root = new ObjectType('root', 'plant', 1);
     this.root

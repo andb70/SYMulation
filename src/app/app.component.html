@@ -8,8 +8,8 @@
   <!--<button type="button" mat-raised-button class="startButtonImpianto"
           [ngClass]="{'motorON': showTree,'motorOFF': !showTree}"
           (click)="showTree = ! showTree">{{showTree ? 'Nascondi albero impianto' : 'Mostra albero impianto'}}
-  </button>
-  <button type="button" mat-raised-button class="startButtonImpianto"
+  </button>-->
+  <!--<button type="button" mat-raised-button class="startButtonImpianto"
           [ngClass]="{'motorON': showGoals,'motorOFF': !showGoals}"
           (click)="showGoals = ! showGoals">{{showGoals ? 'Nascondi gli obiettivi' : 'Mostra gli obiettivi'}}
   </button>-->
@@ -17,7 +17,7 @@
 
 <hr>
 
-<!--<div class="containerDevice" *ngIf="showGoals">
+<div class="containerDevice" *ngIf="showGoals">
   <h1>Vogliamo le seguenti misure:</h1>
   <p>consumo globale di corrente impianto (ogni minuto)</p>
   <p>consumo instantaneo per ogni componente (ogni minuto)</p>
@@ -25,7 +25,7 @@
   <p>consumo corrente forni (ogni minuto)</p>
   <p>temperatura media dei forni (ogni 10 minuti)</p>
   <p>livello massimo e minimo vasche di trattamento (ogni ora)</p>
-</div>-->
+</div>
 
 
 <div class="containerDevice">
@@ -103,7 +103,7 @@
 
 
 </div>
-<!--<div *ngIf="showTree">
+<div *ngIf="showTree">
   <h3>Dati prodotti</h3>
   <app-node [object]="root"></app-node>
-</div>-->
+</div>

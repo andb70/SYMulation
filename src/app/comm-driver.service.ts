@@ -8,7 +8,7 @@ import {Queue} from './models/Queue';
 
 const  server = 'indirizzo_api_che_permette_il_salvataggio_e_il_recupero_della_configurazione_dell\'impianto_tramite_POST_e_GET/';
 
-const  maxLength = 4;
+const  maxLength = 2;
 @Injectable()
 export class CommDriverService {
   @Output()
@@ -36,7 +36,7 @@ export class CommDriverService {
 
 
   newDataMqtt(MqttTopic: string, value: number) {
-    console.log('newDataMqtt', MqttTopic, value);
+    /*console.log('newDataMqtt', MqttTopic, value);*/
     if (this.queue.add(new MqttPacket(value), MqttTopic) ) {
       this.fireMeasure(this.queue.pull(MqttTopic), MqttTopic);
     }
@@ -44,13 +44,14 @@ export class CommDriverService {
   newData(name, fields, tags) {
     const MqttTopicInflux = 'SYMulation/DataLogger/sensori';
 
-    console.log('newData', name, fields, tags);
+    /*console.log('newData', name, fields, tags);*/
     if (this.queue.add(new Measure(name, fields, tags), MqttTopicInflux) ) {
       this.fireMeasure(this.queue.pull(MqttTopicInflux), MqttTopicInflux);
     }
   }
   fireMeasure(data: any, MqttTopic: string) {
-    console.log('fire measure', MqttTopic, data);
+    /*if (  MqttTopic !== 'SYMulation/DataLogger/sensori') {*/
+    console.log('fire measure', MqttTopic, data); /*}*/
     this.mqttService.publish( MqttTopic, JSON.stringify(data)).subscribe( () => {
       console.log('fired');
     });

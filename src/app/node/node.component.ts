@@ -22,12 +22,12 @@ export class NodeComponent implements OnInit {
      * per essere trattate
      * */
     this.object.update.subscribe((args) => {
-      console.log(this.object.name + 'update.subscribe', args);
+      /*console.log(this.object.name + 'update.subscribe', args, this.collector);*/
       //             newData(name,    fields,  tags,    topic)
       this.collector.newData(args[0], args[1], args[2]);
     });
     this.object.updateMqtt.subscribe((args) => {
-      console.log(this.object.name + 'updateMqtt.subscribe', args);
+      /*console.log(this.object.name + 'updateMqtt.subscribe', args, this.collector);*/
       //                         topic,   value
       this.collector.newDataMqtt(args[0], args[1]);
     });

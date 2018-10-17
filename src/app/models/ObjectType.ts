@@ -4,7 +4,7 @@ import {EventEmitter, Output} from '@angular/core';
 import {JUtil} from './JUtil';
 // import {Settings} from '../app.module';
 
-const ObjectUpdateInterval = 1000; // ms di attesa prima che un oggetto notifichi al broker il cambiamento dei dati
+const ObjectUpdateInterval = 2000; // ms di attesa prima che un oggetto notifichi al broker il cambiamento dei dati
 
 export class ObjectType {
   private _id = JUtil.getUID();
@@ -49,15 +49,16 @@ export class ObjectType {
   }
   onUpdate(sensor: DataPointType) {
     let now = Measure.getTimeStamp();
-    if (now - this._lastUpdate > ObjectUpdateInterval) {
-      console.log('DataType.update');
-      this._lastUpdate = now;
+    if (now - sensor.lastUpdate > ObjectUpdateInterval) {
+      /*console.log('ObjectType.onUpdate.update', this._measureName, this.getFields(), this.getTags([]));*/
+      sensor.lastUpdate = now;
       this.update.emit([
         this._measureName,
         this.getFields(),
         this.getTags([])
       ]);
-      console.log('DataType.updateMqtt');
+      console.log('ObjectType.onUpdate.updateMqtt', ObjectType.deleteSpaces(this._topic + this.getTopic() + sensor.fldName),
+        sensor.scaledValue);
       this.updateMqtt.emit([ObjectType.deleteSpaces(this._topic + this.getTopic() + sensor.fldName),
         sensor.scaledValue]);
     }

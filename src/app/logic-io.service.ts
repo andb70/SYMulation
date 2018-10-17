@@ -2,7 +2,7 @@ import {EventEmitter, Injectable, Output} from '@angular/core';
 import {CLogicIO, DataPointType, ILogicIO} from './models/DataPointType';
 import {isNull} from 'util';
 import {Clock7} from './models/Clock7';
-const maxCyclesOff = 5;
+const maxCyclesOff = 2;
 @Injectable()
 export class LogicIOService {
 

@@ -36,6 +36,7 @@ export class DataPointType implements INotify {
   private _value: number;
   private _valueOld: number;
   private parent: ObjectType;
+  public lastUpdate = 0;
    public constructor(public fldName: string,
                      public inMin: number,
                      public inMax: number,
@@ -112,7 +113,7 @@ export class DataPointType implements INotify {
   notify(newValue: number) {
     this._valueOld = this._value;
     this._value = newValue;
-    // console.log('DataType', this.fldName, newValue);
+    // console.log('DataType.notify', this.fldName, newValue);
     this.parent.onUpdate(this);
   }
 
